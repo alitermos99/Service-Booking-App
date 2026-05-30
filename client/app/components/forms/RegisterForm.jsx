@@ -134,6 +134,7 @@ const RegisterForm = () => {
                         required
                         name="privacypolicy"
                         type="checkbox"
+                        className="accent-[#6c63ff]"
                     />
 
                     <span className="text-sm text-muted">
