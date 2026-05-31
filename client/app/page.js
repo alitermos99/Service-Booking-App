@@ -5,7 +5,7 @@ import LandingHeader from "./components/landing/LandingHeader";
 import LandingFeatureCards from "./components/landing/LandingFeatureCards";
 import LandingHeading from "./components/landing/LandingHeading";
 import LandingProcessSteps from "./components/landing/LandingProcessSteps";
-import CTASection from "./components/landing/CTASection";
+import LandingCTASection from "./components/landing/LandingCTASection";
 import LandingHero from "./components/landing/LandingHero";
 import Section from './components/layouts/Section';
 import LandingFooter from "./components/landing/LandingFooter";
@@ -46,7 +46,7 @@ export default function Home() {
 			</Section>
 
 			<Section maxWidth="max-w-3xl">
-				<CTASection user={user} />
+				<LandingCTASection user={user} />
 			</Section>
 
 			<LandingFooter />

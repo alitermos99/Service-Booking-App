@@ -2,7 +2,7 @@ import React from 'react'
 import Orb from '../ui/Orb'
 import Link from 'next/link'
 
-const CTASection = ({ user }) => {
+const LandingCTASection = ({ user }) => {
     const title = user ? 'Welcome back! Ready to manage your bookings?' : 'Ready to streamline your bookings?';
     const text = user ? 'View your dashboard or create a new reservation.' : 'Join hundreds of businesses already using ReservEase.';
     return (
@@ -50,4 +50,4 @@ const CTASection = ({ user }) => {
     )
 }
 
-export default CTASection
+export default LandingCTASection
