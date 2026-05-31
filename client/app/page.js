@@ -4,6 +4,8 @@ import LandingHeader from "./components/landing/LandingHeader";
 import Link from "next/link";
 import LandingStatsCards from "./components/landing/LandingStatsCards";
 import LandingFloatingCard from './components/landing/LandingFloatingCard';
+import LandingFeatureCards from "./components/landing/LandingFeatureCards";
+import LandingHeading from "./components/landing/LandingHeading";
 
 export default function Home() {
 	return (
@@ -48,6 +50,22 @@ export default function Home() {
 
 				<LandingFloatingCard />
 			</Main>
+
+			<section id="features" className="py-24 px-4 sm:px-6 max-w-7xl mx-auto">
+				<LandingHeading 
+					title="features"
+					description="Everything you need to run bookings"
+				/>
+
+				<LandingFeatureCards />
+			</section>
+
+			<section id="how" className="py-24 px-4 sm:px-6 bg-[rgba(17,17,24,0.3)]">
+				<LandingHeading 
+					title="How it works"
+					description="Three steps to running your bookings"
+				/>
+			</section>
 		</>
 	);
 }

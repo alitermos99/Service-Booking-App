@@ -1,23 +1,19 @@
-import { Geist, Geist_Mono, DM_Sans } from "next/font/google";
+import { DM_Sans, DM_Mono } from "next/font/google";
 import "./globals.css";
 import QueryProvider from "./providers/QueryProvider";
 import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
-const geistSans = Geist({
-	variable: "--font-geist-sans",
-	subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-	variable: "--font-geist-mono",
-	subsets: ["latin"],
-});
+import 'react-toastify/dist/ReactToastify.css';;
 
 const dmSans = DM_Sans({
 	subsets: ["latin"],
 	variable: "--font-dm-sans",
 });
+
+const dmMono = DM_Mono({
+	subsets: ["latin"],
+	variable: "--font-dm-mono",
+	weight: ["400", "500"]
+})
 
 export const metadata = {
 	title: "ReservEase",
@@ -28,7 +24,7 @@ export default function RootLayout({ children }) {
 	return (
 		<html
 			lang="en"
-			className={`${dmSans.variable} h-full antialiased`}
+			className={`${dmSans.variable} ${dmMono.variable} h-full antialiased`}
 		>
 			<body className="min-h-full flex flex-col">
 				<QueryProvider>
