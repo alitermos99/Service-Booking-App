@@ -43,9 +43,11 @@ export const loginUser = async ({ email, password }) => {
 	}
 
 	const user = await getUserByEmailOrThrow(email);
+
 	if (
 		!user ||
-		!(await bcrypt.compare(password, user.password))
+		!(await bcrypt.compare(password, user.password)) ||
+		user.role === 'admin'
 	) {
 		throw new ApiError("Invalid email or password", 400);
 	}

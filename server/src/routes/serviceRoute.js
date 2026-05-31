@@ -6,7 +6,7 @@ import authMiddleware from '../middlewares/authMiddleware.js';
 const router = express.Router();
 
 router.use(authMiddleware);
-router.use(authorize('admin'));
+router.use(authorize('business'));
 
 router.get('/', getServices);
 router.get('/:id', getService);
