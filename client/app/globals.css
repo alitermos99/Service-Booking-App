@@ -193,4 +193,13 @@ body {
     -webkit-text-fill-color:transparent;
     background-clip:text
   }
+
+  .card-hover{
+    transition:transform 0.3s,
+    box-shadow 0.3s
+  }
+  .card-hover:hover{
+    transform:translateY(-4px);
+    box-shadow:0 20px 60px rgba(108,99,255,0.2)
+  }
 }

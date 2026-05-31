@@ -6,16 +6,16 @@ import Link from 'next/link'
 const LandingHeader = () => {
     return (
         <Header>
-            <Logo />
+            <Logo spanClass="font-semibold text-tx text-lg tracking-tight" />
 
             <div className="hidden md:flex items-center gap-8">
-                <a href="#features" className="text-muted hover:text-tx text-sm transition-colors">
+                <Link href="#features" className="text-muted hover:text-tx text-sm transition-colors">
                     Features
-                </a>
+                </Link>
 
-                <a href="#how" className="text-muted hover:text-tx text-sm transition-colors">
+                <Link href="#how" className="text-muted hover:text-tx text-sm transition-colors">
                     How it works
-                </a>
+                </Link>
             </div>
 
             <div className="flex items-center gap-3">
@@ -24,7 +24,7 @@ const LandingHeader = () => {
                 </Link>
 
                 <Link href="/login" className="btn-primary text-white text-sm font-medium px-4 py-2 rounded-xl transition-btn">
-                    Get Started
+                    Get started
                 </Link>
             </div>
         </Header>
