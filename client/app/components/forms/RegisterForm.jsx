@@ -3,15 +3,13 @@ import FormField from '../ui/FormField';
 import PasswordField from '../ui/PasswordField';
 import Button from '../ui/Button';
 import AuthRoleCard from '../auth/AuthRoleCard';
-import { register } from '@/app/services/authService';
 import validatePassword from '@/app/validators/passwordValidator';
-import LogoSpinner from '../ui/LogoSpinner';
 import LoadingOverlay from '../ui/LoadingOverlay';
+import { useRegister } from '@/app/features/auth/hooks/useRegister';
 
 const RegisterForm = () => {
     const [selectedRole, setSelectedRole] = useState('customer');
     const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(false);
     const [form, setForm] = useState({
         name: '',
         email: '',
@@ -19,6 +17,7 @@ const RegisterForm = () => {
         accountType: '',
         confirmPassword: ''
     });
+    const { mutate: registerUser, isPending } = useRegister();
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -30,7 +29,7 @@ const RegisterForm = () => {
         }));
     }
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
 
         if(!validatePassword(form.password)) {
@@ -43,20 +42,13 @@ const RegisterForm = () => {
             return;
         }
 
-        setLoading(true);
-
-        try {
-            const data = await register(form);
-        } catch (error) {
-            setError(error.response?.data?.message);
-        } finally {
-            setLoading(false);
-        }
+        registerUser(form);
     }
 
     return (
         <>
             { error && <span className='text-rose-500 text-sm'>{ error }</span> }
+
             <form className='space-y-4' onSubmit={handleSubmit}>
                 <div className="grid grid-cols-2 gap-3 mb-6">
                     <AuthRoleCard
@@ -147,10 +139,10 @@ const RegisterForm = () => {
                     label={'Create account'}
                     className={'block text-center btn-primary text-white font-semibold py-3 mt-2 w-full'}
                     type="submit"
-                    disabled={loading}
+                    disabled={isPending}
                 />
 
-                { loading && <LoadingOverlay /> }
+                { isPending && <LoadingOverlay /> }
             </form>
         </>
     )

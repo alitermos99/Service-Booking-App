@@ -11,7 +11,7 @@ const LoginForm = () => {
         password: '',
         remember: false
     });
-    const { mutate: loginUser, isPending, isError, error } = useLogin();
+    const { mutate: loginUser, isPending } = useLogin();
 
     const handleChange = (event) => {
         const{ name, value, type, checked } = event.target;
@@ -26,8 +26,6 @@ const LoginForm = () => {
         e.preventDefault();
         loginUser(form);
     };
-
-    const errorMessage = error?.response?.data?.message ?? error?.message;
 
     return (
         <>
