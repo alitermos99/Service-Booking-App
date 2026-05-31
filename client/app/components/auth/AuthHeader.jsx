@@ -4,7 +4,7 @@ import Logo from '../ui/Logo'
 const AuthHeader = ({ title, subtitle }) => {
     return (
         <div className="text-center mb-8">
-            <Logo />
+            <Logo className="mb-6" />
 
             <h1 className="text-2xl font-bold">
                 { title }
