@@ -6,12 +6,14 @@ import AuthRoleCard from '../auth/AuthRoleCard';
 import validatePassword from '@/app/validators/passwordValidator';
 import LoadingOverlay from '../ui/LoadingOverlay';
 import { useRegister } from '@/app/features/auth/hooks/useRegister';
+import validatePhone from '@/app/validators/phoneValidator';
 
 const RegisterForm = () => {
     const [selectedRole, setSelectedRole] = useState('customer');
     const [error, setError] = useState(null);
     const [form, setForm] = useState({
         name: '',
+        phone: '',
         email: '',
         password: '',
         accountType: '',
@@ -32,6 +34,11 @@ const RegisterForm = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
+        if(!validatePhone(form.phone)) {
+            setError('Enter a valid phone number (e.g. +14155552671)');
+            return;
+        }
+
         if(!validatePassword(form.password)) {
             setError('Password must be at least 6 characters long and include uppercase, lowercase, number, and special character');
             return;
@@ -47,8 +54,6 @@ const RegisterForm = () => {
 
     return (
         <>
-            { error && <span className='text-rose-500 text-sm'>{ error }</span> }
-
             <form className='space-y-4' onSubmit={handleSubmit}>
                 <div className="grid grid-cols-2 gap-3 mb-6">
                     <AuthRoleCard
@@ -103,6 +108,16 @@ const RegisterForm = () => {
                     onChange={handleChange}
                 />
 
+                <FormField
+                    label={'Phone'}
+                    type="text"
+                    name="phone"
+                    value={form.phone}
+                    className="input-field"
+                    placeholder="+123456789"
+                    onChange={handleChange}
+                />
+
                 <PasswordField
                     required
                     showStrength
@@ -144,6 +159,8 @@ const RegisterForm = () => {
 
                 { isPending && <LoadingOverlay /> }
             </form>
+
+            { error && <span className='text-rose-500 text-sm'>{ error }</span> }
         </>
     )
 }

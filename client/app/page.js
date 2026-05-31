@@ -1,3 +1,5 @@
+'use client'
+
 import Main from "./components/layouts/Main";
 import LandingHeader from "./components/landing/LandingHeader";
 import LandingFeatureCards from "./components/landing/LandingFeatureCards";
@@ -7,8 +9,16 @@ import CTASection from "./components/landing/CTASection";
 import LandingHero from "./components/landing/LandingHero";
 import Section from './components/layouts/Section';
 import LandingFooter from "./components/landing/LandingFooter";
+import { useUser } from "./features/auth/hooks/useUser";
+import LoadingOverlay from "./components/ui/LoadingOverlay";
 
 export default function Home() {
+	const { data: user, isPending } = useUser();
+
+	if(isPending) {
+		return <LoadingOverlay />
+	}
+
 	return (
 		<>
 			<LandingHeader />

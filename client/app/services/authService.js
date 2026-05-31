@@ -17,3 +17,11 @@ export const register = async (credentials) => {
 
     return response.data;
 }
+
+export const getProfile = async () => {
+    const response = await api.get(
+        '/api/v1/auth/profile'
+    )
+
+    return response.data;
+}

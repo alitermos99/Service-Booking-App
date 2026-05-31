@@ -22,8 +22,8 @@ export const useLogin = () => {
             toast.error(message);
         },
 
-        onSettled: () => {
-            queryClient.invalidateQueries({ queryKey: ["user"] });
-        }
+        // onSettled: () => {
+        //     queryClient.invalidateQueries({ queryKey: ["user"] });
+        // }
     });
 };
