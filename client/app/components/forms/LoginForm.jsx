@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 import FormField from '../ui/FormField'
 import PasswordField from '../ui/PasswordField'
 import Button from '../ui/Button'
-import { login } from '@/app/services/authService';
 import { useRouter } from 'next/navigation';
 import LoadingOverlay from '../ui/LoadingOverlay';
+import { useLogin } from '@/app/features/auth/hooks/useLogin';
 
 const LoginForm = () => {
     const router = useRouter();
@@ -13,8 +13,9 @@ const LoginForm = () => {
         password: '',
         remember: false
     });
-    const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(false);
+    // const [error, setError] = useState(null);
+    // const [loading, setLoading] = useState(false);
+    const { mutate: loginUser, isPending, isError, error } = useLogin();
 
     const handleChange = (event) => {
         const{ name, value, type, checked } = event.target;
@@ -25,24 +26,21 @@ const LoginForm = () => {
         }))
     }
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-
-        setLoading(true);
-
-        try {
-            const response = await login(form);
-            router.push('/');
-        } catch (error) {
-            setError(error.response?.data?.message);
-        } finally {
-            setLoading(false);
-        }
+        loginUser(form);
     };
+
+    const errorMessage = error?.response?.data?.message ?? error?.message;
 
     return (
         <>
-            { error && <span className='text-rose-500 text-sm'>{ error }</span> }
+            {
+                isError && (
+                    <span className='text-rose-500 text-sm'>{ errorMessage }</span>
+                )
+            }
+
             <form className="space-y-4" onSubmit={handleSubmit}>
                 <FormField
                     required
@@ -68,7 +66,7 @@ const LoginForm = () => {
                     <FormField
                         name="remember"
                         type="checkbox"
-                        checked={form.checked}
+                        checked={form.remember}
                         className="accent-[#6c63ff]"
                         onChange={handleChange}
                     />
@@ -82,10 +80,10 @@ const LoginForm = () => {
                     label={'Sign in'}
                     className={'block text-center btn-primary text-white font-semibold py-3 rounded-xl mt-2 w-full'}
                     type="submit"
-                    disabled={loading}
+                    disabled={isPending}
                 />
 
-                { loading && <LoadingOverlay /> }
+                { isPending && <LoadingOverlay /> }
             </form>
         </>
     )
