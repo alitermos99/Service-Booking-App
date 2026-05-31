@@ -23,7 +23,7 @@ const LandingHeader = () => {
                     Sign in
                 </Link>
 
-                <Link href="/login" className="btn-primary text-white text-sm font-medium px-4 py-2 rounded-xl transition-btn">
+                <Link href="/register" className="btn-primary text-white text-sm font-medium px-4 py-2 rounded-xl transition-btn">
                     Get started
                 </Link>
             </div>

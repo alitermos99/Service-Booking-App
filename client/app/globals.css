@@ -32,6 +32,8 @@ body {
 @theme {
   --color-card: var(--card);
   --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-sky: var(--accent-sky);
   --animate-fade-up: fadeUp 0.5s ease forwards;
 
   --color-weak: var(--weakpass);
