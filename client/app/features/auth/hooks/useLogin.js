@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { login } from "@/app/services/authService";
+import { toast } from "react-toastify";
 
 export const useLogin = () => {
     const queryClient = useQueryClient();
@@ -17,12 +18,12 @@ export const useLogin = () => {
         },
 
         onError: (err) => {
-            // Optional: global side-effects like toast notifications go here
             console.error("Login failed:", err);
+			const message = err?.response?.data?.message ?? "Login failed. Please try again.";
+            toast.error(message);
         },
 
         onSettled: () => {
-            // Invalidate so any query depending on ["user"] re-fetches fresh
             queryClient.invalidateQueries({ queryKey: ["user"] });
         }
     });

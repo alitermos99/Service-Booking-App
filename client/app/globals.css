@@ -102,4 +102,54 @@ body {
   .social-btn {
     @apply flex items-center justify-center gap-2 p-3 rounded-xl border border-white/10 bg-[#111118] text-sm;
   }
+
+  /* ── ReservEase Toast Overrides ── */
+  .Toastify__toast {
+    background: rgba(17, 17, 24, 0.95) !important;
+    backdrop-filter: blur(12px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.094) !important;
+    border-radius: 0.875rem !important;
+    color: #f0f0f8 !important;
+    font-family: 'DM Sans', sans-serif !important;
+    font-size: 0.875rem !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4) !important;
+    padding: 0.875rem 1rem !important;
+  }
+
+  .Toastify__toast--success {
+    border-color: rgba(52, 211, 153, 0.25) !important;
+  }
+
+  .Toastify__toast--error {
+    border-color: rgba(248, 113, 113, 0.25) !important;
+  }
+
+  .Toastify__toast--warning {
+    border-color: rgba(251, 191, 36, 0.25) !important;
+  }
+
+  .Toastify__toast--info {
+    border-color: rgba(56, 189, 248, 0.25) !important;
+  }
+
+  /* Icons */
+  .Toastify__toast--success .Toastify__toast-icon svg { fill: #34d399 !important; }
+  .Toastify__toast--error   .Toastify__toast-icon svg { fill: #f87171 !important; }
+  .Toastify__toast--warning .Toastify__toast-icon svg { fill: #fbbf24 !important; }
+  .Toastify__toast--info    .Toastify__toast-icon svg { fill: #38bdf8 !important; }
+
+  /* Progress bar */
+  .Toastify__progress-bar--success { background: #34d399 !important; }
+  .Toastify__progress-bar--error   { background: #f87171 !important; }
+  .Toastify__progress-bar--warning { background: #fbbf24 !important; }
+  .Toastify__progress-bar--info    { background: #38bdf8 !important; }
+  .Toastify__progress-bar { background: #6c63ff !important; }
+
+  /* Close button */
+  .Toastify__close-button {
+    color: #8888aa !important;
+    opacity: 1 !important;
+    align-self: center !important;
+  }
+  .Toastify__close-button:hover { color: #f0f0f8 !important; }
 }
