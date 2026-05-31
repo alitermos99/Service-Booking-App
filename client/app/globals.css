@@ -5,6 +5,8 @@
   --foreground: #f0f0f8;
 
   --accent: #6c63ff;
+  --accent-soft: #a78bfa;
+  --accent-sky: #38bdf8;
   --muted: #8888aa;
   --card: rgba(255, 255, 255, 0.094);
 
@@ -12,7 +14,6 @@
   --fairpass: #fbbf24;
   --goodpass: #34d399;
   --strongpass: #00b170;
-
 }
 
 body {
@@ -23,6 +24,9 @@ body {
 
 @theme {
   --color-muted: var(--muted);
+
+  --animate-glow: glow 2s ease-in-out infinite;
+  --animate-float: float 6s ease-in-out infinite;
 }
 
 @theme {
@@ -47,6 +51,26 @@ body {
   }
 }
 
+@keyframes glow {
+  0%, 100% {
+    opacity: 0.4;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
 /* small utilities */
 @layer utilities {
   .glass {
@@ -56,13 +80,23 @@ body {
   }
 
   .btn-primary {
-    background: linear-gradient(135deg, #6c63ff, #a78bfa);
+    background: linear-gradient(135deg, var(--accent), var(--accent-soft));
     transition: all 0.3s ease;
   }
 
   .btn-primary:hover {
     box-shadow: 0 8px 30px rgba(108, 99, 255, 0.4);
     transform: translateY(-1px);
+  }
+
+  .btn-secondary {
+    border: 1px solid #ffffff18;
+    background: #111118d9;
+    transition: all 0.3s ease;
+  }
+
+  .btn-secondary:hover {
+    border-color: rgba(255, 255, 255, 0.157);
   }
 
   .input-field {
@@ -133,17 +167,17 @@ body {
   }
 
   /* Icons */
-  .Toastify__toast--success .Toastify__toast-icon svg { fill: #34d399 !important; }
+  .Toastify__toast--success .Toastify__toast-icon svg { fill: var(----goodpass) !important; }
   .Toastify__toast--error   .Toastify__toast-icon svg { fill: #f87171 !important; }
   .Toastify__toast--warning .Toastify__toast-icon svg { fill: #fbbf24 !important; }
-  .Toastify__toast--info    .Toastify__toast-icon svg { fill: #38bdf8 !important; }
+  .Toastify__toast--info    .Toastify__toast-icon svg { fill: var(--accent-sky) !important; }
 
   /* Progress bar */
-  .Toastify__progress-bar--success { background: #34d399 !important; }
+  .Toastify__progress-bar--success { background: var(----goodpass) !important; }
   .Toastify__progress-bar--error   { background: #f87171 !important; }
   .Toastify__progress-bar--warning { background: #fbbf24 !important; }
-  .Toastify__progress-bar--info    { background: #38bdf8 !important; }
-  .Toastify__progress-bar { background: #6c63ff !important; }
+  .Toastify__progress-bar--info    { background: var(--accent-sky) !important; }
+  .Toastify__progress-bar { background: var(--accent) !important; }
 
   /* Close button */
   .Toastify__close-button {
@@ -152,4 +186,11 @@ body {
     align-self: center !important;
   }
   .Toastify__close-button:hover { color: #f0f0f8 !important; }
+
+  .gradient-text {
+    background:linear-gradient(135deg,var(--accent),var(--accent-soft),var(--accent-sky));
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-clip:text
+  }
 }

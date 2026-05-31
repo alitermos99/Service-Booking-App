@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import React from 'react'
 
-const Logo = ({ className = '' }) => {
+const Logo = ({ className = '', spanClass = '' }) => {
     return (
         <Link href="/" className={className + ' inline-flex items-center gap-2'}>
             <div className="w-8 h-8 rounded-lg btn-primary flex items-center justify-center">
@@ -12,7 +12,7 @@ const Logo = ({ className = '' }) => {
                 </svg>
             </div>
 
-            <span className="font-bold text-xl">
+            <span className={spanClass}>
                 Reserv<span style={{ color: "#6c63ff" }}>Ease</span>
             </span>
         </Link>
