@@ -21,10 +21,10 @@ export default function Home() {
 
 	return (
 		<>
-			<LandingHeader />
+			<LandingHeader user={user} />
 
 			<Main className="overflow-hidden pt-16">
-				<LandingHero />
+				<LandingHero user={user} />
 			</Main>
 
 			<Section id="features">
@@ -46,7 +46,7 @@ export default function Home() {
 			</Section>
 
 			<Section maxWidth="max-w-3xl">
-				<CTASection />
+				<CTASection user={user} />
 			</Section>
 
 			<LandingFooter />

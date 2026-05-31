@@ -3,7 +3,7 @@ import Header from '../ui/Header'
 import Logo from '../ui/Logo'
 import Link from 'next/link'
 
-const LandingHeader = () => {
+const LandingHeader = ({ user }) => {
     return (
         <Header>
             <Logo spanClass="font-semibold text-tx text-lg tracking-tight" />
@@ -18,15 +18,20 @@ const LandingHeader = () => {
                 </Link>
             </div>
 
-            <div className="flex items-center gap-3">
-                <Link href="/login" className="text-sm text-muted hover:text-tx transition-colors px-4 py-2">
-                    Sign in
-                </Link>
+            {
+                !user &&
+                (
+                    <div className="flex items-center gap-3">
+                        <Link href="/login" className="text-sm text-muted hover:text-tx transition-colors px-4 py-2">
+                            Sign in
+                        </Link>
 
-                <Link href="/register" className="btn-primary text-white text-sm font-medium px-4 py-2 rounded-xl transition-btn">
-                    Get started
-                </Link>
-            </div>
+                        <Link href="/register" className="btn-primary text-white text-sm font-medium px-4 py-2 rounded-xl transition-btn">
+                            Get started
+                        </Link>
+                    </div>
+                )
+            }
         </Header>
     )
 }

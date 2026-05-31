@@ -4,7 +4,7 @@ import Link from 'next/link'
 import LandingStatsCards from './LandingStatsCards'
 import LandingFloatingCard from './LandingFloatingCard'
 
-const LandingHero = () => {
+const LandingHero = ({ user }) => {
     return (
         <>
             <Orb className="w-96 h-96 top-1/4 left-1/4 bg-accent opacity-[0.18]" />
@@ -27,12 +27,16 @@ const LandingHero = () => {
                 </p>
 
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                    <Link
-                        href="/register"
-                        className="btn-primary text-white font-semibold px-8 py-4 rounded-2xl text-base w-full sm:w-auto transition-all shadow-[0_0_40px_rgba(108,99,255,0.3)]"
-                    >
-                        Start for free →
-                    </Link>
+                    { !user && 
+                        (
+                            <Link
+                                href="/register"
+                                className="btn-primary text-white font-semibold px-8 py-4 rounded-2xl text-base w-full sm:w-auto transition-all shadow-[0_0_40px_rgba(108,99,255,0.3)]"
+                            >
+                                Start for free →
+                            </Link>
+                        )
+                    }
 
                     <Link href="#how" className="btn-secondary text-tx font-medium px-8 py-4 rounded-2xl text-base transition-colors w-full sm:w-auto">
                         See how it works

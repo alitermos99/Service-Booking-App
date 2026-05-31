@@ -6,12 +6,13 @@ import AuthHeader from '@/app/components/auth/AuthHeader';
 import Card from '@/app/components/ui/Card';
 import RegisterForm from '@/app/components/forms/RegisterForm';
 import AuthFooter from '@/app/components/auth/AuthFooter';
+import Orb from '@/app/components/ui/Orb';
 
 const RegisterPage = () => {
     return (
         <Main className={'animate-fade-up'}>
-            <div className="absolute w-96 h-96 rounded-full blur-3xl opacity-20 bg-[#a78bfa] top-0 right-0 translate-x-1/3 -translate-y-1/3 pointer-events-none"/>
-            <div className="absolute w-64 h-64 rounded-full blur-3xl opacity-10 bg-[#38bdf8] bottom-0 left-0 -translate-x-1/3 translate-y-1/3 pointer-events-none"/>
+            <Orb size="w-96 h-96" opacity={0.20} className="top-0 right-0 translate-x-1/3 -translate-y-1/3 text-accent-soft" />
+            <Orb size="w-64 h-64" opacity={0.10} className="bottom-0 left-0 -translate-x-1/3 translate-y-1/3 text-accent-sky" />
 
             <div className="relative z-10 w-full max-w-lg">
                 <AuthHeader 
