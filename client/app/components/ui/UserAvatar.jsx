@@ -1,4 +1,17 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+
+const getRandomColor = () => {
+    const randomHex = Math.floor(Math.random() * 0xffffff).toString(16);
+    return `#${randomHex.padStart(6, "0")}`;
+};
+
+const getRandomLinearGradient = () => {
+    const angle = Math.floor(Math.random() * 360); // Random angle between 0 and 359 degrees
+    const color1 = getRandomColor();
+    const color2 = getRandomColor();
+    
+    return `linear-gradient(${angle}deg, ${color1}, ${color2})`;
+};
 
 const UserAvatar = ({ user, children, showDropdown = false }) => {
     const [active, setActive] = useState(false);
@@ -11,7 +24,9 @@ const UserAvatar = ({ user, children, showDropdown = false }) => {
     return (
         <div className="relative cursor-pointer">
             <div className="flex items-center gap-2" onClick={handleDropdown}>
-                <div className="w-8 h-8 rounded-full btn-primary flex items-center justify-center text-white text-xs font-bold">
+                <div className="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold"
+                    style={{ background: getRandomLinearGradient() }}
+                >
                     { initials }
                 </div>
 
