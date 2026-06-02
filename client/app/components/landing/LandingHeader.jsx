@@ -1,15 +1,27 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Header from '../ui/Header'
 import Logo from '../ui/Logo'
 import Link from 'next/link'
-import UserAvatar from '../ui/UserAvatar'
+import UserAvatar from '../ui/UserAvatar';
+import { useLogout } from '@/app/features/auth/hooks/useLogout';
+import LoadingOverlay from '../ui/LoadingOverlay';
 
 const LandingHeader = ({ user }) => {
+    const { mutate: logout, isPending } = useLogout();
+
+    const handleLogout = () => {
+        logout();
+    }
+
+    if(isPending) {
+        <LoadingOverlay />
+    }
+
     return (
         <Header>
             <Logo spanClass="font-semibold text-tx text-lg tracking-tight" />
 
-            <div className="hidden md:flex items-center gap-8">
+            <div className="md:flex items-center gap-8">
                 <Link href="#features" className="text-muted hover:text-tx text-sm transition-colors">
                     Features
                 </Link>
@@ -34,7 +46,16 @@ const LandingHeader = ({ user }) => {
                 )
             }
 
-            { user && <UserAvatar user={user} /> }
+            { 
+                user && 
+                (
+                    <UserAvatar user={user} showDropdown>
+                        <span onClick={handleLogout}>
+                            Log out
+                        </span>
+                    </UserAvatar>
+                )
+            }
         </Header>
     )
 }

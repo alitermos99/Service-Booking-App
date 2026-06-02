@@ -18,6 +18,14 @@ export const register = async (credentials) => {
     return response.data;
 }
 
+export const logout = async () => {
+    const response = await api.post(
+        '/api/v1/auth/logout'
+    );
+
+    return response.data;
+}
+
 export const getProfile = async () => {
     const response = await api.get(
         '/api/v1/auth/profile'

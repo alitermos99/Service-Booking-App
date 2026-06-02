@@ -13,7 +13,7 @@ export const useRegister = () => {
 		mutationFn: register,
 
 		onSuccess: (data) => {
-			queryClient.setQueryData(["user"], data.user);
+			queryClient.setQueryData(["user"], data);
 			router.push('/');
 		},
 
