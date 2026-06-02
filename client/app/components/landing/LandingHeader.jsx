@@ -2,6 +2,7 @@ import React from 'react'
 import Header from '../ui/Header'
 import Logo from '../ui/Logo'
 import Link from 'next/link'
+import UserAvatar from '../ui/UserAvatar'
 
 const LandingHeader = ({ user }) => {
     return (
@@ -32,6 +33,8 @@ const LandingHeader = ({ user }) => {
                     </div>
                 )
             }
+
+            { user && <UserAvatar user={user} /> }
         </Header>
     )
 }

@@ -13,7 +13,8 @@ import { useUser } from "./features/auth/hooks/useUser";
 import LoadingOverlay from "./components/ui/LoadingOverlay";
 
 export default function Home() {
-	const { data: user, isPending } = useUser();
+	const { data: userObject, isPending } = useUser();
+	const user = userObject?.user;
 
 	if(isPending) {
 		return <LoadingOverlay />
