@@ -3,8 +3,17 @@ import Orb from '../ui/Orb'
 import Link from 'next/link'
 import LandingStatsCards from './LandingStatsCards'
 import LandingFloatingCard from './LandingFloatingCard'
+import LoadingOverlay from '../ui/LoadingOverlay'
+import { useUser } from '@/app/features/auth/hooks/useUser'
 
-const LandingHero = ({ user }) => {
+const LandingHero = () => {
+    const { data: userObject, isPending } = useUser();
+	const user = userObject?.user;
+
+	if (isPending) {
+        return <LoadingOverlay />
+    }
+
     return (
         <>
             <Orb className="w-96 h-96 top-1/4 left-1/4 bg-accent opacity-[0.18]" />

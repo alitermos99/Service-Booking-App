@@ -13,10 +13,20 @@ const getRandomLinearGradient = () => {
     return `linear-gradient(${angle}deg, ${color1}, ${color2})`;
 };
 
-const UserAvatar = ({ user, children, showDropdown = false }) => {
+const gradientCache = new Map();
+
+const getUserGradient = (userId) => {
+    if (!gradientCache.has(userId)) {
+        gradientCache.set(userId, getRandomLinearGradient());
+    }
+    
+    return gradientCache.get(userId);
+};
+
+const UserAvatar = ({ name, children, showDropdown = false }) => {
     const [active, setActive] = useState(false);
-    const [gradient] = useState(getRandomLinearGradient);
-    const initials = user ? user.name?.split(' ').map(n => n[0]).join('').toUpperCase() : 'AN';
+    const [gradient] = useState(() => getUserGradient(name ?? 'guest'));
+    const initials = name ? name.split(' ').map(n => n[0]).join('').toUpperCase() : 'AN';
 
     const handleDropdown = () => {
         setActive((e) => !e);
@@ -31,13 +41,13 @@ const UserAvatar = ({ user, children, showDropdown = false }) => {
                     { initials }
                 </div>
 
-                <div className="hidden sm:block text-sm text-tx">{ user?.name }</div>
+                <div className="hidden sm:block text-sm text-tx">{ name }</div>
             </div>
 
             {
                 showDropdown &&
                 (
-                    <div className={`absolute glass top-0 left-0 mt-10 w-32 p-2 rounded-lg transition-opacity text-sm text-tx 
+                    <div className={`absolute glass top-0 left-0 mt-10 w-32 p-2 rounded-lg transition-opacity text-sm text-tx
                         ${active ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
                     >
                         { children }

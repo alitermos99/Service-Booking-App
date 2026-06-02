@@ -1,10 +1,20 @@
 import React from 'react'
 import Orb from '../ui/Orb'
 import Link from 'next/link'
+import LoadingOverlay from '../ui/LoadingOverlay';
+import { useUser } from '@/app/features/auth/hooks/useUser';
 
-const LandingCTASection = ({ user }) => {
+const LandingCTASection = () => {
+    const { data: userObject, isPending } = useUser();
+	const user = userObject?.user;
+
+	if (isPending) {
+        return <LoadingOverlay />
+    }
+
     const title = user ? 'Welcome back! Ready to manage your bookings?' : 'Ready to streamline your bookings?';
     const text = user ? 'View your dashboard or create a new reservation.' : 'Join hundreds of businesses already using ReservEase.';
+
     return (
         <div className="max-w-3xl mx-auto text-center glass rounded-3xl p-12 relative overflow-hidden">
             <Orb
