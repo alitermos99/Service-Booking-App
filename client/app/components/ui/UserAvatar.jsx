@@ -1,7 +1,6 @@
 import React from 'react'
 
 const UserAvatar = ({ user }) => {
-    console.log('@@user ', user)
     const initials = user ? user.name?.split(' ').map(n => n[0]).join('').toUpperCase() : 'AN';
 
     return (
