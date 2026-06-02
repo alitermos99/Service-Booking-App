@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Header from '../ui/Header'
 import Logo from '../ui/Logo'
 import Link from 'next/link'
@@ -50,7 +50,13 @@ const LandingHeader = ({ user }) => {
                 user && 
                 (
                     <UserAvatar user={user} showDropdown>
-                        <span onClick={handleLogout}>
+                        <span className="inline-block hover:underline">
+                            <Link href="/profile">Preference</Link>
+                        </span>
+
+                        <div className="border my-0.5"></div>
+
+                        <span className="inline-block hover:underline" onClick={handleLogout}>
                             Log out
                         </span>
                     </UserAvatar>
