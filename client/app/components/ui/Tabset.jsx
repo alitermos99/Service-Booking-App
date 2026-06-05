@@ -12,7 +12,8 @@ const Tabset = ({ children, defaultTab = null }) => {
                         return (
                             <button key={index} onClick={() => setActiveTab(tab.props.name)}
                                 className={`py-2.5 px-4 text-sm text-tx border-b-2 transition-all whitespace-nowrap rounded-none cursor-pointer
-                                    ${activeTab === tab.props.name ? 'text-accent-soft border-b-accent' : 'border-transparent text-muted'}
+                                    ${activeTab === tab.props.name ? 'text-accent-soft border-b-accent' 
+                                        : 'border-transparent text-muted hover:text-[#f0f0f8] transition-colors'}
                                 `}
                             >
                                 { tab }

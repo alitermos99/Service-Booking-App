@@ -187,13 +187,13 @@ body {
   }
 
   /* Icons */
-  .Toastify__toast--success .Toastify__toast-icon svg { fill: var(----goodpass) !important; }
+  .Toastify__toast--success .Toastify__toast-icon svg { fill: var(--goodpass) !important; }
   .Toastify__toast--error   .Toastify__toast-icon svg { fill: #f87171 !important; }
   .Toastify__toast--warning .Toastify__toast-icon svg { fill: #fbbf24 !important; }
   .Toastify__toast--info    .Toastify__toast-icon svg { fill: var(--accent-sky) !important; }
 
   /* Progress bar */
-  .Toastify__progress-bar--success { background: var(----goodpass) !important; }
+  .Toastify__progress-bar--success { background: var(--goodpass) !important; }
   .Toastify__progress-bar--error   { background: #f87171 !important; }
   .Toastify__progress-bar--warning { background: #fbbf24 !important; }
   .Toastify__progress-bar--info    { background: var(--accent-sky) !important; }

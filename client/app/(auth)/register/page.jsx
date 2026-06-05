@@ -8,7 +8,7 @@ import RegisterForm from '@/app/components/forms/RegisterForm';
 import AuthFooter from '@/app/components/auth/AuthFooter';
 import Orb from '@/app/components/ui/Orb';
 import { useRouter } from 'next/navigation';
-import { useUser } from '@/app/features/auth/hooks/useUser';
+import { useUser } from '@/app/features/user/hooks/useUser';
 
 const RegisterPage = () => {
     const router = useRouter();
