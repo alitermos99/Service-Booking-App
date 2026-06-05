@@ -2,7 +2,7 @@ import React from 'react'
 import Orb from '../ui/Orb'
 import Link from 'next/link'
 import LoadingOverlay from '../ui/LoadingOverlay';
-import { useUser } from '@/app/features/user/hooks/useUser';
+import { useUser } from '@/app/features/auth/hooks/useUser';
 
 const LandingCTASection = () => {
     const { data: userObject, isPending } = useUser();

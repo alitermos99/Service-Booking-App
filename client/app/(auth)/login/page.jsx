@@ -5,7 +5,7 @@ import Main from "@/app/components/layouts/Main";
 import LoginForm from "@/app/components/forms/LoginForm";
 import AuthHeader from "@/app/components/auth/AuthHeader";
 import AuthFooter from "@/app/components/auth/AuthFooter";
-import { useUser } from "@/app/features/user/hooks/useUser";
+import { useUser } from "@/app/features/auth/hooks/useUser";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import Orb from "@/app/components/ui/Orb";

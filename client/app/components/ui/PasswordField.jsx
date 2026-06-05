@@ -33,20 +33,22 @@ const PasswordField = ({ label = "Password", showStrength = false, ...rest }) =>
     }
 
     return (
-        <div className="relative">
-            <FormField
-                label={ label }
-                type={show ? "text" : "password"}
-                onInput={handleInput}
-                { ...rest }
-            />
+        <>
+            <div className={`relative ${showStrength ? 'mb-0' : ''}`}>
+                <FormField
+                    label={ label }
+                    type={show ? "text" : "password"}
+                    onInput={handleInput}
+                    { ...rest }
+                />
 
-            <Button
-                type="button"
-                onClick={() => setShow((s) => !s)}
-                className="absolute right-3 top-9 text-[#8888aa]"
-                label={show ? "⌣" : "👁"}
-            />
+                <Button
+                    type="button"
+                    onClick={() => setShow((s) => !s)}
+                    className="absolute right-3 top-[50%] text-[#8888aa]"
+                    label={show ? "⌣" : "👁"}
+                />
+            </div>
 
             {
                 showStrength && 
@@ -77,7 +79,8 @@ const PasswordField = ({ label = "Password", showStrength = false, ...rest }) =>
                     </div>
                 )
             }
-        </div>
+        </>
+        
     )
 }
 

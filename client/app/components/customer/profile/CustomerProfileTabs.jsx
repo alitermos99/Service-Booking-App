@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import Tab from '../../ui/Tab'
 import Tabset from '../../ui/Tabset';
 import CustomerProfilePersonalTab from './CustomerProfilePersonalTab';
+import CustomerProfileSecurityTab from './CustomerProfileSecurityTab';
 
 const CustomerProfileTabs = () => {
 
@@ -15,7 +16,9 @@ const CustomerProfileTabs = () => {
                 </Tab>
 
                 <Tab label="Security" name="security"
-                />
+                >
+                    <CustomerProfileSecurityTab />
+                </Tab>
 
                 <Tab label="Notifications" name="notifications"
                 />

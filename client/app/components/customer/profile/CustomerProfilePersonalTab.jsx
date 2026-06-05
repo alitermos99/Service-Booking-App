@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import FormField from '../../ui/FormField'
 import Button from '../../ui/Button'
-import { useUser } from '@/app/features/user/hooks/useUser';
+import { useUser } from '@/app/features/auth/hooks/useUser';
 import LoadingOverlay from '../../ui/LoadingOverlay';
 import { useUpdate } from '@/app/features/user/hooks/useUpdate';
 import validatePhone from '@/app/validators/phoneValidator';

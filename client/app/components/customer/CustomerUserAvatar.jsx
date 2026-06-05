@@ -3,7 +3,7 @@ import UserAvatar from '../ui/UserAvatar'
 import Link from 'next/link'
 import { useLogout } from '@/app/features/auth/hooks/useLogout';
 import LoadingOverlay from '../ui/LoadingOverlay';
-import { useUser } from '@/app/features/user/hooks/useUser';
+import { useUser } from '@/app/features/auth/hooks/useUser';
 
 const CustomerUserAvatar = () => {
     const { data: userObject, isPending } = useUser();

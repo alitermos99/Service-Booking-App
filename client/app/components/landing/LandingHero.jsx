@@ -4,7 +4,7 @@ import Link from 'next/link'
 import LandingStatsCards from './LandingStatsCards'
 import LandingFloatingCard from './LandingFloatingCard'
 import LoadingOverlay from '../ui/LoadingOverlay'
-import { useUser } from '@/app/features/user/hooks/useUser'
+import { useUser } from '@/app/features/auth/hooks/useUser'
 
 const LandingHero = () => {
     const { data: userObject, isPending } = useUser();

@@ -42,3 +42,12 @@ export const updateProfile = async (body) => {
 
     return response.data;
 }
+
+export const changePassword = async (body) => {
+    const response = await api.patch(
+        '/api/v1/auth/change-password',
+        body
+    )
+
+    return response.data;
+}

@@ -4,7 +4,7 @@ import Logo from '../ui/Logo'
 import Link from 'next/link'
 import LoadingOverlay from '../ui/LoadingOverlay';
 import CustomerUserAvatar from '../customer/CustomerUserAvatar';
-import { useUser } from '@/app/features/user/hooks/useUser';
+import { useUser } from '@/app/features/auth/hooks/useUser';
 
 const LandingHeader = () => {
     const { data: userObject, isPending } = useUser();

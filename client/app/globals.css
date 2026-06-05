@@ -120,7 +120,19 @@ body {
   }
 
   .input-field {
-    @apply w-full rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-sm outline-none;
+    @apply w-full rounded-xl border border-white/10 bg-[rgba(26,26,36,0.8)] px-4 py-3 text-sm outline-none transition-all;
+  }
+
+  .input-field:focus{
+    border-color:var(--accent);
+    box-shadow:0 0 0 3px rgba(108,99,255,0.12)
+  }
+  .input-field::placeholder{
+    color:var(--muted);
+  }
+  .input-field:disabled{
+    opacity:0.5;
+    cursor:not-allowed
   }
 
   .hero-grid {
