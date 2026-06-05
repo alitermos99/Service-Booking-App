@@ -1,26 +1,22 @@
 import React, { useState } from 'react';
 
-const getRandomColor = () => {
-    const randomHex = Math.floor(Math.random() * 0xffffff).toString(16);
-    return `#${randomHex.padStart(6, "0")}`;
-};
+const hashString = (str) => {
+    let hash = 0;
 
-const getRandomLinearGradient = () => {
-    const angle = Math.floor(Math.random() * 360); // Random angle between 0 and 359 degrees
-    const color1 = getRandomColor();
-    const color2 = getRandomColor();
-    
-    return `linear-gradient(${angle}deg, ${color1}, ${color2})`;
-};
-
-const gradientCache = new Map();
-
-const getUserGradient = (userId) => {
-    if (!gradientCache.has(userId)) {
-        gradientCache.set(userId, getRandomLinearGradient());
+    for (let i = 0; i < str.length; i++) {
+        hash = str.charCodeAt(i) + ((hash << 5) - hash);
     }
-    
-    return gradientCache.get(userId);
+
+    return hash;
+};
+
+const getUserGradient = (name) => {
+    const hash = Math.abs(hashString(name));
+
+    const color1 = `hsl(${hash % 360}, 70%, 50%)`;
+    const color2 = `hsl(${(hash + 120) % 360}, 70%, 50%)`;
+
+    return `linear-gradient(135deg, ${color1}, ${color2})`;
 };
 
 const UserAvatar = ({ name, children, hideName = false, showDropdown = false, avatarSize = 'w-8 h-8', initialsSize = 'text-xs' }) => {
