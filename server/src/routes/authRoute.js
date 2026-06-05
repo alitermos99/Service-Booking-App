@@ -8,7 +8,8 @@ import {
 	changePassword, 
 	forgotPassword, 
 	resetPassword, 
-	getProfile 
+	getProfile,
+	deactivateUser
 } from "../controllers/authController.js";
 
 const router = express.Router();
@@ -21,5 +22,6 @@ router.patch("/change-password", authMiddleware, changePassword);
 router.post("/forgot-password", forgotPassword);
 router.post("/reset-password", resetPassword);
 router.get("/profile", authMiddleware, getProfile);
+router.patch("/deactivate-user", authMiddleware, deactivateUser);
 
 export default router;

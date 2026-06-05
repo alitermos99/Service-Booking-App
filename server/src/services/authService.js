@@ -46,6 +46,7 @@ export const loginUser = async ({ email, password }) => {
 
 	if (
 		!user ||
+		!user,isActive ||
 		!(await bcrypt.compare(password, user.password)) ||
 		user.role === 'admin'
 	) {
@@ -131,6 +132,12 @@ export const resetUserPassword = async ({ token, newPassword }) => {
 
 	const user = await getUserOrThrow(decoded.id);
 	user.password = newPassword;
+	await user.save();
+}
+
+export const deactivateUserAccount = async (userId) => {
+	const user = await getUserOrThrow(userId);
+	user.isActive = false;
 	await user.save();
 }
 

@@ -6,7 +6,8 @@ import {
 	changeUserPassword, 
 	forgotUserPassword, 
 	resetUserPassword, 
-	getUserProfile 
+	getUserProfile, 
+	deactivateUserAccount
 } from "../services/authService.js";
 import { sanitizeUser } from '../utils/userUtils.js'
 import { COOKIE_OPTIONS, generateAuthToken } from "../utils/authUtils.js";
@@ -86,6 +87,19 @@ export const resetPassword = asyncHandler(async (req, res) => {
 
 	await resetUserPassword({ token, newPassword });
 	return res.status(200).json({ message: "Password reset successfully" });
+});
+
+export const deactivateUser = asyncHandler(async (req, res) => {
+	await deactivateUserAccount(req.user.id);
+
+	res.clearCookie("token", {
+		httpOnly: true,
+		secure: process.env.NODE_ENV === "production",
+		sameSite: "strict",
+		maxAge: 0
+	});
+	
+	return res.status(200).json({ message: "User deactivated successfully" });
 });
 
 export const getProfile = asyncHandler(async (req, res) => {
