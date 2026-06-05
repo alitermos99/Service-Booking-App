@@ -81,6 +81,24 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.094);
   }
 
+  .glass2{
+    background:rgba(26,26,36,0.6);
+    border:1px solid rgba(255,255,255,0.094);
+  }
+
+  .photo-overlay{
+    position:absolute;
+    inset:0;
+    background:rgba(0,0,0,0.55);
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    opacity:0;
+    transition:opacity 0.2s;
+    cursor:pointer
+  }
+
   .btn-primary {
     background: linear-gradient(135deg, var(--accent), var(--accent-soft));
     transition: all 0.3s ease;

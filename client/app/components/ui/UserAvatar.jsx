@@ -23,7 +23,7 @@ const getUserGradient = (userId) => {
     return gradientCache.get(userId);
 };
 
-const UserAvatar = ({ name, children, showDropdown = false }) => {
+const UserAvatar = ({ name, children, hideName = false, showDropdown = false, avatarSize = 'w-8 h-8', initialsSize = 'text-xs' }) => {
     const [active, setActive] = useState(false);
     const [gradient] = useState(() => getUserGradient(name ?? 'guest'));
     const initials = name ? name.split(' ').map(n => n[0]).join('').toUpperCase() : 'AN';
@@ -35,13 +35,13 @@ const UserAvatar = ({ name, children, showDropdown = false }) => {
     return (
         <div className="relative cursor-pointer">
             <div className="flex items-center gap-2" onClick={handleDropdown}>
-                <div className="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold"
+                <div className={`${avatarSize} rounded-full flex items-center justify-center text-white ${initialsSize} font-bold`}
                     style={{ background: gradient }}
                 >
                     { initials }
                 </div>
 
-                <div className="hidden sm:block text-sm text-tx">{ name }</div>
+                { !hideName && <div className="hidden sm:block text-sm text-tx">{ name }</div> }
             </div>
 
             {
