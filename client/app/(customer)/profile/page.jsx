@@ -16,7 +16,7 @@ const CustomerProfilePage = () => {
 
                 <div className="md:flex items-center gap-8">
                     <Link href="/services" className="text-muted hover:text-tx text-sm transition-colors">
-                        Browse
+                        Services
                     </Link>
 
                     <Link href="/my-bookings" className="text-muted hover:text-tx text-sm transition-colors">
