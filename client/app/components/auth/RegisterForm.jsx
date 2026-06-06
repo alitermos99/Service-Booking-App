@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import FormField from '../ui/FormField';
-import PasswordField from '../ui/PasswordField';
+import PasswordField from '../forms/PasswordField';
 import Button from '../ui/Button';
 import AuthRoleCard from '../auth/AuthRoleCard';
 import validatePassword from '@/app/validators/passwordValidator';

@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import FormField from '../ui/FormField'
-import PasswordField from '../ui/PasswordField'
+import PasswordField from '../forms/PasswordField'
 import Button from '../ui/Button'
 import LoadingOverlay from '../ui/LoadingOverlay';
 import { useLogin } from '@/app/features/auth/hooks/useLogin';
+import FormField from '../forms/FormField';
 
 const LoginForm = () => {
     const [form, setForm] = useState({

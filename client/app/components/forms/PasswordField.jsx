@@ -1,7 +1,7 @@
 import React from 'react'
 import FormField from './FormField'
 import { useState } from 'react';
-import Button from './Button';
+import Button from '../ui/Button';
 
 const LABELS = ['Weak','Fair','Good','Strong'];
 const COLORS = ['bg-weak','bg-fair','bg-good','bg-strong'];

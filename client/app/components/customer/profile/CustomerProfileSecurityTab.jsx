@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import PasswordField from '../../ui/PasswordField'
+import PasswordField from '../../forms/PasswordField'
 import LoadingOverlay from '../../ui/LoadingOverlay';
 import Button from '../../ui/Button';
 import { useChangePassword } from '@/app/features/user/hooks/useChangePassword';

@@ -2,7 +2,7 @@
 
 import Card from "@/app/components/ui/Card";
 import Main from "@/app/components/layouts/Main";
-import LoginForm from "@/app/components/forms/LoginForm";
+import LoginForm from "@/app/components/auth/LoginForm";
 import AuthHeader from "@/app/components/auth/AuthHeader";
 import AuthFooter from "@/app/components/auth/AuthFooter";
 import { useUser } from "@/app/features/auth/hooks/useUser";

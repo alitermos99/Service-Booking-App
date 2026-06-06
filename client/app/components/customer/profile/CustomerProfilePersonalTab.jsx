@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import FormField from '../../ui/FormField'
 import Button from '../../ui/Button'
 import { useUser } from '@/app/features/auth/hooks/useUser';
 import LoadingOverlay from '../../ui/LoadingOverlay';
 import { useUpdateProfile } from '@/app/features/user/hooks/useUpdateProfile';
 import validatePhone from '@/app/validators/phoneValidator';
+import FormField from '../../forms/FormField';
 
 const CustomerProfilePersonalTab = () => {
     const { data: userObject, isPending } = useUser();
