@@ -9,7 +9,6 @@ import LandingCTASection from "./components/landing/LandingCTASection";
 import LandingHero from "./components/landing/LandingHero";
 import Section from './components/layouts/Section';
 import LandingFooter from "./components/landing/LandingFooter";
-import { useEffect } from "react";
 
 export default function Home() {
 	return (

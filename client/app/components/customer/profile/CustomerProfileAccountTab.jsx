@@ -49,10 +49,10 @@ const CustomerProfileAccountTab = () => {
                                 </svg>
                             </div>
 
-                            <div class="text-center">
-                                <h3 class="font-semibold text-tx">Deactivate account?</h3>
+                            <div className="text-center">
+                                <h3 className="font-semibold text-tx">Deactivate account?</h3>
 
-                                <p class="text-sm text-muted mt-1.5">
+                                <p className="text-sm text-muted mt-1.5">
                                     Your account will be hidden and you won&apos;t be able to log in. You can reactivate anytime by signing back in.
                                 </p>
                             </div>
