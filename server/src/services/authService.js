@@ -46,7 +46,7 @@ export const loginUser = async ({ email, password }) => {
 
 	if (
 		!user ||
-		!user,isActive ||
+		!user.isActive ||
 		!(await bcrypt.compare(password, user.password)) ||
 		user.role === 'admin'
 	) {
