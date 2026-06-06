@@ -4,7 +4,7 @@ import { updateProfile } from "@/app/services/authService";
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { toast } from "react-toastify";
 
-export const useUpdate = () => {
+export const useUpdateProfile = () => {
 	const queryClient = useQueryClient();
 
 	return useMutation({

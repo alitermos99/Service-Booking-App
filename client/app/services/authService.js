@@ -51,3 +51,11 @@ export const changePassword = async (body) => {
 
     return response.data;
 }
+
+export const deactivateUser = async () => {
+    const response = await api.patch(
+        '/api/v1/auth/deactivate-user',
+    )
+
+    return response.data;
+}

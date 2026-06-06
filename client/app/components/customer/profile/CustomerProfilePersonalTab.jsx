@@ -3,13 +3,13 @@ import FormField from '../../ui/FormField'
 import Button from '../../ui/Button'
 import { useUser } from '@/app/features/auth/hooks/useUser';
 import LoadingOverlay from '../../ui/LoadingOverlay';
-import { useUpdate } from '@/app/features/user/hooks/useUpdate';
+import { useUpdateProfile } from '@/app/features/user/hooks/useUpdateProfile';
 import validatePhone from '@/app/validators/phoneValidator';
 
 const CustomerProfilePersonalTab = () => {
     const { data: userObject, isPending } = useUser();
     const user = userObject?.user;
-    const { mutate: updateUser, isPending: isUserUpdating } = useUpdate();
+    const { mutate: updateUser, isPending: isUserUpdating } = useUpdateProfile();
 
     const [error, setError] = useState(null);
     const [form, setForm] = useState({
