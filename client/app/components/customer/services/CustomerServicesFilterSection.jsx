@@ -3,7 +3,7 @@ import Button from '../../ui/Button'
 
 const CustomerServicesFilterSection = () => {
     return (
-        <div className="px-4 lg:px-8 pb-16 max-w-7xl mx-auto">
+        <>
             <div className="flex gap-2 overflow-x-auto pb-2 mb-6 hide-scrollbar">
                 <Button className="cat-chip active" label="All" />
                 <Button className="cat-chip" label="Massage" />
@@ -58,7 +58,7 @@ const CustomerServicesFilterSection = () => {
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     )
 }
 

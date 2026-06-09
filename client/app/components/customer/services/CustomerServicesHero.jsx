@@ -21,7 +21,7 @@ const CustomerServicesHero = ({ onChange }) => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                 </svg>
 
-                <Input type="text" placeholder="Search services..." class={`w-full pl-12 pr-4 py-3.5 rounded-2xl 
+                <Input type="text" placeholder="Search services..." className={`w-full pl-12 pr-4 py-3.5 rounded-2xl 
                     text-sm text-tx outline-none bg-[:rgba(26,26,36,0.9)] border border-solid border-[rgba(255,255,255,0.094)]`}
                     onChange={onChange}
                 />
