@@ -5,6 +5,7 @@ import LoadingOverlay from '../../ui/LoadingOverlay';
 import { useUpdateProfile } from '@/app/features/user/hooks/useUpdateProfile';
 import validatePhone from '@/app/validators/phoneValidator';
 import FormField from '../../forms/FormField';
+import TextArea from '../../forms/TextArea';
 
 const CustomerProfilePersonalTab = () => {
     const { data: userObject, isPending } = useUser();
@@ -15,7 +16,8 @@ const CustomerProfilePersonalTab = () => {
     const [form, setForm] = useState({
         name: '',
         email: '',
-        phone: ''
+        phone: '',
+        bio: ''
     });
 
     useEffect(() => {
@@ -24,7 +26,8 @@ const CustomerProfilePersonalTab = () => {
                 setForm({
                     name: user.name,
                     email: user.email,
-                    phone: user.phone
+                    phone: user.phone,
+                    bio: user.bio
                 });
             }
         }
@@ -54,7 +57,11 @@ const CustomerProfilePersonalTab = () => {
             return;
         }
 
-        if(form.email === user.email && form.name === user.name && form.phone === user.phone) {
+        if(form.email === user.email && 
+            form.name === user.name && 
+            form.phone === user.phone && 
+            form.bio === user.bio
+        ) {
             return;
         }
 
@@ -96,6 +103,16 @@ const CustomerProfilePersonalTab = () => {
                     placeholder="+123456789"
                     labelClass="text-xs! text-muted mb-1.5 block"
                     onChange={handleChange}
+                />
+
+                <TextArea 
+                    label={'Bio (optional)'}
+                    name="bio"
+                    value={form?.bio}
+                    placeholder="Personal Information"
+                    labelClass="text-xs! text-muted mb-1.5 block"
+                    onChange={handleChange}
+                    showCount
                 />
 
                 <Button
