@@ -14,7 +14,7 @@ const CustomerServicesFilterSection = () => {
             </div>
 
             <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
-                <p className="text-sm text-muted"><span class="text-tx font-medium">{'12'}</span> services available</p>
+                <p className="text-sm text-muted"><span className="text-tx font-medium">{'12'}</span> services available</p>
 
                 <div className="flex items-center gap-2">
                     <div className="flex items-center gap-1.5 text-xs glass2 rounded-xl px-3 py-2">
@@ -48,8 +48,8 @@ const CustomerServicesFilterSection = () => {
                         <Button 
                             className="w-7 h-7 rounded-lg flex items-center justify-center btn-primary text-white"
                             label={
-                                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" 
                                         d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
                                     />
                                 </svg>
