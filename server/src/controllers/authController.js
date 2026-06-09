@@ -55,8 +55,8 @@ export const logout = asyncHandler(async (req, res) => {
 });
 
 export const updateProfile = asyncHandler(async (req, res) => {
-	const { name, phone } = req.body;
-	const user = await updateUserProfile(req.user.id, { name, phone });
+	const { name, phone, bio } = req.body;
+	const user = await updateUserProfile(req.user.id, { name, phone, bio });
 
 	return res.status(200).json({ 
 		message: "Profile updated successfully", 

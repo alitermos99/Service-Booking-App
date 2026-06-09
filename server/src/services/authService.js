@@ -56,8 +56,16 @@ export const loginUser = async ({ email, password }) => {
 	return user;
 }
 
-export const updateUserProfile = async (userId, { name, phone }) => {
+export const updateUserProfile = async (userId, { name, phone, bio }) => {
 	const user = await getUserOrThrow(userId);
+
+	if(bio && bio.length > 5000) {
+		throw new ApiError("Bio too long", 400);
+	}
+
+	if(bio) {
+		user.bio = bio;
+	}
 
 	if (name) {
 		user.name = name;

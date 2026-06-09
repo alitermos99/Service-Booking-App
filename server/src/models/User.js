@@ -34,6 +34,10 @@ const userSchema = new mongoose.Schema(
 			enum: ["business", "customer", "admin"],
 			default: "customer"
 		},
+		bio: {
+			type: String,
+			maxlength: [5000, 'Content too long'],
+		}
 	}, 
 	{ 
 		timestamps: true 
