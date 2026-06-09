@@ -154,7 +154,7 @@ body {
     align-items: center;
     gap: 1rem;
     font-size: 0.75rem;
-    color: #8888aa;
+    color: var(--muted);
   }
 
   .divider::before,
@@ -213,7 +213,7 @@ body {
 
   /* Close button */
   .Toastify__close-button {
-    color: #8888aa !important;
+    color: var(--muted) !important;
     opacity: 1 !important;
     align-self: center !important;
   }
@@ -237,5 +237,30 @@ body {
 
   .font-mono {
     font-family: DM Mono, monospace;
+  }
+
+  .cat-chip{
+    padding:0.5rem 1rem;
+    border-radius:9999px;
+    font-size:0.8rem;
+    font-weight:500;
+    cursor:pointer;
+    transition:all 0.2s;
+    white-space:nowrap
+  }
+
+  .cat-chip.active,.cat-chip:hover{
+    background:linear-gradient(135deg,var(--accent),var(--accent-soft));
+    color:white
+  }
+
+  .cat-chip:not(.active){
+    background:rgba(255,255,255,0.06);
+    color: var(--muted);
+  }
+
+  .text-tx {
+    --tw-text-opacity: 1;
+    color: rgb(240 240 248 / var(--tw-text-opacity, 1));
   }
 }
