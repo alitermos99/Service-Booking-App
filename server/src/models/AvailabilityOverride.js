@@ -1,26 +1,24 @@
 import mongoose from "mongoose";
 
-const availabilitySchema = new mongoose.Schema(
+const availabilityOverrideSchema = new mongoose.Schema(
 	{
 		admin_id: { 
 			type: mongoose.Schema.Types.ObjectId, 
 			ref: "User", 
 			required: true 
 		},
-		dayOfWeek: { 
-			type: Number, 
-			min: 0, 
-			max: 6, 
+		date: { 
+			type: String, 
 			required: true 
-		}, // 0=Sun, 6=Sat
+		},       // "2025-06-23" specific date
 		startTime: { 
 			type: String, 
 			required: true 
-		},
+		}, // "11:00" instead of usual "09:00"
 		endTime: { 
 			type: String, 
-			required: true
-		},
+			required: true 
+		},   // "17:00"
 		isActive: { 
 			type: Boolean, 
 			default: true 
@@ -31,4 +29,4 @@ const availabilitySchema = new mongoose.Schema(
 	}
 );
 
-export default mongoose.model("Availability", availabilitySchema);
+export default mongoose.model("AvailabilityOverride", availabilityOverrideSchema);
