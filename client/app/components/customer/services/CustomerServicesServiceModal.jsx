@@ -3,7 +3,7 @@ import Modal from '../../ui/Modal'
 import Button from '../../ui/Button'
 import Link from 'next/link'
 
-const CustomerServicesGridModal = ({ setIsOpen }) => {
+const CustomerServicesServiceModal = ({ adminId, title, price, duration, description, setIsOpen }) => {
     return (
         <Modal>
             {/* example */ }
@@ -11,8 +11,8 @@ const CustomerServicesGridModal = ({ setIsOpen }) => {
                 <div className="p-6 space-y-4">
                     <div className="flex items-start justify-between">
                         <div>
-                            <h3 className="text-xl font-bold text-tx">Deep Tissue Massage</h3>
-                            <p className="text-muted text-sm mt-0.5">60 min · $85</p>
+                            <h3 className="text-xl font-bold text-tx">{ title }</h3>
+                            <p className="text-muted text-sm mt-0.5">{ duration } min · ${ price }</p>
                         </div>
 
                         <Button 
@@ -36,26 +36,24 @@ const CustomerServicesGridModal = ({ setIsOpen }) => {
                     </div>
 
                     <p className="text-sm text-muted leading-relaxed">
-                        Full-body deep tissue massage designed to relieve chronic muscle tension and pain. 
-                        Our skilled therapist uses firm pressure to reach deeper muscle layers, targeting knots and areas of tension. 
-                        A consultation is done before the session to understand your specific needs.
+                        { description }
                     </p>
                     
                     <div className="grid grid-cols-3 gap-3">
                         <div className="glass2 rounded-xl p-3 text-center">
                             <p className="text-xs text-muted">Duration</p>
-                            <p className="text-sm font-semibold text-tx mt-0.5">60 min</p>
+                            <p className="text-sm font-semibold text-tx mt-0.5">{ duration } min</p>
                         </div>
 
                         <div className="glass2 rounded-xl p-3 text-center">
                             <p className="text-xs text-muted">Price</p>
-                            <p className="text-sm font-semibold text-tx mt-0.5">$85</p>
+                            <p className="text-sm font-semibold text-tx mt-0.5">${ price }</p>
                         </div>
 
-                        <div className="glass2 rounded-xl p-3 text-center">
+                        {/* <div className="glass2 rounded-xl p-3 text-center">
                             <p className="text-xs text-muted">Deposit</p>
                             <p className="text-sm font-semibold text-success mt-0.5">$20</p>
-                        </div>
+                        </div> */}
                     </div>
 
                     <div>
@@ -105,4 +103,4 @@ const CustomerServicesGridModal = ({ setIsOpen }) => {
     )
 }
 
-export default CustomerServicesGridModal
+export default CustomerServicesServiceModal
