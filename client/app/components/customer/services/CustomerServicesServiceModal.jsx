@@ -3,7 +3,9 @@ import Modal from '../../ui/Modal'
 import Button from '../../ui/Button'
 import Link from 'next/link'
 
-const CustomerServicesServiceModal = ({ adminId, title, price, duration, description, setIsOpen }) => {
+const CustomerServicesServiceModal = ({ serviceId, title, price, duration, description, stars, avgRating, 
+    totalReviews, setIsOpen 
+}) => {
     return (
         <Modal>
             {/* example */ }
@@ -27,12 +29,13 @@ const CustomerServicesServiceModal = ({ adminId, title, price, duration, descrip
                     </div>
 
                     <div className="flex items-center gap-1">
-                        <span className="text-fair">★</span>
-                        <span className="text-fair">★</span>
-                        <span className="text-fair">★</span>
-                        <span className="text-fair">★</span>
-                        <span className="text-fair">★</span>
-                        <span className="text-sm text-muted ml-1">4.9 · 48 reviews</span>
+                        {
+                            stars?.map(star => (
+                                <span key={star} className="text-fair text-xs">★</span>
+                            ))
+                        }
+
+                        <span className="text-sm text-muted ml-1">{ avgRating } · { totalReviews } reviews</span>
                     </div>
 
                     <p className="text-sm text-muted leading-relaxed">

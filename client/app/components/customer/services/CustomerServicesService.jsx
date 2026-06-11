@@ -1,9 +1,12 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Button from '../../ui/Button'
 import CustomerServicesGridModal from './CustomerServicesServiceModal'
 
-const CustomerServicesService = ({ adminId, icon, title, short, description, price, duration, isActive }) => {
+const CustomerServicesService = ({ serviceId, icon, title, short, description, price, duration, isActive, 
+    avgRating = 0, totalReviews = 0
+}) => {
     const [isOpen, setIsOpen] = useState(false);
+    const stars = Array.from({ length: Math.round(avgRating) }, (_, i) => i + 1);
 
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
@@ -27,12 +30,14 @@ const CustomerServicesService = ({ adminId, icon, title, short, description, pri
                 <p className="text-xs text-muted mb-3 leading-relaxed">{ short }</p>
 
                 <div className="flex items-center gap-1 mb-3">
-                    <span className="text-fair text-xs">★</span>
-                    <span className="text-fair text-xs">★</span>
-                    <span className="text-fair text-xs">★</span>
-                    <span className="text-fair text-xs">★</span>
-                    <span className="text-fair text-xs">★</span>
-                    <span className="text-xs text-muted ml-1">4.9 (48)</span>
+                    {console.log('stars ', stars)}
+                    {
+                        stars.map(star => (
+                            <span key={star} className="text-fair text-xs">★</span>
+                        ))
+                    }
+
+                    <span className="text-xs text-muted ml-1">{ avgRating } ({ totalReviews })</span>
                 </div>
 
                 <div className="flex items-center justify-between">
@@ -51,10 +56,13 @@ const CustomerServicesService = ({ adminId, icon, title, short, description, pri
 
             { isOpen && 
                 <CustomerServicesGridModal 
-                    adminId={adminId} 
+                    serviceId={serviceId} 
                     price={price} 
                     duration={duration} 
                     description={description} 
+                    stars={stars}
+                    avgRating={avgRating}
+                    totalReviews={totalReviews}
                     setIsOpen={setIsOpen} 
                 /> 
             }

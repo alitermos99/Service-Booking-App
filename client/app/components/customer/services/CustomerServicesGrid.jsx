@@ -12,13 +12,15 @@ const CustomerServicesGrid = ({ services }) => {
                     <CustomerServicesService
                         key={service._id}
                         icon={service.icon}
-                        adminId={service.admin_id}
+                        serviceId={service.service._id}
                         title={service.title}
                         short={service.short}
                         description={service.description}
                         duration={service.duration}
                         price={service.price}
                         isActive={service.isActive}
+                        avgRating={service.averageRating}
+                        totalReviews={service.totalReviews}
                     />
                 ))
             }
