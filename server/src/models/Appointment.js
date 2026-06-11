@@ -2,6 +2,12 @@ import mongoose from "mongoose";
 
 const appointmentSchema = new mongoose.Schema(
 	{
+		admin_id: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "User",
+			required: true,
+			index: true
+		},
 		service_id: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: "Service",

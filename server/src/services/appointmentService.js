@@ -25,7 +25,8 @@ export const createAnAppointment = async ({ service_id, startTime, notes }, user
 		startTime: start,
 		notes,
 		endTime: end,
-		user_id: userId
+		user_id: userId,
+		admin_id: service.admin_id
 	})
 
 	return appointment;
