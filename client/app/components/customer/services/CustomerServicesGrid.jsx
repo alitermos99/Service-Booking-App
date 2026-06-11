@@ -12,7 +12,7 @@ const CustomerServicesGrid = ({ services }) => {
                     <CustomerServicesService
                         key={service._id}
                         icon={service.icon}
-                        serviceId={service.service._id}
+                        serviceId={service._id}
                         title={service.title}
                         short={service.short}
                         description={service.description}
