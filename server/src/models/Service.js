@@ -7,6 +7,9 @@ const serviceSchema = new mongoose.Schema(
 			ref: "User",
 			required: true
 		},
+		icon: {
+			type: String
+		},
 		title: {
 			type: String,
 			required: [true, 'Service title is required'],
