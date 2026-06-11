@@ -59,9 +59,9 @@ const CustomerServicesGridModal = ({ setIsOpen }) => {
                     </div>
 
                     <div>
-                        <p class="text-sm font-medium text-tx mb-2">Available Today</p>
+                        <p className="text-sm font-medium text-tx mb-2">Available Today</p>
 
-                        <div class="grid grid-cols-3 sm:grid-cols-4 gap-2">
+                        <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
                             <Button className="glass2 rounded-xl py-2 text-xs text-tx hover:border-accent transition-colors border-[rgba(108,99,255,0.4)]!" 
                                 label="9:00 AM" 
                             />
@@ -93,7 +93,7 @@ const CustomerServicesGridModal = ({ setIsOpen }) => {
 
                     <Link href="/book" className="btn-primary text-white rounded-xl py-3 text-sm font-medium w-full flex items-center justify-center gap-2">
                             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" 
                                     d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
                                 />
                             </svg>
