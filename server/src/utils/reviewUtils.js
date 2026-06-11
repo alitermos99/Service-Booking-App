@@ -11,10 +11,11 @@ export const getReviewByIdOrThrow = async (reviewId) => {
 	return review;
 };
 
-export const getExistingReviewByParentIds = async (appointmentId, userId) => {
+export const getExistingReviewByParentIds = async (appointmentId, serviceId, userId) => {
 	const existingReview = await Review.findOne({ 
 		appointment_id: appointmentId,
-		user_id: userId
+		user_id: userId,
+		service_id: serviceId
 	});
 
 	if(existingReview) {

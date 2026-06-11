@@ -2,6 +2,7 @@ import Service from '../models/Service.js';
 import ApiError from '../errors/ApiError.js';
 import { getServiceByIdOrThrow } from '../utils/serviceUtils.js'
 import { assertOwnership } from '../utils/authUtils.js';
+import Review from '../models/Review.js';
 
 export const createAService = async (serviceData, adminId) => {
 	const { title, description, price, duration } = serviceData;
@@ -43,7 +44,13 @@ export const getAllServicesAdmin = async (adminId) => {
 }
 
 export const getAllServices = async () => {
-	const services = await Service.find();
+	const services = await Service.find().lean();
+	const ids = services.map(service => {
+		return service._id
+	});
+	const ratings = await _getAverageServicesRatingsAndReviews(ids);
+	_assignAverageRating(ratings, services);
+
 	return services;
 }
 
@@ -67,3 +74,29 @@ export const deleteAService = async (serviceId, adminId) => {
 	await service.deleteOne();
 	return service;
 };
+
+async function _getAverageServicesRatingsAndReviews(serviceIds) {
+	const ratings = await Review.aggregate([
+		{ $match: { service_id: { $in: serviceIds }} },
+		{
+			$group: {
+				_id: "$service_id",
+				avgRating: { $avg: "$rating" },
+				totalReviews: { $sum: 1 }
+			}
+		}
+	]);
+
+	return ratings;
+}
+
+function _assignAverageRating(ratings, services) {
+	ratings.forEach(rating => {
+		const service = services.find(ser => ser._id.toString() === rating._id.toString());
+
+		if (service) {
+            service.averageRating = rating.avgRating;
+            service.totalReviews = rating.totalReviews;
+        }
+	});
+}

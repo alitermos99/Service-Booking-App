@@ -12,7 +12,7 @@ export const getServiceByIdOrThrow = async (serviceId) => {
 };
 
 export const sanitizeService = (service) => {
-	const object = service.toObject();
+	const object = service?.toObject ? service.toObject() : service;
 
 	delete object.__v;
 	delete object.createdAt;

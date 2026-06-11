@@ -3,8 +3,8 @@ import ApiError from '../errors/ApiError.js';
 import { assertOwnership } from '../utils/authUtils.js';
 import { getReviewByIdOrThrow, getExistingReviewByParentIds } from '../utils/reviewUtils.js'
 
-export const createAReview = async ({ rating, comment, appointmentId }, userId) => {
-	if(!rating || !appointmentId) {
+export const createAReview = async ({ rating, comment, serviceId, appointmentId }, userId) => {
+	if(!rating || !appointmentId || !serviceId) {
 		throw new ApiError("All fields are required", 400);
 	}
 
@@ -12,12 +12,13 @@ export const createAReview = async ({ rating, comment, appointmentId }, userId) 
 		throw new ApiError("Rating must be between 1 and 5", 400);
 	}
 
-	await getExistingReviewByParentIds(appointmentId, userId);
+	await getExistingReviewByParentIds(appointmentId, serviceId, userId);
 
 	const review = await Review.create({
 		rating,
 		comment,
 		user_id: userId,
+		service_id: serviceId,
 		appointment_id: appointmentId,
 	});
 
