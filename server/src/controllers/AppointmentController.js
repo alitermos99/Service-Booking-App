@@ -12,7 +12,7 @@ export const createAppointment = asyncHandler(async (req, res) => {
 	const { service_id, startTime, notes } = req.body;
 	const appointment = await createAnAppointment({ service_id, startTime, notes }, req.user.id);
 
-	return res.status(200).json({
+	return res.status(201).json({
 		message: "Appointment created successfully",
 		appointment: sanitizeAppointment(appointment)
 	});

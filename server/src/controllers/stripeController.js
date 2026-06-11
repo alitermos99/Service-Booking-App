@@ -9,5 +9,5 @@ export const createPaymentIntent = asyncHandler(async (req, res) => {
 		req.user.id
 	);
 
-	return res.status(200).json(result);
+	return res.status(201).json(result);
 });

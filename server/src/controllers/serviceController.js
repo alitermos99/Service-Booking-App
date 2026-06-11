@@ -12,6 +12,7 @@ import { sanitizeService } from '../utils/serviceUtils.js'
 // Create a service
 export const createService = asyncHandler(async (req, res) => {
 	const service = await createAService(req.body, req.user.id);
+	
 	return res.status(201).json({
 		message: 'Service created successfully',
 		service: sanitizeService(service)

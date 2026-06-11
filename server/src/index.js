@@ -10,6 +10,7 @@ import appointmentRoutes from './routes/appointmentRoute.js';
 import reviewRoutes from './routes/reviewRoute.js';
 import stripeRoutes from './routes/stripeRoute.js';
 import stripeWebhookRoutes from './routes/stripeWebhookRoute.js';
+import availabilityRoutes from './routes/availabilityRoute.js';
 
 const app = express();
 app.use(cookieParser());
@@ -43,6 +44,8 @@ app.use('/api/v1/appointments', appointmentRoutes);
 app.use('/api/v1/reviews', reviewRoutes);
 // Use Stripe routes
 app.use("/api/v1/stripe", stripeRoutes);
+// Use Availability routes
+app.use("/api/v1/slots", availabilityRoutes);
 
 // Error middleware MUST be last
 app.use(errorMiddleware);

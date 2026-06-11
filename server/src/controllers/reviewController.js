@@ -10,7 +10,7 @@ export const createReview = asyncHandler(async (req, res) => {
 	const { rating, comment, serviceId, appointmentId } = req.body;
 	const review = await createAReview({ rating, comment, serviceId, appointmentId }, req.user.id);
 
-	return res.status(200).json({
+	return res.status(201).json({
 		message: "Review created successfully",
 		review
 	});
