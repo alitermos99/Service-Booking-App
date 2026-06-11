@@ -37,8 +37,13 @@ export const getAService = async (serviceId) => {
 	return service;
 }
 
-export const getAllServices = async (adminId) => {
+export const getAllServicesAdmin = async (adminId) => {
 	const services = await Service.find({ admin_id: adminId }).sort({ createdAt: -1 });
+	return services;
+}
+
+export const getAllServices = async () => {
+	const services = await Service.find();
 	return services;
 }
 

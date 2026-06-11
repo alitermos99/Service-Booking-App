@@ -1,17 +1,17 @@
 import express from 'express';
-import { createService, getService, getServices, updateService, deleteService } from '../controllers/serviceController.js';
+import { createService, getService, getServicesBusiness, getServices, updateService, deleteService } from '../controllers/serviceController.js';
 import { authorize } from '../middlewares/roleMiddleware.js';
 import authMiddleware from '../middlewares/authMiddleware.js';
 
 const router = express.Router();
 
 router.use(authMiddleware);
-router.use(authorize('business'));
 
-router.get('/', getServices);
-router.get('/:id', getService);
-router.post('/', createService);
-router.put('/:id', updateService);
-router.delete('/:id', deleteService);
+router.get('/all-services', getServices);
+router.get('/', authorize('business'), getServicesBusiness);
+router.get('/:id', authorize('business'),  getService);
+router.post('/', authorize('business'), createService);
+router.put('/:id', authorize('business'), updateService);
+router.delete('/:id', authorize('business'), deleteService);
 
 export default router;

@@ -2,6 +2,7 @@ import asyncHandler from "express-async-handler";
 import { 
 	createAService,
 	getAService,
+	getAllServicesAdmin,
 	getAllServices,
 	updateAService,
 	deleteAService
@@ -29,7 +30,18 @@ export const getService = asyncHandler(async (req, res) => {
 
 // Get all services
 export const getServices = asyncHandler(async (req, res) => {
-	const services = await getAllServices(req.user.id);
+	const services = await getAllServices();
+
+	const sanitizedServices = services.map(service => {
+		return sanitizeService(service)
+	});
+
+	return res.status(200).json(sanitizedServices);
+});
+
+// Get all services for business
+export const getServicesBusiness = asyncHandler(async (req, res) => {
+	const services = await getAllServicesAdmin(req.user.id);
 
 	const sanitizedServices = services.map(service => {
 		return sanitizeService(service)

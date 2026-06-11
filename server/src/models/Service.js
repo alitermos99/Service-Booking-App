@@ -12,6 +12,10 @@ const serviceSchema = new mongoose.Schema(
 			required: [true, 'Service title is required'],
 			trim: true
 		},
+		short: {
+			type: String,
+			required: [true, 'Short is required'],
+		},
 		description: {
 			type: String,
 			required: [true, 'Description is required'],
