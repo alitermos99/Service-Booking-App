@@ -5,7 +5,7 @@ import { assertOwnership } from '../utils/authUtils.js';
 import Review from '../models/Review.js';
 
 export const createAService = async (serviceData, adminId) => {
-	const { title, description, price, duration } = serviceData;
+	const { title, description, price, duration, tags } = serviceData;
 
 	if(!title || !description || !price || !duration) {
 		throw new ApiError('All fields are required', 400);
@@ -24,10 +24,33 @@ export const createAService = async (serviceData, adminId) => {
 		description,
 		price,
 		duration,
+		tags,
 		admin_id: adminId
 	});
 
 	await service.save();
+	return service;
+};
+
+export const updateAService = async (serviceId, updateData, adminId) => {
+	const service = await getServiceByIdOrThrow(serviceId);
+	const { title, description, price, duration, tags } = updateData;
+	assertOwnership(service, "admin_id", adminId, 'Not authorized to update this service');
+
+	Object.assign(service, { title: title || service.title, description: description 
+		|| service.description, price: price || service.price, duration: duration || service.duration ,
+		tags
+	});
+	
+	await service.save();
+	return service;
+};
+
+export const deleteAService = async (serviceId, adminId) => {
+	const service = await getServiceByIdOrThrow(serviceId);
+	assertOwnership(service, "admin_id", adminId, 'Not authorized to delete this service');
+
+	await service.deleteOne();
 	return service;
 };
 
@@ -63,27 +86,6 @@ export const getAllServices = async (filter) => {
 
 	return services;
 }
-
-export const updateAService = async (serviceId, updateData, adminId) => {
-	const service = await getServiceByIdOrThrow(serviceId);
-	const { title, description, price, duration } = updateData;
-	assertOwnership(service, "admin_id", adminId, 'Not authorized to update this service');
-
-	Object.assign(service, { title: title || service.title, description: description 
-		|| service.description, price: price || service.price, duration: duration || service.duration 
-	});
-	
-	await service.save();
-	return service;
-};
-
-export const deleteAService = async (serviceId, adminId) => {
-	const service = await getServiceByIdOrThrow(serviceId);
-	assertOwnership(service, "admin_id", adminId, 'Not authorized to delete this service');
-
-	await service.deleteOne();
-	return service;
-};
 
 async function _getAverageServicesRatingsAndReviews(serviceIds) {
 	const ratings = await Review.aggregate([
