@@ -21,6 +21,7 @@ const CustomerProfileHero = () => {
                             name={user.name}
                             avatarSize="w-[74px] h-[74px]"
                             initialsSize="text-2xl"
+                            borderRadius="rounded-full"
                             hideName
                         />
                     </div>

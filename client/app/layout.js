@@ -24,7 +24,7 @@ export default function RootLayout({ children }) {
 	return (
 		<html
 			lang="en"
-			className={`${dmSans.variable} ${dmMono.variable} h-full antialiased`}
+			className={`${dmSans.variable} ${dmMono.variable} h-full antialiased scroll-smooth`}
 		>
 			<body className="min-h-full">
 				<QueryProvider>

@@ -1,12 +1,12 @@
 import React from 'react'
 
-const Section = ({ id, children, className = '', maxWidth = 'max-w-7xl', style }) => {
+const Section = ({ id, children, padding = 'py-24 px-4', className = '', maxWidth = 'max-w-7xl', style }) => {
     return (
         <section
             id={id}
             style={style}
-            className={`py-24 px-4 sm:px-6 ${maxWidth} mx-auto ${className}`}
-            >
+            className={`${padding} sm:px-6 ${maxWidth} mx-auto ${className}`}
+        >
             {children}
         </section>
     );

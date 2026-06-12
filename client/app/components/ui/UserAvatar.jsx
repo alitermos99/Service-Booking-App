@@ -19,7 +19,9 @@ const getUserGradient = (name) => {
     return `linear-gradient(135deg, ${color1}, ${color2})`;
 };
 
-const UserAvatar = ({ name, children, hideName = false, showDropdown = false, avatarSize = 'w-8 h-8', initialsSize = 'text-xs' }) => {
+const UserAvatar = ({ name, children, hideName = false, showDropdown = false, avatarSize = 'w-8 h-8', initialsSize = 'text-xs',
+    borderRadius = 'rounded-xl'
+ }) => {
     const [active, setActive] = useState(false);
     const [gradient] = useState(() => getUserGradient(name ?? 'guest'));
     const initials = name ? name.split(' ').map(n => n[0]).join('').toUpperCase() : 'AN';
@@ -31,7 +33,7 @@ const UserAvatar = ({ name, children, hideName = false, showDropdown = false, av
     return (
         <div className="relative cursor-pointer">
             <div className="flex items-center gap-2" onClick={handleDropdown}>
-                <div className={`${avatarSize} rounded-xl flex items-center justify-center text-white ${initialsSize} font-bold`}
+                <div className={`${avatarSize} ${borderRadius} flex items-center justify-center text-white ${initialsSize} font-bold`}
                     style={{ background: gradient }}
                 >
                     { initials }
