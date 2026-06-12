@@ -9,7 +9,7 @@ const TAGS = [{name: 'all', label: 'All'},
     {name: 'fitness',label: 'Fitness'},
 ]
 
-const CustomerServicesFilterSection = ({ selectedtTag, onSelect, availableServices = 0 }) => {
+const CustomerServicesFilterSection = ({ selectedtTag, onSelect, onSort, availableServices = 0 }) => {
     return (
         <>
             <div className="flex gap-2 overflow-x-auto pb-2 mb-6 hide-scrollbar">
@@ -36,12 +36,13 @@ const CustomerServicesFilterSection = ({ selectedtTag, onSelect, availableServic
                             />
                         </svg>
 
-                        <select className="bg-transparent outline-none text-muted text-xs">
-                            <option>Sort: Popular</option>
-                            <option>Price: Low to High</option>
-                            <option>Price: High to Low</option>
-                            <option>Duration</option>
-                            <option>Rating</option>
+                        <select className="bg-transparent outline-none text-muted text-xs" onChange={onSort}>
+                            <option value="createdAt;desc">Sort: Newest to Oldest</option>
+                            <option value="createdAt;asc">Sort: Oldest to Newest</option>
+                            <option value="title;desc">Title: Z - A</option>
+                            <option value="title;asc">Title: A - Z</option>
+                            <option value="price;desc">Price: High to Low</option>
+                            <option value="price;asc">Price: Low to High</option>
                         </select>
                     </div>
 

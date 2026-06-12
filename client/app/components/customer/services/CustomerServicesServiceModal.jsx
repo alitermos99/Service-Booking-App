@@ -53,13 +53,16 @@ const CustomerServicesServiceModal = ({ serviceId, adminId, title, price, durati
                     </div>
 
                     <div className="flex items-center gap-1">
-                        {
-                            stars?.map(star => (
-                                <span key={star} className="text-fair text-xs">★</span>
-                            ))
-                        }
+                        {!stars?.length
+                            ? <p className="text-xs text-muted">No rating available</p>
+                            : <>
+                                {stars.map(star => (
+                                    <span key={star} className="text-fair text-xs">★</span>
+                                ))}
 
-                        <span className="text-sm text-muted ml-1">{ avgRating } · { totalReviews } reviews</span>
+                                <span className="text-sm text-muted ml-1">{avgRating} · {totalReviews} review(s)</span>
+                            </>
+                        }
                     </div>
 
                     <p className="text-sm text-muted leading-relaxed">
@@ -88,7 +91,7 @@ const CustomerServicesServiceModal = ({ serviceId, adminId, title, price, durati
 
                         <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
                             {
-                                availableSlots?.map((slot, index) => (
+                                availableSlots?.filter(filter => filter.available).map((slot, index) => (
                                     <Button key={index} 
                                         className={`glass2 rounded-xl py-2 text-xs text-tx hover:border-accent transition-colors text-[10px]
                                             ${selectedIndex === index ? 'border-[rgba(108,99,255,0.4)]!' : ''}

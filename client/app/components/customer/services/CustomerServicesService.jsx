@@ -9,7 +9,7 @@ const CustomerServicesService = ({ serviceId, adminId, icon, title, short, descr
     const stars = Array.from({ length: Math.round(avgRating) }, (_, i) => i + 1);
 
     return (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        <>
             <div className="service-card">
                 <div className="flex items-start justify-between mb-3">
                     <div className={`w-11 h-11 rounded-xl flex items-center justify-center 
@@ -29,13 +29,16 @@ const CustomerServicesService = ({ serviceId, adminId, icon, title, short, descr
                 <p className="text-xs text-muted mb-3 leading-relaxed">{ short }</p>
 
                 <div className="flex items-center gap-1 mb-3">
-                    {
-                        stars.map(star => (
-                            <span key={star} className="text-fair text-xs">★</span>
-                        ))
-                    }
+                    {!stars?.length
+                        ? <p className="text-xs text-muted">No rating available</p>
+                        : <>
+                            {stars.map(star => (
+                                <span key={star} className="text-fair text-xs">★</span>
+                            ))}
 
-                    <span className="text-xs text-muted ml-1">{ avgRating } ({ totalReviews })</span>
+                            <span className="text-sm text-muted ml-1">{avgRating} · {totalReviews} review(s)</span>
+                        </>
+                    }
                 </div>
 
                 <div className="flex items-center justify-between">
@@ -65,7 +68,7 @@ const CustomerServicesService = ({ serviceId, adminId, icon, title, short, descr
                     setIsOpen={setIsOpen} 
                 /> 
             }
-        </div>
+        </>
     )
 }
 
