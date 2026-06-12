@@ -1,5 +1,5 @@
 import asyncHandler from "express-async-handler";
-import { createASlot, deleteASlot, updateASlot } from "../services/AvailabilityService.js";
+import { createASlot, deleteASlot, getAllAvailableSlots, updateASlot } from "../services/AvailabilityService.js";
 
 export const createSlot = asyncHandler(async (req, res) => {
 	const { dayOfWeek, startTime, endTime } = req.body;
@@ -29,4 +29,11 @@ export const deleteSlot = asyncHandler(async (req, res) => {
 	return res.status(200).json({
 		message: "Slot deleted successfully"
 	});
+});
+
+export const getAvailableSlots = asyncHandler(async (req, res) => {
+	const { adminId, serviceId, date, tzOffset } = req.query;
+	const slots = await getAllAvailableSlots(adminId, serviceId, date, tzOffset);
+
+	return res.status(200).json(slots);
 });
