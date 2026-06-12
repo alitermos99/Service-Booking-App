@@ -4,7 +4,7 @@ import React, { useEffect } from 'react'
 import Main from '@/app/components/layouts/Main'
 import AuthHeader from '@/app/components/auth/AuthHeader';
 import Card from '@/app/components/ui/Card';
-import RegisterForm from '@/app/components/forms/RegisterForm';
+import RegisterForm from '@/app/components/auth/RegisterForm';
 import AuthFooter from '@/app/components/auth/AuthFooter';
 import Orb from '@/app/components/ui/Orb';
 import { useRouter } from 'next/navigation';

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import FormField from '../ui/FormField';
 import PasswordField from '../forms/PasswordField';
 import Button from '../ui/Button';
 import AuthRoleCard from '../auth/AuthRoleCard';
@@ -7,6 +6,7 @@ import validatePassword from '@/app/validators/passwordValidator';
 import LoadingOverlay from '../ui/LoadingOverlay';
 import { useRegister } from '@/app/features/auth/hooks/useRegister';
 import validatePhone from '@/app/validators/phoneValidator';
+import FormField from '../forms/FormField';
 
 const RegisterForm = () => {
     const [selectedRole, setSelectedRole] = useState('customer');
