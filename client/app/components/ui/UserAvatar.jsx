@@ -31,7 +31,7 @@ const UserAvatar = ({ name, children, hideName = false, showDropdown = false, av
     return (
         <div className="relative cursor-pointer">
             <div className="flex items-center gap-2" onClick={handleDropdown}>
-                <div className={`${avatarSize} rounded-full flex items-center justify-center text-white ${initialsSize} font-bold`}
+                <div className={`${avatarSize} rounded-xl flex items-center justify-center text-white ${initialsSize} font-bold`}
                     style={{ background: gradient }}
                 >
                     { initials }
