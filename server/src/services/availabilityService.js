@@ -90,8 +90,8 @@ function _generateSlots(start, end, duration, booked, date, tzOffset) {
     const endMin = timeToMinutes(end);
 
     const nowUTC = new Date();
-	const localNowMinutes = nowUTC.getUTCHours() * 60 + nowUTC.getUTCMinutes() + tzOffset;
-	const localNow = new Date(nowUTC.getTime() + tzOffset * 60 * 1000);
+	const localNowMinutes = nowUTC.getUTCHours() * 60 + nowUTC.getUTCMinutes() - tzOffset;
+    const localNow = new Date(nowUTC.getTime() - tzOffset * 60 * 1000);
 	const localToday = localNow.toISOString().split('T')[0];
 	const isToday = date === localToday;
 	const bufferMinutes = 60;
