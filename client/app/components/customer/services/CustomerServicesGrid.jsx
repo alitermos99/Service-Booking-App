@@ -11,6 +11,7 @@ const CustomerServicesGrid = ({ services }) => {
             { !!services?.length && services.map(service => (
                 <CustomerServicesService
                     key={service._id}
+                    iconBg={service.iconBg}
                     icon={service.icon}
                     serviceId={service._id}
                     adminId={service.admin_id}

@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import Button from '../../ui/Button'
 import CustomerServicesGridModal from './CustomerServicesServiceModal'
 
-const CustomerServicesService = ({ serviceId, adminId, icon, title, short, description, price, duration, isActive, 
+const DEFAULT_ICON_BG = 'linear-gradient(135deg,rgba(108,99,255,0.2),rgba(167,139,250,0.2))';
+
+const CustomerServicesService = ({ serviceId, adminId, icon, iconBg, title, short, description, price, duration, isActive, 
     avgRating = 0, totalReviews = 0
 }) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -12,8 +14,8 @@ const CustomerServicesService = ({ serviceId, adminId, icon, title, short, descr
         <>
             <div className="service-card">
                 <div className="flex items-start justify-between mb-3">
-                    <div className={`w-11 h-11 rounded-xl flex items-center justify-center 
-                        bg-[linear-gradient(135deg,rgba(108,99,255,0.2),rgba(167,139,250,0.2))]`}
+                    <div className="w-11 h-11 rounded-xl flex items-center justify-center"
+                        style={{ background: iconBg ?? DEFAULT_ICON_BG }}
                     >
                         <span className="text-xl">{ icon }</span>
                     </div>
