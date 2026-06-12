@@ -15,15 +15,15 @@ export default async function paginate(model, { cursor, limit = 10, sort, filter
         }
         : {};
 
-	const isPrev      = cursor?.direction === 'prev';
+	const isPrev = cursor?.direction === 'prev';
     const appliedSort = isPrev ? sortOrder * -1 : sortOrder;
 	const query = { ...filter, ...cursorCondition };
 
 	const docs = await model
-		.find(query)
-		.sort({ [sortField]: sortOrder, _id: sortOrder })
-		.limit(limitNum + 1)
-		.lean();
+        .find(query)
+        .sort({ [sortField]: appliedSort, _id: appliedSort })
+        .limit(limitNum + 1)
+        .lean();
 
 	const hasMore = docs.length > limitNum;
 	const results = hasMore ? docs.slice(0, limitNum) : docs;
