@@ -33,7 +33,7 @@ export const getService = asyncHandler(async (req, res) => {
 export const getServices = asyncHandler(async (req, res) => {
 	const {
         cursor,
-        limit     = 10,
+        limit = 10,
         sortField = 'createdAt',
         sortOrder = 'desc',
         filter

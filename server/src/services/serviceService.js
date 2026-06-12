@@ -6,9 +6,9 @@ import Review from '../models/Review.js';
 import paginate from '../utils/pagination.js';
 
 export const createAService = async (serviceData, adminId) => {
-	const { title, description, price, duration, tags } = serviceData;
+	const { icon, title, description, price, duration, short, tags } = serviceData;
 
-	if(!title || !description || !price || !duration) {
+	if(!title || !description || !price || !duration || !short) {
 		throw new ApiError('All fields are required', 400);
 	}
 
@@ -21,11 +21,13 @@ export const createAService = async (serviceData, adminId) => {
 	}
 
 	const service = new Service({
+		icon,
 		title,
 		description,
 		price,
 		duration,
 		tags,
+		short,
 		admin_id: adminId
 	});
 
@@ -35,12 +37,12 @@ export const createAService = async (serviceData, adminId) => {
 
 export const updateAService = async (serviceId, updateData, adminId) => {
 	const service = await getServiceByIdOrThrow(serviceId);
-	const { title, description, price, duration, tags } = updateData;
+	const { icon, title, description, price, duration, short, tags } = updateData;
 	assertOwnership(service, "admin_id", adminId, 'Not authorized to update this service');
 
 	Object.assign(service, { title: title || service.title, description: description 
 		|| service.description, price: price || service.price, duration: duration || service.duration ,
-		tags
+		tags, icon: icon || service.icon, short: short || service.short
 	});
 	
 	await service.save();
