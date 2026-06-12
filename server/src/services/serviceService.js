@@ -3,6 +3,7 @@ import ApiError from '../errors/ApiError.js';
 import { getServiceByIdOrThrow } from '../utils/serviceUtils.js'
 import { assertOwnership } from '../utils/authUtils.js';
 import Review from '../models/Review.js';
+import paginate from '../utils/pagination.js';
 
 export const createAService = async (serviceData, adminId) => {
 	const { title, description, price, duration, tags } = serviceData;
@@ -66,7 +67,7 @@ export const getAllServicesAdmin = async (adminId) => {
 	return services;
 }
 
-export const getAllServices = async (filter) => {
+export const getAllServices = async ({ cursor, limit, sortField, sortOrder, filter }) => {
 	const query = filter
 		? {
 			$or: [
@@ -77,15 +78,22 @@ export const getAllServices = async (filter) => {
 			]
 		}
 		: {};
+	const { results, nextCursor, prevCursor, 
+		hasNextPage, hasPrevPage } = await _handlePagination(cursor, limit, sortField, sortOrder, query);
 
-	const services = await Service.find(query).sort({ createdAt: -1 }).lean();
-	const ids = services.map(service => {
+	const ids = results.map(service => {
 		return service._id
 	});
 	const ratings = await _getAverageServicesRatingsAndReviews(ids);
-	_assignAverageRating(ratings, services);
+	_assignAverageRating(ratings, results);
 
-	return services;
+	return {
+        results,
+        nextCursor: nextCursor  ? Buffer.from(JSON.stringify(nextCursor)).toString('base64')  : null,
+        prevCursor: prevCursor  ? Buffer.from(JSON.stringify(prevCursor)).toString('base64')  : null,
+        hasNextPage,
+        hasPrevPage
+    };
 }
 
 async function _getAverageServicesRatingsAndReviews(serviceIds) {
@@ -112,4 +120,19 @@ function _assignAverageRating(ratings, services) {
             service.totalReviews = rating.totalReviews;
         }
 	});
+}
+
+async function _handlePagination(cursor, limit, sortField, sortOrder, query) {
+	const parsedCursor = cursor
+        ? JSON.parse(Buffer.from(cursor, 'base64').toString('utf8'))
+        : null;
+
+    const { results, nextCursor, prevCursor, hasNextPage, hasPrevPage } = await paginate(Service, {
+        cursor: parsedCursor,
+        limit,
+        sort: { field: sortField, order: sortOrder },
+        filter: query
+    });
+
+	return { results, nextCursor, prevCursor, hasNextPage, hasPrevPage };
 }

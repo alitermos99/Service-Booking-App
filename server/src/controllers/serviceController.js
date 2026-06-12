@@ -31,14 +31,30 @@ export const getService = asyncHandler(async (req, res) => {
 
 // Get all services
 export const getServices = asyncHandler(async (req, res) => {
-	const { filter } = req.query;
-	const services = await getAllServices(filter?.trim());
+	const {
+        cursor,
+        limit     = 10,
+        sortField = 'createdAt',
+        sortOrder = 'desc',
+        filter
+    } = req.query;
 
-	const sanitizedServices = services.map(service => {
+	const data = await getAllServices({
+        cursor,
+        limit,
+        sortField,
+        sortOrder,
+        filter: filter?.trim()
+    });
+
+	const sanitizedServices = data?.results?.map(service => {
 		return sanitizeService(service)
 	});
 
-	return res.status(200).json(sanitizedServices);
+	return res.status(200).json({
+		...data,
+		results: sanitizedServices
+	});
 });
 
 // Get all services for business
