@@ -10,6 +10,9 @@ const serviceSchema = new mongoose.Schema(
 		icon: {
 			type: String
 		},
+		iconBg: {
+			type: String
+		},
 		title: {
 			type: String,
 			required: [true, 'Service title is required'],
