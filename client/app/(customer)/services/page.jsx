@@ -9,6 +9,7 @@ import CustomerServicesHero from '@/app/components/customer/services/CustomerSer
 import CustomerServicesFilterSection from '@/app/components/customer/services/CustomerServicesFilterSection';
 
 const CustomerServicesPage = () => {
+    const [tag, setTag] = useState('all');
     const [search, setSearch] = useState('');
     const { data: services, isPending } = useGetServices(search);
 
@@ -22,6 +23,13 @@ const CustomerServicesPage = () => {
         setSearch(event.target.value);
     }
 
+    const handleTagChange = (event) => { 
+        const { name } = event.target;
+
+        setTag(name);    
+        setSearch(name === 'all' ? '' : name);
+    }
+
     return (
         <>
             { isPending && <LoadingOverlay /> }
@@ -30,7 +38,12 @@ const CustomerServicesPage = () => {
             <CustomerServicesHero onChange={handleChange} />
 
             <div className="px-4 lg:px-8 pb-16 max-w-7xl mx-auto">
-                <CustomerServicesFilterSection availableServices={services?.length} />
+                <CustomerServicesFilterSection 
+                    selectedtTag={tag} 
+                    onSelect={handleTagChange} 
+                    availableServices={services?.length} 
+                />
+                
                 <CustomerServicesGrid services={services} />
             </div>
         </>

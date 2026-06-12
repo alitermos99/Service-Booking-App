@@ -1,16 +1,28 @@
 import React from 'react'
 import Button from '../../ui/Button'
 
-const CustomerServicesFilterSection = ({ availableServices = 0 }) => {
+const TAGS = [{name: 'all', label: 'All'},
+    {name: 'massage', label: 'Massage'},
+    {name: 'hair and beauty',label: 'Hair & Beauty'},
+    {name: 'skincare',label: 'Skincare'},
+    {name: 'consulting',label: 'Consulting'},
+    {name: 'fitness',label: 'Fitness'},
+]
+
+const CustomerServicesFilterSection = ({ selectedtTag, onSelect, availableServices = 0 }) => {
     return (
         <>
             <div className="flex gap-2 overflow-x-auto pb-2 mb-6 hide-scrollbar">
-                <Button className="cat-chip active" label="All" />
-                <Button className="cat-chip" label="Massage" />
-                <Button className="cat-chip" label="Hair & Beauty" />
-                <Button className="cat-chip" label="Skincare" />
-                <Button className="cat-chip" label="Consulting" />
-                <Button className="cat-chip" label="Fitness" />
+                {
+                    TAGS.map((tag, index) => (
+                        <Button key={index} 
+                            className={`cat-chip ${tag.name === selectedtTag ? 'active' : ''}`} 
+                            label={tag.label} 
+                            name={tag.name} 
+                            onClick={onSelect} 
+                        />
+                    ))
+                }
             </div>
 
             <div className="flex flex-wrap items-center justify-between gap-3 mb-5">

@@ -5,7 +5,7 @@ import { useDebounce } from '@/app/hooks/useDebounce';
 import { getServices } from "@/app/services/serviceService";
 
 export const useGetServices = (filter) =>{
-	const debouncedSearch = useDebounce(filter, 1000);
+	const debouncedSearch = useDebounce(filter, 500);
 
 	return useQuery({
 		queryKey: ["services", debouncedSearch],
