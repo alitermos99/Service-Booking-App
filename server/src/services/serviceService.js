@@ -72,7 +72,8 @@ export const getAllServices = async (filter) => {
 			$or: [
 				{ title: { $regex: filter, $options: 'i' } },
 				{ short: { $regex: filter, $options: 'i' } },
-				{ description: { $regex: filter, $options: 'i' } }
+				{ description: { $regex: filter, $options: 'i' } },
+				{ tags: { $regex: filter, $options: 'i' } }
 			]
 		}
 		: {};
