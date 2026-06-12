@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Button from '../../ui/Button'
 import CustomerServicesGridModal from './CustomerServicesServiceModal'
 
-const CustomerServicesService = ({ serviceId, icon, title, short, description, price, duration, isActive, 
+const CustomerServicesService = ({ serviceId, adminId, icon, title, short, description, price, duration, isActive, 
     avgRating = 0, totalReviews = 0
 }) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -10,7 +10,6 @@ const CustomerServicesService = ({ serviceId, icon, title, short, description, p
 
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-            {/* example */}
             <div className="service-card">
                 <div className="flex items-start justify-between mb-3">
                     <div className={`w-11 h-11 rounded-xl flex items-center justify-center 
@@ -30,7 +29,6 @@ const CustomerServicesService = ({ serviceId, icon, title, short, description, p
                 <p className="text-xs text-muted mb-3 leading-relaxed">{ short }</p>
 
                 <div className="flex items-center gap-1 mb-3">
-                    {console.log('stars ', stars)}
                     {
                         stars.map(star => (
                             <span key={star} className="text-fair text-xs">★</span>
@@ -63,6 +61,7 @@ const CustomerServicesService = ({ serviceId, icon, title, short, description, p
                     stars={stars}
                     avgRating={avgRating}
                     totalReviews={totalReviews}
+                    adminId={adminId}
                     setIsOpen={setIsOpen} 
                 /> 
             }

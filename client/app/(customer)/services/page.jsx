@@ -19,7 +19,7 @@ const CustomerServicesPage = () => {
             <CustomerServicesHero />
 
             <div className="px-4 lg:px-8 pb-16 max-w-7xl mx-auto">
-                <CustomerServicesFilterSection />
+                <CustomerServicesFilterSection availableServices={services?.length} />
                 <CustomerServicesGrid services={services} />
             </div>
         </>

@@ -1,7 +1,7 @@
 import React from 'react'
 import Button from '../../ui/Button'
 
-const CustomerServicesFilterSection = () => {
+const CustomerServicesFilterSection = ({ availableServices = 0 }) => {
     return (
         <>
             <div className="flex gap-2 overflow-x-auto pb-2 mb-6 hide-scrollbar">
@@ -14,7 +14,7 @@ const CustomerServicesFilterSection = () => {
             </div>
 
             <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
-                <p className="text-sm text-muted"><span className="text-tx font-medium">{'12'}</span> services available</p>
+                <p className="text-sm text-muted"><span className="text-tx font-medium">{ availableServices }</span> service(s) available</p>
 
                 <div className="flex items-center gap-2">
                     <div className="flex items-center gap-1.5 text-xs glass2 rounded-xl px-3 py-2">

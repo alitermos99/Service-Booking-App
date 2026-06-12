@@ -1,14 +1,38 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Modal from '../../ui/Modal'
 import Button from '../../ui/Button'
 import Link from 'next/link'
+import { useGetAvailableSlots } from '@/app/features/slot/hooks/useGetAvailableSlots'
+import LoadingOverlay from '../../ui/LoadingOverlay'
 
-const CustomerServicesServiceModal = ({ serviceId, title, price, duration, description, stars, avgRating, 
-    totalReviews, setIsOpen 
+const CustomerServicesServiceModal = ({ serviceId, adminId, title, price, duration, description, stars, avgRating = 0, 
+    totalReviews = 0, setIsOpen 
 }) => {
+    const [selectedIndex, setSelectedIndex] = useState(0);
+    const [selectedTime, setSelectedTime] = useState(null);
+    const { data: availableSlots, isPending } = useGetAvailableSlots(adminId, serviceId, 
+        new Date().toLocaleDateString('en-CA'), new Date().getTimezoneOffset()
+    );
+
+    const formatTo12hr = (time) => {
+        const [h, m] = time.split(':').map(Number);
+        const period = h >= 12 ? 'PM' : 'AM';
+        const hour = h % 12 || 12;
+        return `${hour}:${m.toString().padStart(2, '0')} ${period}`;
+    };
+
+    const handleSlotSelection = (slot, index) => {
+        setSelectedIndex(index);
+        setSelectedTime({
+            startTime: slot.startTime,
+            endTime: slot.endTime
+        });
+    }
+
     return (
         <Modal>
-            {/* example */ }
+            { isPending && <LoadingOverlay /> }
+
             <div className="glass rounded-2xl w-full max-w-lg overflow-y-auto max-h-[90vh]">
                 <div className="p-6 space-y-4">
                     <div className="flex items-start justify-between">
@@ -63,31 +87,21 @@ const CustomerServicesServiceModal = ({ serviceId, title, price, duration, descr
                         <p className="text-sm font-medium text-tx mb-2">Available Today</p>
 
                         <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
-                            <Button className="glass2 rounded-xl py-2 text-xs text-tx hover:border-accent transition-colors border-[rgba(108,99,255,0.4)]!" 
-                                label="9:00 AM" 
-                            />
-
-                            <Button className="glass2 rounded-xl py-2 text-xs text-tx hover:border-accent transition-colors" 
-                                label="11:00 AM" 
-                            />
-
-                            <Button className="glass2 rounded-xl py-2 text-xs text-muted line-through" 
-                                label="1:00 PM"
-                                disabled 
-                            />
-
-                            <Button className="glass2 rounded-xl py-2 text-xs text-tx hover:border-accent transition-colors" 
-                                label="3:00 PM" 
-                            />
-
-                            <Button className="glass2 rounded-xl py-2 text-xs text-tx hover:border-accent transition-colors" 
-                                label="4:30 PM" 
-                            />
-
-                            <Button className="glass2 rounded-xl py-2 text-xs text-muted line-through" 
-                                label="5:00 PM" 
-                                disabled
-                            />
+                            {
+                                availableSlots?.map((slot, index) => (
+                                    <Button key={index} 
+                                        className={`glass2 rounded-xl py-2 text-xs text-tx hover:border-accent transition-colors text-[10px]
+                                            ${selectedIndex === index ? 'border-[rgba(108,99,255,0.4)]!' : ''}
+                                            ${slot.available ? '' : 'text-muted! line-through'}
+                                        `} 
+                                        label={
+                                            `${formatTo12hr(slot.startTime)} - ${formatTo12hr(slot.endTime)}`
+                                        }
+                                        onClick={() => handleSlotSelection(slot, index)}
+                                        disabled={!slot.available}
+                                    />
+                                ))
+                            }
                         </div>
 
                     </div>
