@@ -31,7 +31,8 @@ export const getService = asyncHandler(async (req, res) => {
 
 // Get all services
 export const getServices = asyncHandler(async (req, res) => {
-	const services = await getAllServices();
+	const { filter } = req.query;
+	const services = await getAllServices(filter?.trim());
 
 	const sanitizedServices = services.map(service => {
 		return sanitizeService(service)

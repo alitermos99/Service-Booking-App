@@ -43,8 +43,18 @@ export const getAllServicesAdmin = async (adminId) => {
 	return services;
 }
 
-export const getAllServices = async () => {
-	const services = await Service.find().lean();
+export const getAllServices = async (filter) => {
+	const query = filter
+		? {
+			$or: [
+				{ title: { $regex: filter, $options: 'i' } },
+				{ short: { $regex: filter, $options: 'i' } },
+				{ description: { $regex: filter, $options: 'i' } }
+			]
+		}
+		: {};
+
+	const services = await Service.find(query).sort({ createdAt: -1 }).lean();
 	const ids = services.map(service => {
 		return service._id
 	});
