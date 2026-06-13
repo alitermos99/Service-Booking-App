@@ -20,7 +20,7 @@ const DataTable = ({ columns = [], data = [], className = 'overflow-x-auto', tab
                         <tr key={row._id} className="cursor-pointer">
                             {columns.map(column => (
                                 <td key={column.fieldName} className={column.className}>
-                                    <span>{row[column.fieldName]}</span>
+                                    <span>{ row[column.fieldName] }</span>
                                 </td>
                             ))}
                         </tr>
