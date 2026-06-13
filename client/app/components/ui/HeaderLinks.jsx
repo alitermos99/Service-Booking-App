@@ -1,10 +1,22 @@
-import { usePathname } from 'next/navigation';
-import { createPortal } from 'react-dom';
-import Button from './Button';
+'use client'
+
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import Button from './Button';
+import { createPortal } from 'react-dom';
+import { usePathname } from 'next/navigation';
 
 const HeaderLinks = ({ pages, isMobileNavOpen, setIsMobileNavOpen }) => {
     const currentPage = usePathname();
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        function setIsMounted() {
+            setMounted(true);
+        }
+
+        setIsMounted();
+    }, []);
 
     const mobileNav = (
         <>
@@ -64,7 +76,7 @@ const HeaderLinks = ({ pages, isMobileNavOpen, setIsMobileNavOpen }) => {
             </div>
 
             {/* portal renders at document.body level, outside header DOM */}
-            {typeof window !== 'undefined' && createPortal(mobileNav, document.body)}
+            {mounted && createPortal(mobileNav, document.body)}
         </>
     );
 }
