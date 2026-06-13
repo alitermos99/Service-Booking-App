@@ -1,10 +1,10 @@
 import React from 'react'
 
-const Input = (props) => {
+const Input = ({ className = '', ...rest }) => {
     return (
         <input
-            className='input-field'
-            { ...props }
+            className={`${className} input-field`}
+            { ...rest }
         />
     )
 }
