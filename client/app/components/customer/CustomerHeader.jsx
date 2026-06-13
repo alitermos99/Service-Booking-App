@@ -3,23 +3,21 @@
 import React, { useState } from 'react'
 import Header from '../ui/Header'
 import Logo from '../ui/Logo'
-import Link from 'next/link'
 import CustomerUserAvatar from './CustomerUserAvatar'
-import { usePathname } from 'next/navigation'
 import Button from '../ui/Button'
 import HeaderLinks from '../ui/HeaderLinks'
 
 const PAGES = [
     {
-        label: 'Services',
+        label: '⚡ Services',
         link: '/services'
     },
     {
-        label: 'My Bookings',
+        label: '📆 My Bookings',
         link: '/bookings'
     },
     {
-        label: 'Reviews',
+        label: '⭐ Reviews',
         link: '/reviews'
     }
 ];
