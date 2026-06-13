@@ -200,14 +200,14 @@ body {
 
   /* Icons */
   .Toastify__toast--success .Toastify__toast-icon svg { fill: var(--goodpass) !important; }
-  .Toastify__toast--error   .Toastify__toast-icon svg { fill: #f87171 !important; }
-  .Toastify__toast--warning .Toastify__toast-icon svg { fill: #fbbf24 !important; }
+  .Toastify__toast--error   .Toastify__toast-icon svg { fill: var(--weakpass) !important; }
+  .Toastify__toast--warning .Toastify__toast-icon svg { fill: var(--fairpass) !important; }
   .Toastify__toast--info    .Toastify__toast-icon svg { fill: var(--accent-sky) !important; }
 
   /* Progress bar */
   .Toastify__progress-bar--success { background: var(--goodpass) !important; }
-  .Toastify__progress-bar--error   { background: #f87171 !important; }
-  .Toastify__progress-bar--warning { background: #fbbf24 !important; }
+  .Toastify__progress-bar--error   { background: var(--weakpass) !important; }
+  .Toastify__progress-bar--warning { background: var(--fairpass) !important; }
   .Toastify__progress-bar--info    { background: var(--accent-sky) !important; }
   .Toastify__progress-bar { background: var(--accent) !important; }
 
@@ -272,5 +272,61 @@ body {
     border-color:rgba(108,99,255,0.4);
     transform:translateY(-3px);
     box-shadow:0 10px 30px rgba(108,99,255,0.15)
+  }
+
+  .booking-card{
+    background:rgba(26,26,36,0.6);
+    border:1px solid rgba(255,255,255,0.094);
+    border-radius:1rem;
+    transition:all 0.2s
+  }
+
+  .booking-card:hover{
+    border-color:rgba(108,99,255,0.3);
+    transform:translateY(-1px)
+  }
+
+  .badge{
+    display:inline-flex;
+    align-items:center;
+    padding:0.2rem 0.65rem;
+    border-radius:9999px;
+    font-size:0.7rem;
+    font-weight:500
+  }
+
+  .badge-pending{
+    background:rgba(251,191,36,0.15);
+    color:var(--fairpass)
+  }
+
+  .badge-confirmed{
+    background:rgba(52,211,153,0.15);
+    color:var(--goodpass)
+  }
+
+  .badge-cancelled{
+    background:rgba(248,113,113,0.15);
+    color:var(--weakpass)
+  }
+
+  .badge-completed{
+    background:rgba(56,189,248,0.15);
+    color:var(--accent-sky)
+  }
+
+  .badge-paid{
+    background:rgba(52,211,153,0.15);
+    color:var(--goodpass)
+  }
+
+  .badge-unpaid{
+    background:rgba(251,191,36,0.15);
+    color:var(--fairpass)
+  }
+
+  .badge-refunded{
+    background:rgba(167,139,250,0.15);
+    color:var(--accent-soft)
   }
 }
