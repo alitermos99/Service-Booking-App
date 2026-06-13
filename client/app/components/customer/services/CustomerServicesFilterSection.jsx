@@ -1,5 +1,7 @@
 import React from 'react'
 import Button from '../../ui/Button'
+import Chip from '../../ui/Chip'
+import SelectField from '../../forms/SelectField';
 
 const TAGS = [{name: 'all', label: 'All'},
     {name: 'massage', label: 'Massage'},
@@ -9,17 +11,44 @@ const TAGS = [{name: 'all', label: 'All'},
     {name: 'fitness',label: 'Fitness'},
 ]
 
+const SORT_OPTIONS = [
+    {
+        value: 'createdAt;desc',
+        label: 'Sort: Newest to Oldest'
+    },
+    {
+        value: 'createdAt;asc',
+        label: 'Sort: Oldest to Newest'
+    },
+    {
+        value: 'title;desc',
+        label: 'Title: Z - A'
+    },
+    {
+        value: 'title;asc',
+        label: 'Title: A - Z'
+    },
+    {
+        value: 'price;desc',
+        label: 'Price: High to Low'
+    },
+    {
+        value: 'price;asc',
+        label: 'Price: Low to High'
+    }
+];
+
 const CustomerServicesFilterSection = ({ selectedtTag, onSelect, onSort, availableServices = 0 }) => {
     return (
         <>
             <div className="flex gap-2 overflow-x-auto pb-2 mb-6 hide-scrollbar">
                 {
                     TAGS.map((tag, index) => (
-                        <Button key={index} 
-                            className={`cat-chip ${tag.name === selectedtTag ? 'active' : ''}`} 
-                            label={tag.label} 
-                            name={tag.name} 
-                            onClick={onSelect} 
+                        <Chip key={index} 
+                            chipLabel={tag.label}
+                            chipName={tag.name}
+                            onSelect={onSelect}
+                            isActive={tag.name === selectedtTag}
                         />
                     ))
                 }
@@ -36,14 +65,7 @@ const CustomerServicesFilterSection = ({ selectedtTag, onSelect, onSort, availab
                             />
                         </svg>
 
-                        <select className="bg-transparent outline-none text-muted text-xs" onChange={onSort}>
-                            <option value="createdAt;desc">Sort: Newest to Oldest</option>
-                            <option value="createdAt;asc">Sort: Oldest to Newest</option>
-                            <option value="title;desc">Title: Z - A</option>
-                            <option value="title;asc">Title: A - Z</option>
-                            <option value="price;desc">Price: High to Low</option>
-                            <option value="price;asc">Price: Low to High</option>
-                        </select>
+                        <SelectField onChange={onSort} options={SORT_OPTIONS} />
                     </div>
 
                     <div className="flex gap-1 glass2 rounded-xl p-1">
