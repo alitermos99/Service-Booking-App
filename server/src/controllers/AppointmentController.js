@@ -35,28 +35,13 @@ export const getUserAppointmentsData = asyncHandler(async (req, res) => {
 });
 
 export const getUserAppointments = asyncHandler(async (req, res) => {
-	const {
-        cursor,
-        limit = 10,
-        sortField = 'createdAt',
-        sortOrder = 'desc',
-    } = req.query;
-	
-	const data = await getAUserAppointments({
-        cursor,
-        limit,
-        sortField,
-        sortOrder
-    }, req.user.id);
+	const appointments = await getAUserAppointments(req.user.id);
 
-	const sanitizedAppointments = data?.results?.map(appointment => {
+	const sanitizedAppointments = appointments?.map(appointment => {
 		return sanitizeAppointment(appointment);
 	});
 
-	return res.status(200).json({
-		...data,
-		results: sanitizedAppointments
-	});
+	return res.status(200).json(sanitizedAppointments);
 });
 
 export const getUserPastAppointments = asyncHandler(async (req, res) => {

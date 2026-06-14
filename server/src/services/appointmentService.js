@@ -93,26 +93,12 @@ export const getAUserAppointment = async (appointmentId, userId) => {
 	return appointment;
 }
 
-export const getAUserAppointments = async ({ cursor, limit, sortField, sortOrder }, userId) => {
-	const query = {
-		user_id: userId,
-		startTime: { $gte: new Date() }
-	};
+export const getAUserAppointments = async (userId) => {
+	const appointments = await Appointment.find({ user_id: userId, startTime: { $gte: new Date() } })
+		.populate("admin_id", "name")
+		.populate("service_id", "title duration price");
 
-	const queryModifier = q =>
-			q.populate("service_id", "name price duration")
-			.populate("admin_id", "name")
-
-	const { results, nextCursor, prevCursor, 
-		hasNextPage, hasPrevPage } = await _handlePagination(cursor, limit, sortField, sortOrder, query, queryModifier);
-
-	return {
-        results,
-        nextCursor: nextCursor  ? Buffer.from(JSON.stringify(nextCursor)).toString('base64')  : null,
-        prevCursor: prevCursor  ? Buffer.from(JSON.stringify(prevCursor)).toString('base64')  : null,
-        hasNextPage,
-        hasPrevPage
-    };
+	return appointments;
 }
 
 export const getAUserPastAppointments = async ({ cursor, limit, sortField, sortOrder }, userId) => {
