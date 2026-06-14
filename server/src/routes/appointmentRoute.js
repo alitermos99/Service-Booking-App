@@ -20,6 +20,6 @@ router.get('/appointments-info', getUserAppointmentsData);
 router.get('/:id', getUserAppointment);
 router.post('/', createAppointment);
 router.put('/:id', updateAppointment);
-router.post('/:id', cancelAppointment);
+router.post('/cancel/:id', cancelAppointment);
 
 export default router;

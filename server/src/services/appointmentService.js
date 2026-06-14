@@ -96,7 +96,7 @@ export const getAUserAppointment = async (appointmentId, userId) => {
 export const getAUserAppointments = async (userId) => {
 	const appointments = await Appointment.find({ user_id: userId, startTime: { $gte: new Date() } })
 		.populate("admin_id", "name")
-		.populate("service_id", "title duration price");
+		.populate("service_id", "title duration price icon iconBg");
 
 	return appointments;
 }
