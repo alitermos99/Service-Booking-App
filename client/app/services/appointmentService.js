@@ -22,3 +22,11 @@ export const getPastAppointments = async ({ cursor, limit = 10, sortField = 'cre
 
 	return response.data;
 }
+
+export const getAppointmentsInfo = async () => {
+	const response = await api.get(
+		'/api/v1/appointments/appointments-info'
+	);
+
+	return response.data;
+}
