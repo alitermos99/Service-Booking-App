@@ -96,9 +96,7 @@ export const getAUserAppointment = async (appointmentId, userId) => {
 export const getAUserAppointments = async ({ cursor, limit, sortField, sortOrder }, userId) => {
 	const query = {
 		user_id: userId,
-		status: {
-			$in: ["pending", "confirmed"]
-		}
+		startTime: { $gte: new Date() }
 	};
 
 	const queryModifier = q =>
@@ -120,9 +118,7 @@ export const getAUserAppointments = async ({ cursor, limit, sortField, sortOrder
 export const getAUserPastAppointments = async ({ cursor, limit, sortField, sortOrder }, userId) => {
 	const query = {
 		user_id: userId,
-		status: {
-			$in: ["completed", "cancelled"]
-		}
+		startTime: { $lt: new Date() }
 	};
 
 	const queryModifier = q =>
