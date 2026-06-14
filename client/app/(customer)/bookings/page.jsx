@@ -9,8 +9,59 @@ import CustomerBookingsFiltersSearch from '@/app/components/customer/bookings/Cu
 import CustomerBookingsUpcomingSection from '@/app/components/customer/bookings/CustomerBookingsUpcomingSection'
 import DataTable from '@/app/components/ui/DataTable'
 import Button from '@/app/components/ui/Button'
+import { useGetAppointments } from '@/app/features/appointment/hooks/useGetAppointments';
+
+function formatAppointmentDate(dateString) {
+    const date = new Date(dateString);
+
+    const datePart = date.toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+    });
+
+    const timePart = date.toLocaleTimeString("en-US", {
+        hour: "numeric",
+        minute: "2-digit",
+        hour12: true,
+    });
+
+    return `${datePart} · ${timePart}`;
+}
+
+const PAST_APPOINTMENTS_COLUMNS = [
+    {label: 'SERVICE', fieldName: 'service', className: 'font-medium text-tx'},
+    {label: 'PROVIDER', fieldName: 'provider', className: 'text-muted'},
+    {label: 'DATE & TIME', fieldName: 'datetime', className: 'text-muted hidden sm:table-cell'},
+    {label: 'DURATION', fieldName: 'duration', className: 'text-muted hidden md:table-cell'},
+    {label: 'STATUS', fieldName: 'status', 
+        typeAttributes: {
+            className: (row) => row?.status === 'completed' ? 'badge badge-completed' : 'badge badge-cancelled'
+        }
+    },
+    {label: 'PAYMENT', fieldName: 'paymentStatus', typeAttributes: {
+            className: (row) => row?.paymentStatus === 'paid' ? 'badge badge-paid' : 'badge badge-refunded'
+        }
+    },
+    {label: 'AMOUNT', fieldName: 'amount', className: 'hidden lg:table-cell font-medium text-muted'},
+]
 
 const CustomerBookingsPage = () => {
+    const { data: appointments, isPending } = useGetAppointments();
+    console.log('@@@@ data ', appointments, isPending);
+    const pastAppointments = appointments?.filter(filter => {
+        return filter?.status === 'completed' || filter?.status === 'cancelled'
+    }).map(appointment => {
+        return {
+            ...appointment,
+            amount: `$${appointment.service_id?.price}`,
+            duration: `${appointment.service_id?.price} min`,
+            provider: appointment.admin_id?.name,
+            service: appointment.service_id?.title,
+            datetime: formatAppointmentDate(appointment.startTime)
+        }
+    });
+    console.log('@@@@ pastAppointments ', pastAppointments);
+
     return (
         <>
             <CustomerHeader />
@@ -46,11 +97,11 @@ const CustomerBookingsPage = () => {
                         <span className="text-xs text-muted">9 records</span>
                     </div>
 
-                    {/* <DataTable
-                        columns={columns}
-                        data={data}
+                    <DataTable
+                        columns={PAST_APPOINTMENTS_COLUMNS}
+                        data={pastAppointments}
                         tableClass="w-full table"
-                    /> */}
+                    />
 
                     <div className="flex items-center justify-between px-6 py-4 border-[rgba(255,255,255,0.07)] border-t border-solid">
                         <p className="text-xs text-muted">Showing 5 of 9 records</p>
