@@ -3,6 +3,7 @@ import DataTable from '../../ui/DataTable';
 import { useGetPastAppointments } from '@/app/features/appointment/hooks/useGetPastAppointments';
 import Button from '../../ui/Button';
 import LoadingOverlay from '../../ui/LoadingOverlay';
+import CustomerBookingsFiltersSearch from './CustomerBookingsFilterSection';
 
 function formatAppointmentDate(dateString) {
     const date = new Date(dateString);
@@ -73,12 +74,14 @@ const CustomerBookingsPastAppointments = () => {
         const prevCursor = history.pop();
         setHistory(history);
         setCursor(prevCursor);
+        setTotalShowing(prev => prev - data.results.length);
     };
 
     useEffect(() => {
         function handleSetPagination() {
             setCursor(null);
             setHistory([]);
+            setTotalShowing(0);
         }
 
         handleSetPagination();
@@ -97,52 +100,56 @@ const CustomerBookingsPastAppointments = () => {
     }, [data]);
 
     return (
-        <div className="glass2 rounded-2xl overflow-hidden">
+        <>
             { isPending && <LoadingOverlay /> }
 
-            <div className="flex items-center justify-between px-6 py-4 border-b border-solid border-[rgba(255,255,255,0.07)]">
-                <h2 className="text-sm font-semibold text-muted uppercase tracking-wider flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-accent-sky"></span>
-                    Booking History
-                </h2>
+            <CustomerBookingsFiltersSearch />
 
-                <span className="text-xs text-muted">{ data?.totalRecords } record(s)</span>
-            </div>
+            <div className="glass2 rounded-2xl overflow-hidden">
+                <div className="flex items-center justify-between px-6 py-4 border-b border-solid border-[rgba(255,255,255,0.07)]">
+                    <h2 className="text-sm font-semibold text-muted uppercase tracking-wider flex items-center gap-2">
+                        <span className="w-2 h-2 rounded-full bg-accent-sky"></span>
+                        Booking History
+                    </h2>
 
-            <DataTable
-                columns={PAST_APPOINTMENTS_COLUMNS}
-                data={pastAppointments}
-                tableClass="w-full table"
-            />
+                    <span className="text-xs text-muted">{ data?.totalRecords } record(s)</span>
+                </div>
 
-            <div className="flex items-center justify-between px-6 py-4 border-[rgba(255,255,255,0.07)] border-t border-solid">
-                <p className="text-xs text-muted">Showing { totalShowing } of { data?.totalRecords } record(s)</p>
+                <DataTable
+                    columns={PAST_APPOINTMENTS_COLUMNS}
+                    data={pastAppointments}
+                    tableClass="w-full table"
+                />
 
-                <div className="flex items-center gap-1">
-                    <Button 
-                        className="w-8 h-8 rounded-lg text-xs flex items-center justify-center text-muted bg-[rgba(255,255,255,0.04)] disabled:opacity-40 disabled:cursor-not-allowed" 
-                        label={
-                            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"/>
-                            </svg>
-                        }
-                        disabled={!hasPrevPage || isPending}
-                        onClick={handlePrev}
-                    />
+                <div className="flex items-center justify-between px-6 py-4 border-[rgba(255,255,255,0.07)] border-t border-solid">
+                    <p className="text-xs text-muted">Showing { totalShowing } of { data?.totalRecords } record(s)</p>
 
-                    <Button 
-                        className="w-8 h-8 rounded-lg text-xs flex items-center justify-center text-muted bg-[rgba(255,255,255,0.04)] disabled:opacity-40 disabled:cursor-not-allowed" 
-                        label={
-                            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"/>
-                            </svg>
-                        }
-                        disabled={!hasNextPage || isPending}
-                        onClick={handleNext}
-                    />
+                    <div className="flex items-center gap-1">
+                        <Button 
+                            className="w-8 h-8 rounded-lg text-xs flex items-center justify-center text-muted bg-[rgba(255,255,255,0.04)] disabled:opacity-40 disabled:cursor-not-allowed" 
+                            label={
+                                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"/>
+                                </svg>
+                            }
+                            disabled={!hasPrevPage || isPending}
+                            onClick={handlePrev}
+                        />
+
+                        <Button 
+                            className="w-8 h-8 rounded-lg text-xs flex items-center justify-center text-muted bg-[rgba(255,255,255,0.04)] disabled:opacity-40 disabled:cursor-not-allowed" 
+                            label={
+                                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"/>
+                                </svg>
+                            }
+                            disabled={!hasNextPage || isPending}
+                            onClick={handleNext}
+                        />
+                    </div>
                 </div>
             </div>
-        </div>
+        </>
     )
 }
 

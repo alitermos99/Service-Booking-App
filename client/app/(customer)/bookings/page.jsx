@@ -5,7 +5,6 @@ import Link from 'next/link'
 import Section from '@/app/components/layouts/Section'
 import CustomerHeader from '@/app/components/customer/CustomerHeader'
 import CustomerBookingsStats from '@/app/components/customer/bookings/CustomerBookingsStats'
-import CustomerBookingsFiltersSearch from '@/app/components/customer/bookings/CustomerBookingsFilterSection'
 import CustomerBookingsUpcomingSection from '@/app/components/customer/bookings/CustomerBookingsUpcomingSection'
 import CustomerBookingsPastAppointments from '@/app/components/customer/bookings/CustomerBookingsPastAppointments'
 
@@ -32,7 +31,6 @@ const CustomerBookingsPage = () => {
                 </div>
 
                 <CustomerBookingsStats />
-                <CustomerBookingsFiltersSearch />
                 <CustomerBookingsUpcomingSection />
                 <CustomerBookingsPastAppointments />
             </Section>
