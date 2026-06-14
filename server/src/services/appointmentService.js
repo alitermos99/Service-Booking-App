@@ -81,6 +81,7 @@ export const getAUserAppointmentsData = async (userId) => {
 	return {
 		totalBookings: stats?.totalBookings || 0,
 		upcomingBookings: stats?.upcomingBookings || 0,
+		completedBookings: stats?.completedBookings || 0,
 		totalAmount: stats?.totalAmount || 0
 	};
 }
