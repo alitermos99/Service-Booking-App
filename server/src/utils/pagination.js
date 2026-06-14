@@ -55,5 +55,7 @@ export default async function paginate(model, { cursor, limit = 10, sort, filter
         }
         : null;
 
-	return { results, nextCursor, prevCursor, hasNextPage, hasPrevPage };
+    const totalRecords = await model.countDocuments(filter);
+    
+	return { results, nextCursor, prevCursor, hasNextPage, hasPrevPage, totalRecords };
 }

@@ -35,6 +35,7 @@ export const getUserAppointments = asyncHandler(async (req, res) => {
         sortField = 'createdAt',
         sortOrder = 'desc',
     } = req.query;
+	
 	const data = await getAUserAppointments({
         cursor,
         limit,

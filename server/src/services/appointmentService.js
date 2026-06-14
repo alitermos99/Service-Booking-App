@@ -49,7 +49,7 @@ export const getAUserAppointments = async ({ cursor, limit, sortField, sortOrder
 	};
 
 	const queryModifier = q =>
-			q.populate("service_id", "name price")
+			q.populate("service_id", "name price duration")
 			.populate("admin_id", "name")
 
 	const { results, nextCursor, prevCursor, 
@@ -73,18 +73,19 @@ export const getAUserPastAppointments = async ({ cursor, limit, sortField, sortO
 	};
 
 	const queryModifier = q =>
-			q.populate("service_id", "name price")
+			q.populate("service_id", "title price duration")
 			.populate("admin_id", "name")
 
 	const { results, nextCursor, prevCursor, 
-		hasNextPage, hasPrevPage } = await _handlePagination(cursor, limit, sortField, sortOrder, query, queryModifier);
+		hasNextPage, hasPrevPage, totalRecords } = await _handlePagination(cursor, limit, sortField, sortOrder, query, queryModifier);
 
 	return {
         results,
         nextCursor: nextCursor  ? Buffer.from(JSON.stringify(nextCursor)).toString('base64')  : null,
         prevCursor: prevCursor  ? Buffer.from(JSON.stringify(prevCursor)).toString('base64')  : null,
         hasNextPage,
-        hasPrevPage
+        hasPrevPage,
+		totalRecords
     };
 }
 
@@ -121,7 +122,7 @@ async function _handlePagination(cursor, limit, sortField, sortOrder, query, que
 		? JSON.parse(Buffer.from(cursor, 'base64').toString('utf8'))
 		: null;
 
-	const { results, nextCursor, prevCursor, hasNextPage, hasPrevPage } = await paginate(Appointment, {
+	const { results, nextCursor, prevCursor, hasNextPage, hasPrevPage, totalRecords } = await paginate(Appointment, {
 		cursor: parsedCursor,
 		limit,
 		sort: { field: sortField, order: sortOrder },
@@ -129,5 +130,5 @@ async function _handlePagination(cursor, limit, sortField, sortOrder, query, que
 		queryModifier
 	});
 
-	return { results, nextCursor, prevCursor, hasNextPage, hasPrevPage };
+	return { results, nextCursor, prevCursor, hasNextPage, hasPrevPage, totalRecords };
 }
