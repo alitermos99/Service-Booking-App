@@ -8,7 +8,7 @@ const SelectField = ({ onChange, showIcon = false, className = 'bg-transparent o
             {
                 !!options?.length &&
                 (
-                    <div className="flex items-center gap-1.5 text-xs glass2 rounded-xl px-3 py-2">
+                    <div className="flex items-center gap-1.5 text-xs glass2 rounded-xl px-3 py-2 cursor-pointer">
                         {
                             showIcon &&
                             (
@@ -21,7 +21,7 @@ const SelectField = ({ onChange, showIcon = false, className = 'bg-transparent o
                             )
                         }
 
-                        <select className={className} onChange={onChange}>
+                        <select className={className + ' ' + 'cursor-pointer'} onChange={onChange}>
                             {
                                 options.map(option => (
                                     <option key={option.value} value={option?.value}>{ option.label }</option>
