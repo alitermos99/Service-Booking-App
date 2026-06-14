@@ -8,53 +8,7 @@ import CustomerBookingsStats from '@/app/components/customer/bookings/CustomerBo
 import CustomerBookingsFiltersSearch from '@/app/components/customer/bookings/CustomerBookingsFilterSection'
 import CustomerBookingsUpcomingSection from '@/app/components/customer/bookings/CustomerBookingsUpcomingSection'
 import DataTable from '@/app/components/ui/DataTable'
-
-const columns = [
-    {
-        label: 'Title',
-        fieldName: 'title',
-        className: 'px-4 py-3'
-    },
-    {
-        label: 'Category',
-        fieldName: 'category',
-        className: 'px-4 py-3'
-    },
-    {
-        label: 'Price',
-        fieldName: 'price',
-        className: 'px-4 py-3'
-    },
-    {
-        label: 'Status',
-        fieldName: 'status',
-        className: 'px-4 py-3'
-    }
-];
-
-const data = [
-    {
-        _id: '1',
-        title: 'Deep Tissue Massage',
-        category: 'Wellness',
-        price: '$90',
-        status: 'Active'
-    },
-    {
-        _id: '2',
-        title: 'Hair Cut & Styling',
-        category: 'Beauty',
-        price: '$45',
-        status: 'Active'
-    },
-    {
-        _id: '3',
-        title: 'Personal Training Session',
-        category: 'Fitness',
-        price: '$120',
-        status: 'Inactive'
-    }
-];
+import Button from '@/app/components/ui/Button'
 
 const CustomerBookingsPage = () => {
     return (
@@ -92,11 +46,33 @@ const CustomerBookingsPage = () => {
                         <span className="text-xs text-muted">9 records</span>
                     </div>
 
-                    <DataTable
+                    {/* <DataTable
                         columns={columns}
                         data={data}
                         tableClass="w-full table"
-                    />
+                    /> */}
+
+                    <div className="flex items-center justify-between px-6 py-4 border-[rgba(255,255,255,0.07)] border-t border-solid">
+                        <p className="text-xs text-muted">Showing 5 of 9 records</p>
+
+                        <div className="flex items-center gap-1">
+                            <Button className="w-8 h-8 rounded-lg text-xs flex items-center justify-center text-muted bg-[rgba(255,255,255,0.04)]" 
+                                label={
+                                    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"/>
+                                    </svg>
+                                }
+                            />
+
+                            <Button className="w-8 h-8 rounded-lg text-xs flex items-center justify-center text-muted bg-[rgba(255,255,255,0.04)]" 
+                                label={
+                                    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"/>
+                                    </svg>
+                                }
+                            />
+                        </div>
+                    </div>
                 </div>
             </Section>
         </>
