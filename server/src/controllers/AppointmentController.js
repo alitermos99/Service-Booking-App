@@ -5,7 +5,8 @@ import {
 	getAUserAppointment,
 	getAUserAppointments,
 	updateAnAppointment,
-	cancelAnAppointment
+	cancelAnAppointment,
+	getAUserPastAppointments
 } from '../services/appointmentService.js';
 
 export const createAppointment = asyncHandler(async (req, res) => {
@@ -28,13 +29,52 @@ export const getUserAppointment = asyncHandler(async (req, res) => {
 });
 
 export const getUserAppointments = asyncHandler(async (req, res) => {
-	const appointments = await getAUserAppointments(req.user.id);
+	const {
+        cursor,
+        limit = 10,
+        sortField = 'createdAt',
+        sortOrder = 'desc',
+    } = req.query;
+	const data = await getAUserAppointments({
+        cursor,
+        limit,
+        sortField,
+        sortOrder
+    }, req.user.id);
 
-	const sanitizedAppointments = appointments.map(appointment => {
+	const sanitizedAppointments = data?.results?.map(appointment => {
+		return sanitizeAppointment(appointment);
+	});
+
+	return res.status(200).json({
+		...data,
+		results: sanitizedAppointments
+	});
+});
+
+export const getUserPastAppointments = asyncHandler(async (req, res) => {
+	const {
+        cursor,
+        limit = 10,
+        sortField = 'createdAt',
+        sortOrder = 'desc',
+    } = req.query;
+
+	const data = await getAUserPastAppointments({
+        cursor,
+        limit,
+        sortField,
+        sortOrder
+    }, req.user.id);
+
+	const sanitizedAppointments = data?.results?.map(appointment => {
 		return sanitizeAppointment(appointment);
 	})
 
-	return res.status(200).json(sanitizedAppointments);
+	return res.status(200).json({
+		...data,
+		results: sanitizedAppointments
+	});
 });
 
 export const updateAppointment = asyncHandler(async (req, res) => {

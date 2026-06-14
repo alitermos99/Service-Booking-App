@@ -56,7 +56,7 @@ export const calculateAndValidateTimeRange = async (startTime, duration) => {
 };
 
 export const sanitizeAppointment = (appointment) => {
-	const object = appointment.toObject();
+	const object = appointment?.toObject ? appointment.toObject() : appointment;
 
 	delete object.__v;
 	delete object.createdAt;

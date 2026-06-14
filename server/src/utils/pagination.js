@@ -1,4 +1,4 @@
-export default async function paginate(model, { cursor, limit = 10, sort, filter = {} }) {
+export default async function paginate(model, { cursor, limit = 10, sort, filter = {}, queryModifier }) {
 	const limitNum = parseInt(limit);
 	const sortOrder = sort?.order === 'asc' ? 1 : -1;
 	const sortField = sort?.field || 'createdAt';
@@ -19,12 +19,16 @@ export default async function paginate(model, { cursor, limit = 10, sort, filter
     const appliedSort = isPrev ? sortOrder * -1 : sortOrder;
 	const query = { ...filter, ...cursorCondition };
 
-	const docs = await model
+	let mongooseQuery = model
         .find(query)
         .sort({ [sortField]: appliedSort, _id: appliedSort })
         .limit(limitNum + 1)
-        .lean();
 
+    if (queryModifier) {
+        mongooseQuery = queryModifier(mongooseQuery);
+    }
+
+    const docs = await mongooseQuery.lean();
 	const hasMore = docs.length > limitNum;
 	const results = hasMore ? docs.slice(0, limitNum) : docs;
 
@@ -37,16 +41,16 @@ export default async function paginate(model, { cursor, limit = 10, sort, filter
 
 	const nextCursor = hasNextPage
         ? {
-            value:     results[results.length - 1][sortField],
-            id:        results[results.length - 1]._id,
+            value: results[results.length - 1][sortField],
+            id: results[results.length - 1]._id,
             direction: 'next'
         }
         : null;
 
     const prevCursor = hasPrevPage
         ? {
-            value:     results[0][sortField],
-            id:        results[0]._id,
+            value: results[0][sortField],
+            id: results[0]._id,
             direction: 'prev'
         }
         : null;

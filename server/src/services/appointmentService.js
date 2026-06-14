@@ -8,6 +8,7 @@ import {
 	getAppointmentWithParentServiceObject,
 	calculateAndValidateTimeRange 
 } from '../utils/appointmentUtils.js';
+import paginate from "../utils/pagination.js";
 
 export const createAnAppointment = async ({ service_id, startTime, notes }, userId) => {
 	if(!startTime) {
@@ -39,11 +40,52 @@ export const getAUserAppointment = async (appointmentId, userId) => {
 	return appointment;
 }
 
-export const getAUserAppointments = async (userId) => {
-	const appointments = await Appointment.find({ user_id: userId }).populate("admin_id", "name")
-		.populate("service_id", "title duration price");
+export const getAUserAppointments = async ({ cursor, limit, sortField, sortOrder }, userId) => {
+	const query = {
+		user_id: userId,
+		status: {
+			$in: ["pending", "confirmed"]
+		}
+	};
 
-	return appointments;
+	const queryModifier = q =>
+			q.populate("service_id", "name price")
+			.populate("admin_id", "name")
+
+	const { results, nextCursor, prevCursor, 
+		hasNextPage, hasPrevPage } = await _handlePagination(cursor, limit, sortField, sortOrder, query, queryModifier);
+
+	return {
+        results,
+        nextCursor: nextCursor  ? Buffer.from(JSON.stringify(nextCursor)).toString('base64')  : null,
+        prevCursor: prevCursor  ? Buffer.from(JSON.stringify(prevCursor)).toString('base64')  : null,
+        hasNextPage,
+        hasPrevPage
+    };
+}
+
+export const getAUserPastAppointments = async ({ cursor, limit, sortField, sortOrder }, userId) => {
+	const query = {
+		user_id: userId,
+		status: {
+			$in: ["completed", "cancelled"]
+		}
+	};
+
+	const queryModifier = q =>
+			q.populate("service_id", "name price")
+			.populate("admin_id", "name")
+
+	const { results, nextCursor, prevCursor, 
+		hasNextPage, hasPrevPage } = await _handlePagination(cursor, limit, sortField, sortOrder, query, queryModifier);
+
+	return {
+        results,
+        nextCursor: nextCursor  ? Buffer.from(JSON.stringify(nextCursor)).toString('base64')  : null,
+        prevCursor: prevCursor  ? Buffer.from(JSON.stringify(prevCursor)).toString('base64')  : null,
+        hasNextPage,
+        hasPrevPage
+    };
 }
 
 export const updateAnAppointment = async ({ startTime, notes }, appointmentId, userId) => {
@@ -72,4 +114,20 @@ export const cancelAnAppointment = async (appointmentId, userId) => {
 
 	appointment.status = 'cancelled';
 	await appointment.save();
+}
+
+async function _handlePagination(cursor, limit, sortField, sortOrder, query, queryModifier) {
+	const parsedCursor = cursor
+		? JSON.parse(Buffer.from(cursor, 'base64').toString('utf8'))
+		: null;
+
+	const { results, nextCursor, prevCursor, hasNextPage, hasPrevPage } = await paginate(Appointment, {
+		cursor: parsedCursor,
+		limit,
+		sort: { field: sortField, order: sortOrder },
+		filter: query,
+		queryModifier
+	});
+
+	return { results, nextCursor, prevCursor, hasNextPage, hasPrevPage };
 }
