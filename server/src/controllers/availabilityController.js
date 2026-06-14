@@ -1,5 +1,5 @@
 import asyncHandler from "express-async-handler";
-import { createASlot, deleteASlot, getAllAvailableSlots, updateASlot } from "../services/AvailabilityService.js";
+import { createASlot, deleteASlot, getAllAvailableSlots, updateASlot } from "../services/availabilityService.js";
 
 export const createSlot = asyncHandler(async (req, res) => {
 	const { dayOfWeek, startTime, endTime } = req.body;

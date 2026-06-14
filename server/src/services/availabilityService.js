@@ -8,7 +8,7 @@ import { getSlotOrThrow, minutesToTime, timeToMinutes } from "../utils/availabil
 import { getServiceByIdOrThrow } from './../utils/serviceUtils.js';
 
 export const createASlot = async ({ dayOfWeek, startTime, endTime }, adminId) => {
-	if(!dayOfWeek || !startTime || !endTime || !adminId) {
+	if((!dayOfWeek && dayOfWeek != 0) || !startTime || !endTime || !adminId) {
 		throw new ApiError("All fields are required", 400);
 	}
 
