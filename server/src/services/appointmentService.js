@@ -40,7 +40,9 @@ export const getAUserAppointment = async (appointmentId, userId) => {
 }
 
 export const getAUserAppointments = async (userId) => {
-	const appointments = await Appointment.find({ user_id: userId });
+	const appointments = await Appointment.find({ user_id: userId }).populate("admin_id", "name")
+		.populate("service_id", "title duration price");
+
 	return appointments;
 }
 
