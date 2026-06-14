@@ -35,7 +35,7 @@ const PAST_APPOINTMENTS_COLUMNS = [
             className: (row) => row?.paymentStatus === 'paid' ? 'badge badge-paid' : 'badge badge-refunded'
         }
     },
-    {label: 'AMOUNT', fieldName: 'amount', className: 'hidden lg:table-cell font-medium text-muted', headerClass: 'hidden sm:table-cell'},
+    {label: 'AMOUNT', fieldName: 'amount', className: 'hidden lg:table-cell font-medium text-good', headerClass: 'hidden sm:table-cell'},
 ]
 
 const CustomerBookingsPastAppointments = () => {
