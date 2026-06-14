@@ -30,3 +30,11 @@ export const getAppointmentsInfo = async () => {
 
 	return response.data;
 }
+
+export const cancelAppointment = async (id) => {
+	const response = await api.post(
+		`/api/v1/appointments/cancel/${id}`
+	);
+
+	return response.data;
+}
