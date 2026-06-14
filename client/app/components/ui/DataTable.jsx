@@ -36,7 +36,7 @@ const DataTable = ({ columns = [], data = [], className = 'overflow-x-auto', tab
                         {
                             !!columns?.length &&
                             columns.map((column, index) => (
-                                <th key={index}>{ column.label }</th>
+                                <th key={index} className={column.headerClass}>{ column.label }</th>
                             ))
                         }
                     </tr>
