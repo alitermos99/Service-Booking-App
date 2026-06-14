@@ -44,6 +44,10 @@ const appointmentSchema = new mongoose.Schema(
 			type: String,
 			default: null
 		},
+		amount: {
+			type: Number,
+			required: true
+		}
 	},
 	{
 		timestamps: true

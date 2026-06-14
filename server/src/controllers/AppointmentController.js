@@ -6,7 +6,8 @@ import {
 	getAUserAppointments,
 	updateAnAppointment,
 	cancelAnAppointment,
-	getAUserPastAppointments
+	getAUserPastAppointments,
+	getAUserAppointmentsData
 } from '../services/appointmentService.js';
 
 export const createAppointment = asyncHandler(async (req, res) => {
@@ -26,6 +27,11 @@ export const getUserAppointment = asyncHandler(async (req, res) => {
 	return res.status(200).json({
 		appointment: sanitizeAppointment(appointment)
 	});
+});
+
+export const getUserAppointmentsData = asyncHandler(async (req, res) => {
+	const appointmentsInfo = await getAUserAppointmentsData(req.user.id);
+	return res.status(200).json(appointmentsInfo);
 });
 
 export const getUserAppointments = asyncHandler(async (req, res) => {

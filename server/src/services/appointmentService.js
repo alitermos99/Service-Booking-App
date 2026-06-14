@@ -9,6 +9,7 @@ import {
 	calculateAndValidateTimeRange 
 } from '../utils/appointmentUtils.js';
 import paginate from "../utils/pagination.js";
+import mongoose from "mongoose";
 
 export const createAnAppointment = async ({ service_id, startTime, notes }, userId) => {
 	if(!startTime) {
@@ -27,10 +28,61 @@ export const createAnAppointment = async ({ service_id, startTime, notes }, user
 		notes,
 		endTime: end,
 		user_id: userId,
-		admin_id: service.admin_id
+		admin_id: service.admin_id,
+		amount: service.price
 	})
 
 	return appointment;
+}
+
+export const getAUserAppointmentsData = async (userId) => {
+	const [stats] = await Appointment.aggregate([
+		{
+			$match: {
+				user_id: new mongoose.Types.ObjectId(userId)
+			}
+		},
+		{
+			$group: {
+				_id: null,
+				totalBookings: { $sum: 1 },
+
+				upcomingBookings: {
+					$sum: {
+						$cond: [
+							{ $in: ["$status", ["pending", "confirmed"]] },
+							1,
+							0
+						]
+					}
+				},
+				completedBookings: {
+					$sum: {
+						$cond: [
+							{ $in: ["$status", ["completed"]] },
+							1,
+							0
+						]
+					}
+				},
+				totalAmount: {
+					$sum: {
+						$cond: [
+							{ $in: ["$status", ["confirmed", "completed"]] },
+							"$amount",
+							0
+						]
+					}
+				}
+			}
+		}
+	]);
+
+	return {
+		totalBookings: stats?.totalBookings || 0,
+		upcomingBookings: stats?.upcomingBookings || 0,
+		totalAmount: stats?.totalAmount || 0
+	};
 }
 
 export const getAUserAppointment = async (appointmentId, userId) => {

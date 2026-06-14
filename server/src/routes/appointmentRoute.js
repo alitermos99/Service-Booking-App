@@ -6,7 +6,8 @@ import {
 	getUserAppointments,
 	updateAppointment,
 	cancelAppointment,
-	getUserPastAppointments
+	getUserPastAppointments,
+	getUserAppointmentsData
 } from "../controllers/appointmentController.js";
 
 const router = express.Router();
@@ -15,6 +16,7 @@ router.use(authMiddleware);
 
 router.get('/', getUserAppointments);
 router.get('/past-appointments', getUserPastAppointments);
+router.get('/appointments-info', getUserAppointmentsData);
 router.get('/:id', getUserAppointment);
 router.post('/', createAppointment);
 router.put('/:id', updateAppointment);
