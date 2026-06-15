@@ -19,7 +19,10 @@ const CustomerScheduleAppointment = ({ serviceId, adminId, onSelect, onCancel, s
 
     const handleSlotSelection = (slot, index) => {
         setSelectedIndex(index);
-        onSelect(slot.startTime);
+
+        if(onSelect && typeof value !== 'function') {
+            onSelect(slot.startTime);
+        }
     }
     
     return (
