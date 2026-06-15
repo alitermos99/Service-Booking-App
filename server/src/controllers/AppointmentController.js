@@ -50,13 +50,17 @@ export const getUserPastAppointments = asyncHandler(async (req, res) => {
         limit = 10,
         sortField = 'createdAt',
         sortOrder = 'desc',
+		search,
+		status
     } = req.query;
 
 	const data = await getAUserPastAppointments({
         cursor,
         limit,
         sortField,
-        sortOrder
+        sortOrder,
+		search,
+		status
     }, req.user.id);
 
 	const sanitizedAppointments = data?.results?.map(appointment => {

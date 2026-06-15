@@ -10,6 +10,7 @@ import {
 } from '../utils/appointmentUtils.js';
 import paginate from "../utils/pagination.js";
 import mongoose from "mongoose";
+import aggregatePagination from "../utils/aggregatePagination.js";
 
 export const createAnAppointment = async ({ service_id, startTime, notes }, userId) => {
 	if(!startTime) {
@@ -101,27 +102,71 @@ export const getAUserAppointments = async (userId) => {
 	return appointments;
 }
 
-export const getAUserPastAppointments = async ({ cursor, limit, sortField, sortOrder }, userId) => {
-	const query = {
-		user_id: userId,
-		startTime: { $lt: new Date() }
-	};
-
-	const queryModifier = q =>
-			q.populate("service_id", "title price duration")
-			.populate("admin_id", "name")
-
-	const { results, nextCursor, prevCursor, 
-		hasNextPage, hasPrevPage, totalRecords } = await _handlePagination(cursor, limit, sortField, sortOrder, query, queryModifier);
-
-	return {
-        results,
-        nextCursor: nextCursor  ? Buffer.from(JSON.stringify(nextCursor)).toString('base64')  : null,
-        prevCursor: prevCursor  ? Buffer.from(JSON.stringify(prevCursor)).toString('base64')  : null,
-        hasNextPage,
-        hasPrevPage,
-		totalRecords
+export const getAUserPastAppointments = async ({ search, status, cursor, limit, sortField, sortOrder }, userId) => {
+	const matchStage = {
+        user_id:   new mongoose.Types.ObjectId(userId),
+        startTime: { $lt: new Date() },
+        ...(status && status !== 'all' && { status })
     };
+
+    const pipeline = [
+        { $match: matchStage },
+        {
+            $lookup: {
+                from:         'services',
+                localField:   'service_id',
+                foreignField: '_id',
+                as:           'service_id'
+            }
+        },
+        { $unwind: '$service_id' },
+        {
+            $lookup: {
+                from:         'users',
+                localField:   'admin_id',
+                foreignField: '_id',
+                as:           'admin_id'
+            }
+        },
+        { $unwind: '$admin_id' },
+
+        {
+            $project: {
+                startTime:     1,
+                endTime:       1,
+                status:        1,
+                paymentStatus: 1,
+                paymentIntentId: 1,
+                notes:         1,
+                price:         1,
+                createdAt:     1,
+                'service_id._id':      1,
+                'service_id.title':    1,
+                'service_id.price':    1,
+                'service_id.duration': 1,
+                'admin_id._id':        1,
+                'admin_id.name':       1,
+            }
+        },
+    ];
+
+    if (search) {
+        pipeline.push({
+            $match: {
+                $or: [
+                    { 'service_id.title': { $regex: search, $options: 'i' } },
+                    { 'admin_id.name':    { $regex: search, $options: 'i' } }
+                ]
+            }
+        });
+    }
+
+    return aggregatePagination(Appointment, pipeline, {
+        cursor,
+        limit,
+        sortField: sortField || 'createdAt',
+        sortOrder: sortOrder || 'desc'
+    });
 }
 
 export const updateAnAppointment = async ({ startTime, notes }, appointmentId, userId) => {
@@ -150,20 +195,4 @@ export const cancelAnAppointment = async (appointmentId, userId) => {
 
 	appointment.status = 'cancelled';
 	await appointment.save();
-}
-
-async function _handlePagination(cursor, limit, sortField, sortOrder, query, queryModifier) {
-	const parsedCursor = cursor
-		? JSON.parse(Buffer.from(cursor, 'base64').toString('utf8'))
-		: null;
-
-	const { results, nextCursor, prevCursor, hasNextPage, hasPrevPage, totalRecords } = await paginate(Appointment, {
-		cursor: parsedCursor,
-		limit,
-		sort: { field: sortField, order: sortOrder },
-		filter: query,
-		queryModifier
-	});
-
-	return { results, nextCursor, prevCursor, hasNextPage, hasPrevPage, totalRecords };
 }
