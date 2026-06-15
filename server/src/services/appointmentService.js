@@ -8,7 +8,6 @@ import {
 	getAppointmentWithParentServiceObject,
 	calculateAndValidateTimeRange 
 } from '../utils/appointmentUtils.js';
-import paginate from "../utils/pagination.js";
 import mongoose from "mongoose";
 import aggregatePagination from "../utils/aggregatePagination.js";
 
@@ -181,6 +180,9 @@ export const updateAnAppointment = async ({ startTime, notes }, appointmentId, u
 
 		appointment.startTime = start;
 		appointment.endTime = end;
+	}
+	else {
+		throw new ApiError("Appointment already scheduled at this time", 400);
 	}
 
 	appointment.notes = notes || appointment.notes;
