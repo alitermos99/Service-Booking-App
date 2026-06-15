@@ -12,11 +12,13 @@ const PAST_APPOINTMENTS_COLUMNS = [
     {label: 'DURATION', fieldName: 'duration', className: 'text-muted hidden md:table-cell', headerClass: 'hidden sm:table-cell'},
     {label: 'STATUS', fieldName: 'status', 
         typeAttributes: {
-            className: (row) => row?.status === 'completed' ? 'badge badge-completed capitalize' : 'badge badge-cancelled capitalize'
+            className: (row) => row?.status === 'completed' ? 'badge badge-completed capitalize' 
+                : row?.status === 'pending' ? 'badge badge-pending capitalize' : 'badge badge-cancelled capitalize'
         }
     },
     {label: 'PAYMENT', fieldName: 'paymentStatus', typeAttributes: {
-            className: (row) => row?.paymentStatus === 'paid' ? 'badge badge-paid capitalize' : 'badge badge-refunded capitalize'
+            className: (row) => row?.paymentStatus === 'paid' ? 'badge badge-paid capitalize' 
+                : row?.paymentStatus === 'unpaid' ? 'badge badge-unpaid capitalize' : 'badge badge-refunded capitalize'
         }
     },
     {label: 'AMOUNT', fieldName: 'amount', className: 'hidden lg:table-cell font-medium text-good', headerClass: 'hidden sm:table-cell'},

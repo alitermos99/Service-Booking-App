@@ -39,6 +39,8 @@ const CustomerBookingsUpcomingSection = () => {
                             />
                         ))
                     }
+                    
+                    { (!data || !data.length) && <p className="text-muted">No upcoming appointments</p> }
                 </div>
             </div>
         </>
