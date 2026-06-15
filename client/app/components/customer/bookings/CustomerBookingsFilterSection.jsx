@@ -4,7 +4,7 @@ import Chip from '../../ui/Chip';
 import SelectField from '../../forms/SelectField';
 
 const TAGS = [{name: 'all', label: 'All'},
-    {name: 'upcoming', label: 'Upcoming'},
+    {name: 'confirmed', label: 'Confirmed'},
     {name: 'completed',label: 'Completed'},
     {name: 'cancelled',label: 'Cancelled'},
     {name: 'pending',label: 'Pending'}
