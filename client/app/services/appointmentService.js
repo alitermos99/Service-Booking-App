@@ -33,6 +33,15 @@ export const getAppointmentsInfo = async () => {
 	return response.data;
 }
 
+export const updateAppointment = async ({ id, body }) => {
+	const response = await api.put(
+		`/api/v1/appointments/${id}`,
+		body
+	);
+
+	return response.data;
+}
+
 export const cancelAppointment = async (id) => {
 	const response = await api.post(
 		`/api/v1/appointments/cancel/${id}`

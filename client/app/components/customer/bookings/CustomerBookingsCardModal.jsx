@@ -1,21 +1,35 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Modal from '../../ui/Modal'
 import Button from '../../ui/Button'
 import Link from 'next/link';
 import { useCancelAppointment } from '@/app/features/appointment/hooks/useCancelAppointment';
 import LoadingOverlay from '../../ui/LoadingOverlay';
 import CustomerScheduleAppointment from '../CustomerScheduleAppointment';
+import { useUpdateAppointment } from '@/app/features/appointment/hooks/useUpdateAppointment';
+import { TODAY, buildISODateTime } from '@/app/utils/dateUtils';
 
 const DEFAULT_ICON_BG = 'linear-gradient(135deg,rgba(108,99,255,0.2),rgba(167,139,250,0.2))';
 
 const CustomerBookingsCardModal = ({ appointmentId, icon, iconBg, title, status, timeText, time, duration, amount, paymentStatus, notes, providerName,
     modal, setModal, setIsOpenModal, serviceId, adminId
 }) => {
+    const [startTime, setStartTime] = useState('');
     const { mutate: cancelAppointment, isPending } = useCancelAppointment();
+    const { mutate: rescheduleAppointment, isPending: pendingUpdate } = useUpdateAppointment();
 
-    const handleReschedule = (startTime) => {
-        console.log('satr ', startTime);
-        
+    const handleReschedule = () => {
+        if(startTime?.trim()) {
+            rescheduleAppointment({
+                id: appointmentId,
+                body: { startTime: buildISODateTime(TODAY, startTime) }
+            });
+
+            setIsOpenModal(false);
+        }
+    }
+
+    const handleSlotSelection = (startTime) => {
+        setStartTime(startTime);
     }
 
     const handleCancelAppointment = () => {
@@ -25,7 +39,7 @@ const CustomerBookingsCardModal = ({ appointmentId, icon, iconBg, title, status,
 
     return (
         <>
-            { isPending && <LoadingOverlay /> }
+            { (isPending || pendingUpdate) && <LoadingOverlay /> }
 
             <Modal>
                 {
@@ -164,9 +178,9 @@ const CustomerBookingsCardModal = ({ appointmentId, icon, iconBg, title, status,
                     <CustomerScheduleAppointment 
                         serviceId={serviceId} 
                         adminId={adminId} 
-                        // onSelect={handleSlotSelection}
+                        onSelect={handleSlotSelection}
                         scheduleLabel="Reschedule"
-                        // onSchedule={() => router.push('/book')}
+                        onSchedule={handleReschedule}
                         className="glass rounded-2xl w-full max-w-lg overflow-y-auto p-6"
                         onCancel={() => setIsOpenModal(false)}
                         showCancel
