@@ -4,13 +4,19 @@ import Button from '../../ui/Button'
 import Link from 'next/link';
 import { useCancelAppointment } from '@/app/features/appointment/hooks/useCancelAppointment';
 import LoadingOverlay from '../../ui/LoadingOverlay';
+import CustomerAvailableSlots from '../CustomerAvailableSlots';
 
 const DEFAULT_ICON_BG = 'linear-gradient(135deg,rgba(108,99,255,0.2),rgba(167,139,250,0.2))';
 
 const CustomerBookingsCardModal = ({ appointmentId, icon, iconBg, title, status, timeText, time, duration, amount, paymentStatus, notes, providerName,
-    isCancel = false, setIsOpenModal, setIsCancel 
+    modal, setModal, setIsOpenModal, serviceId, adminId
 }) => {
     const { mutate: cancelAppointment, isPending } = useCancelAppointment();
+
+    const handleReschedule = (startTime) => {
+        console.log('satr ', startTime);
+        
+    }
 
     const handleCancelAppointment = () => {
         cancelAppointment(appointmentId);
@@ -23,7 +29,7 @@ const CustomerBookingsCardModal = ({ appointmentId, icon, iconBg, title, status,
 
             <Modal>
                 {
-                    !isCancel &&
+                    modal === 'reschedule' &&
                     (
                         <div className="glass rounded-2xl w-full max-w-lg max-h-screen overflow-y-auto border-[rgba(255,255,255,0.12)] border border-solid">
                             <div className="flex items-center justify-between p-6 border-[rgba(255,255,255,0.07)] border border-solid">
@@ -95,14 +101,14 @@ const CustomerBookingsCardModal = ({ appointmentId, icon, iconBg, title, status,
 
                                 <div className="flex gap-3 pt-2">
                                     <Button label="Cancel Booking"
-                                        onClick={() => {setIsCancel(true)}}
+                                        onClick={() => {setModal('cancel')}}
                                         className="flex-1 py-2.5 rounded-xl text-sm font-medium bg-[rgba(248,113,113,0.1)] text-weak 
                                             border-[rgba(248,113,113,0.2)] border border-solid" 
                                     />
 
                                     <Button className="flex-1 py-2.5 rounded-xl text-sm font-medium bg-[rgba(108,99,255,0.15)] 
                                         text-accent-soft border-[rgba(108,99,255,0.25)] border border-solid" 
-                                        label="Reschedule"
+                                        label="Reschedule" onClick={() => {setModal('slots')}}
                                     />
                                     
                                     <Link href="/reviews" className="flex-1 py-2.5 rounded-xl text-sm font-medium text-white btn-primary flex items-center justify-center gap-1.5">
@@ -123,7 +129,7 @@ const CustomerBookingsCardModal = ({ appointmentId, icon, iconBg, title, status,
                 }
 
                 {
-                    isCancel &&
+                    modal === 'cancel' &&
                     (
                         <div className="glass rounded-2xl w-full max-w-sm p-6 border-[rgba(248,113,113,0.2)] border border-solid">
                             <div className="w-12 h-12 rounded-xl mx-auto mb-4 flex items-center justify-center bg-[rgba(248,113,113,0.15)]">
@@ -151,6 +157,17 @@ const CustomerBookingsCardModal = ({ appointmentId, icon, iconBg, title, status,
                             </div>
                         </div>
                     )
+                }
+
+                {
+                    modal === 'slots' &&
+                    <CustomerAvailableSlots 
+                        serviceId={serviceId} 
+                        adminId={adminId} 
+                        className="glass rounded-2xl w-full max-w-lg overflow-y-auto p-6 space-y-4"
+                        onCancel={() => setIsOpenModal(false)}
+                        showCancel
+                    />
                 }
             </Modal>
         </>

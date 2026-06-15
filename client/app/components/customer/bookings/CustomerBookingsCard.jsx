@@ -4,17 +4,19 @@ import CustomerBookingsCardModal from './CustomerBookingsCardModal';
 
 const DEFAULT_ICON_BG = 'linear-gradient(135deg,rgba(108,99,255,0.2),rgba(167,139,250,0.2))';
 
-const CustomerBookingsCard = ({ appointmentId, icon, iconBg, status, title, providerName, startTime, endTime, duration, amount, paymentStatus, notes }) => {
-    const [isCancel, setIsCancel] = useState(false);
+const CustomerBookingsCard = ({ appointmentId, icon, iconBg, status, title, providerName, startTime, endTime, 
+    duration, amount, paymentStatus, notes, serviceId, adminId 
+}) => {
+    const [modal, setModal] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleModalCancel = () => {
-        setIsCancel(true);
+        setModal('cancel');
         setIsModalOpen(true);
     }
 
     const handleModalReschedule = () => {
-        setIsCancel(false);
+        setModal('reschedule');
         setIsModalOpen(true);
     }
 
@@ -89,8 +91,8 @@ const CustomerBookingsCard = ({ appointmentId, icon, iconBg, status, title, prov
 
             { isModalOpen && 
                 <CustomerBookingsCardModal 
-                    isCancel={isCancel} 
-                    setIsCancel={setIsCancel}
+                    modal={modal} 
+                    setModal={setModal}
                     setIsOpenModal={setIsModalOpen} 
                     title={title}
                     duration={duration}
@@ -104,6 +106,8 @@ const CustomerBookingsCard = ({ appointmentId, icon, iconBg, status, title, prov
                     time={formatTimeRange(startTime, endTime)}
                     timeText={formatBookingDate(startTime)}
                     appointmentId={appointmentId}
+                    serviceId={serviceId}
+                    adminId={adminId}
                 /> 
             }
         </>

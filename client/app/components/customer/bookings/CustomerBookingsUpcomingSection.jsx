@@ -34,6 +34,8 @@ const CustomerBookingsUpcomingSection = () => {
                                 amount={appointment.amount}
                                 paymentStatus={appointment.paymentStatus}
                                 notes={appointment.notes}
+                                serviceId={appointment.service_id?._id}
+                                adminId={appointment.admin_id?._id}
                             />
                         ))
                     }

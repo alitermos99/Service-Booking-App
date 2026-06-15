@@ -59,6 +59,7 @@ const CustomerServicesService = ({ serviceId, adminId, icon, iconBg, title, shor
 
             { isOpen && 
                 <CustomerServicesGridModal 
+                    title={title}
                     serviceId={serviceId} 
                     price={price} 
                     duration={duration} 
