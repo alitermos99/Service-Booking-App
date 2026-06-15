@@ -8,11 +8,13 @@ export const getAppointments = async () => {
 	return response.data;
 }
 
-export const getPastAppointments = async ({ cursor, limit = 10, sortField = 'createdAt', sortOrder = 'desc' } = {}) => {
+export const getPastAppointments = async ({ search, status, cursor, limit = 10, sortField = 'createdAt', sortOrder = 'desc' } = {}) => {
 	const params = new URLSearchParams({
         limit,
         sortField,
         sortOrder,
+		search,
+		status,
         ...(cursor && { cursor }),
     });
 

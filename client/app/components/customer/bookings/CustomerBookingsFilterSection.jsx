@@ -21,11 +21,11 @@ const SORT_OPTIONS = [
     }
 ]
 
-const CustomerBookingsFiltersSearch = () => {
+const CustomerBookingsFilterSection = ({ selectedTag, onChange, onSelect, onSort }) => {
     return (
         <div className="flex flex-col sm:flex-row gap-4 mb-6">
             <SearchInputField inputClass="w-full pl-10! pr-4! py-2.5! rounded-xl text-sm outline-none" 
-                className="flex-1"
+                className="flex-1" placeholder="Search by service or provider..." onChange={onChange}
             />
 
             <div className="flex items-center gap-2 flex-wrap">
@@ -34,16 +34,16 @@ const CustomerBookingsFiltersSearch = () => {
                         <Chip key={index} 
                             chipLabel={tag.label}
                             chipName={tag.name}
-                            // onSelect={onSelect}
-                            // isActive={tag.name === selectedtTag}
+                            onSelect={onSelect}
+                            isActive={tag.name === selectedTag}
                         />
                     ))
                 }
             </div>
 
-            <SelectField options={SORT_OPTIONS} showIcon />
+            <SelectField options={SORT_OPTIONS} onChange={onSort} showIcon />
         </div>
     )
 }
 
-export default CustomerBookingsFiltersSearch
+export default CustomerBookingsFilterSection

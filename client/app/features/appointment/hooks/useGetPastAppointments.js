@@ -2,15 +2,20 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { getPastAppointments } from "@/app/services/appointmentService";
+import { useDebounce } from "@/app/hooks/useDebounce";
 
-export const useGetPastAppointments = (sortField = 'createdAt', sortOrder = 'desc', cursor = null) => {
+export const useGetPastAppointments = (search, status, sortField = 'createdAt', sortOrder = 'desc', cursor = null) => {
+    const debouncedSearch = useDebounce(search, 500);
+
 	return useQuery({
-		queryKey: ["past-appointments", sortField, sortOrder, cursor],
+		queryKey: ["past-appointments", sortField, sortOrder, cursor, debouncedSearch, status],
 		queryFn: () => getPastAppointments({
             cursor,
             limit: 10,
             sortField,
-            sortOrder
+            sortOrder,
+            search: debouncedSearch,
+            status
         }),
 		throwOnError: false,
         meta: {

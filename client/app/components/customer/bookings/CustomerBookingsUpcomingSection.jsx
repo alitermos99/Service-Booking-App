@@ -5,7 +5,6 @@ import LoadingOverlay from '../../ui/LoadingOverlay';
 
 const CustomerBookingsUpcomingSection = () => {
     const { data, isPending } = useGetAppointments();
-    console.log('@@@data ', data)
 
     return (
         <>

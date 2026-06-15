@@ -3,24 +3,7 @@ import DataTable from '../../ui/DataTable';
 import { useGetPastAppointments } from '@/app/features/appointment/hooks/useGetPastAppointments';
 import Button from '../../ui/Button';
 import LoadingOverlay from '../../ui/LoadingOverlay';
-import CustomerBookingsFiltersSearch from './CustomerBookingsFilterSection';
-
-function formatAppointmentDate(dateString) {
-    const date = new Date(dateString);
-
-    const datePart = date.toLocaleDateString("en-US", {
-        month: "short",
-        day: "numeric",
-    });
-
-    const timePart = date.toLocaleTimeString("en-US", {
-        hour: "numeric",
-        minute: "2-digit",
-        hour12: true,
-    });
-
-    return `${datePart} · ${timePart}`;
-}
+import CustomerBookingsFilterSection from './CustomerBookingsFilterSection';
 
 const PAST_APPOINTMENTS_COLUMNS = [
     {label: 'SERVICE', fieldName: 'service', className: 'font-medium text-tx'},
@@ -29,11 +12,11 @@ const PAST_APPOINTMENTS_COLUMNS = [
     {label: 'DURATION', fieldName: 'duration', className: 'text-muted hidden md:table-cell', headerClass: 'hidden sm:table-cell'},
     {label: 'STATUS', fieldName: 'status', 
         typeAttributes: {
-            className: (row) => row?.status === 'completed' ? 'badge badge-completed' : 'badge badge-cancelled'
+            className: (row) => row?.status === 'completed' ? 'badge badge-completed capitalize' : 'badge badge-cancelled capitalize'
         }
     },
     {label: 'PAYMENT', fieldName: 'paymentStatus', typeAttributes: {
-            className: (row) => row?.paymentStatus === 'paid' ? 'badge badge-paid' : 'badge badge-refunded'
+            className: (row) => row?.paymentStatus === 'paid' ? 'badge badge-paid capitalize' : 'badge badge-refunded capitalize'
         }
     },
     {label: 'AMOUNT', fieldName: 'amount', className: 'hidden lg:table-cell font-medium text-good', headerClass: 'hidden sm:table-cell'},
@@ -47,9 +30,11 @@ const CustomerBookingsPastAppointments = () => {
     const [sortOrder, setSortOrder] = useState('desc');
     //*           *//
 
+    const [tag, setTag] = useState('all');
+    const [search, setSearch] = useState('');
     const [totalShowing, setTotalShowing] = useState(0);
 
-    const { data, isPending } = useGetPastAppointments(sortField, sortOrder, cursor);
+    const { data, isPending } = useGetPastAppointments(search, tag, sortField, sortOrder, cursor);
     const hasNextPage = data?.hasNextPage ?? false;
     const hasPrevPage = data?.hasPrevPage ?? false;
     
@@ -63,6 +48,27 @@ const CustomerBookingsPastAppointments = () => {
             datetime: formatAppointmentDate(appointment.startTime)
         }
     });
+
+    const handleSearchChange = (event) => {
+        const { value } = event.target;
+
+        if(value?.length > 0 && !value.trim()) {
+            return;
+        }
+        
+        setSearch(value);
+    }
+
+    const handleTagChange = (event) => { 
+        setTag(event.target.name);    
+    }
+
+    const handleSortChange = (event) => {
+        const { value } = event.target; 
+
+        setSortField(value.split(';')[0]);
+        setSortOrder(value.split(';')[1]);
+    }
 
     const handleNext = () => {
         setHistory(prev => [...prev, cursor]);
@@ -85,7 +91,7 @@ const CustomerBookingsPastAppointments = () => {
         }
 
         handleSetPagination();
-    }, [sortField, sortOrder]);
+    }, [sortField, sortOrder, search, tag]);
 
     useEffect(() => {
         function accumulateData() {
@@ -103,7 +109,12 @@ const CustomerBookingsPastAppointments = () => {
         <>
             { isPending && <LoadingOverlay /> }
 
-            <CustomerBookingsFiltersSearch />
+            <CustomerBookingsFilterSection 
+                selectedTag={tag} 
+                onSort={handleSortChange}
+                onSelect={handleTagChange} 
+                onChange={handleSearchChange} 
+            />
 
             <div className="glass2 rounded-2xl overflow-hidden">
                 <div className="flex items-center justify-between px-6 py-4 border-b border-solid border-[rgba(255,255,255,0.07)]">
@@ -151,6 +162,23 @@ const CustomerBookingsPastAppointments = () => {
             </div>
         </>
     )
+}
+
+function formatAppointmentDate(dateString) {
+    const date = new Date(dateString);
+
+    const datePart = date.toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+    });
+
+    const timePart = date.toLocaleTimeString("en-US", {
+        hour: "numeric",
+        minute: "2-digit",
+        hour12: true,
+    });
+
+    return `${datePart} · ${timePart}`;
 }
 
 export default CustomerBookingsPastAppointments
