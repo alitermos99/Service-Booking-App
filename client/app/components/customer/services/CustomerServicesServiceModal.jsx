@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import Modal from '../../ui/Modal'
 import Button from '../../ui/Button'
-import CustomerAvailableSlots from '../CustomerAvailableSlots'
+import CustomerScheduleAppointment from '../CustomerScheduleAppointment'
+import { useRouter } from 'next/navigation'
 
 const CustomerServicesServiceModal = ({ serviceId, adminId, title, price, duration, description, stars, avgRating = 0, 
     totalReviews = 0, setIsOpen 
 }) => {
+    const router = useRouter();
     const [selectedTime, setSelectedTime] = useState(null);
 
     const handleSlotSelection = (startTime) => {
@@ -67,7 +69,13 @@ const CustomerServicesServiceModal = ({ serviceId, adminId, title, price, durati
                         </div> */}
                     </div>
 
-                    <CustomerAvailableSlots serviceId={serviceId} adminId={adminId} onSelect={handleSlotSelection} />
+                    <CustomerScheduleAppointment 
+                        serviceId={serviceId} 
+                        adminId={adminId} 
+                        onSelect={handleSlotSelection}
+                        scheduleLabel="Continue to Book"
+                        onSchedule={() => router.push('/book')}
+                    />
                 </div>
             </div>
         </Modal>

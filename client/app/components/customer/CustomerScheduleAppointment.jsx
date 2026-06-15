@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
-import Button from '../ui/Button'
+import Button from '../ui/Button';
 import { useGetAvailableSlots } from '@/app/features/slot/hooks/useGetAvailableSlots';
-import Link from 'next/link';
 
 function formatTo12hr(time) {
     const [h, m] = time.split(':').map(Number);
@@ -10,7 +9,9 @@ function formatTo12hr(time) {
     return `${hour}:${m.toString().padStart(2, '0')} ${period}`;
 };
 
-const CustomerAvailableSlots = ({ serviceId, adminId, onSelect, onCancel, showCancel = false, className = '' }) => {
+const CustomerScheduleAppointment = ({ serviceId, adminId, onSelect, onCancel, showCancel = false, onSchedule,
+    scheduleLabel = 'Schedule', className = '' 
+}) => {
     const [selectedIndex, setSelectedIndex] = useState(0);
     const { data: availableSlots } = useGetAvailableSlots(adminId, serviceId, 
         new Date().toLocaleDateString('en-CA'), new Date().getTimezoneOffset()
@@ -22,7 +23,7 @@ const CustomerAvailableSlots = ({ serviceId, adminId, onSelect, onCancel, showCa
     }
     
     return (
-        <div className={className}>
+        <div className={className + ' ' + 'space-y-4'}>
             <p className="text-sm font-medium text-tx mb-2">Available Today</p>
 
             <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
@@ -50,20 +51,24 @@ const CustomerAvailableSlots = ({ serviceId, adminId, onSelect, onCancel, showCa
                         border-[rgba(255,255,255,0.094)] border border-solid"
                         label="Cancel" onClick={onCancel}
                     />
-                }
-                                
+                }              
 
-                <Link href="/book" className="flex-1 btn-primary text-white rounded-xl py-3 text-sm font-medium flex items-center justify-center gap-2">
-                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" 
-                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                        />
-                    </svg>
-                    Continue to Book
-                </Link>
+                <Button className="flex-1 btn-primary text-white rounded-xl py-3 text-sm font-medium" 
+                    label={
+                        <div className="flex items-center justify-center gap-2">
+                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" 
+                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                                />
+                            </svg>
+                            { scheduleLabel }
+                        </div>
+                    }
+                    onClick={onSchedule}
+                />
             </div>
         </div>
     )
 }
 
-export default CustomerAvailableSlots
+export default CustomerScheduleAppointment

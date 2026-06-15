@@ -4,7 +4,7 @@ import Button from '../../ui/Button'
 import Link from 'next/link';
 import { useCancelAppointment } from '@/app/features/appointment/hooks/useCancelAppointment';
 import LoadingOverlay from '../../ui/LoadingOverlay';
-import CustomerAvailableSlots from '../CustomerAvailableSlots';
+import CustomerScheduleAppointment from '../CustomerScheduleAppointment';
 
 const DEFAULT_ICON_BG = 'linear-gradient(135deg,rgba(108,99,255,0.2),rgba(167,139,250,0.2))';
 
@@ -161,10 +161,13 @@ const CustomerBookingsCardModal = ({ appointmentId, icon, iconBg, title, status,
 
                 {
                     modal === 'slots' &&
-                    <CustomerAvailableSlots 
+                    <CustomerScheduleAppointment 
                         serviceId={serviceId} 
                         adminId={adminId} 
-                        className="glass rounded-2xl w-full max-w-lg overflow-y-auto p-6 space-y-4"
+                        // onSelect={handleSlotSelection}
+                        scheduleLabel="Reschedule"
+                        // onSchedule={() => router.push('/book')}
+                        className="glass rounded-2xl w-full max-w-lg overflow-y-auto p-6"
                         onCancel={() => setIsOpenModal(false)}
                         showCancel
                     />
