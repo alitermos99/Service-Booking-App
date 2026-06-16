@@ -38,12 +38,13 @@ const CustomerScheduleAppointment = ({ serviceId, adminId, onSelect, onCancel, s
                             {
                                 availableSlots?.map((slot, index) => (
                                     <Button key={index} 
-                                        className={`glass2 rounded-xl py-2 text-xs text-tx hover:border-accent transition-colors text-[10px]
-                                            ${selectedIndex === index ? 'border-[rgba(108,99,255,0.4)]!' : ''}
-                                            ${slot.available ? '' : 'text-muted! line-through'}
+                                        className={`time-slot
+                                            ${selectedIndex === index ? 'selected' : ''}
+                                            ${slot.available ? '' : 'disabled'}
                                         `} 
                                         label={
-                                            `${formatTo12hr(slot.startTime)} - ${formatTo12hr(slot.endTime)}`
+                                            // `${formatTo12hr(slot.startTime)} - ${formatTo12hr(slot.endTime)}`
+                                            `${formatTo12hr(slot.startTime)}`
                                         }
                                         onClick={() => handleSlotSelection(slot, index)}
                                         disabled={!slot.available}
