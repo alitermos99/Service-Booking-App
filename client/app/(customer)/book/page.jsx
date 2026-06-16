@@ -1,4 +1,6 @@
+import CustomerBookMainContent from '@/app/components/customer/book/CustomerBookMainContent'
 import CustomerBookProgressSteps from '@/app/components/customer/book/CustomerBookProgressSteps'
+import Section from '@/app/components/layouts/Section'
 import Header from '@/app/components/ui/Header'
 import Logo from '@/app/components/ui/Logo'
 import React from 'react'
@@ -11,9 +13,10 @@ const CustomerBookPage = () => {
                 <p className="text-sm text-muted hidden sm:block">Booking · Deep Tissue Massage</p>
             </Header>
 
-            <div className="max-w-4xl mx-auto py-8">
+            <Section maxWidth="max-w-4xl" padding="py-8">
                 <CustomerBookProgressSteps />
-            </div>
+                <CustomerBookMainContent />
+            </Section>
         </>
     )
 }
