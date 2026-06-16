@@ -1,6 +1,6 @@
 import React from 'react'
 
-const TextArea = ({ className, label, showCount = false, value = '', labelClass = '', rows = 3, maxLength = 5000, ...rest}) => {
+const TextArea = ({ className, label, showCount = false, value = '', labelClass = '', rows = 3, maxLength = 5000, ...rest }) => {
     return (
         <div>
             <div className="m-0">
