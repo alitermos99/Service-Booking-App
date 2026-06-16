@@ -6,12 +6,12 @@ import { useCancelAppointment } from '@/app/features/appointment/hooks/useCancel
 import LoadingOverlay from '../../ui/LoadingOverlay';
 import CustomerScheduleAppointment from '../CustomerScheduleAppointment';
 import { useUpdateAppointment } from '@/app/features/appointment/hooks/useUpdateAppointment';
-import { TODAY, buildISODateTime } from '@/app/utils/dateUtils';
+import { TODAY, buildISODateTime, formatBookingDate } from '@/app/utils/dateUtils';
 
 const DEFAULT_ICON_BG = 'linear-gradient(135deg,rgba(108,99,255,0.2),rgba(167,139,250,0.2))';
 
-const CustomerBookingsCardModal = ({ appointmentId, icon, iconBg, title, status, timeText, time, duration, amount, paymentStatus, notes, providerName,
-    modal, setModal, setIsOpenModal, serviceId, adminId
+const CustomerBookingsCardModal = ({ appointmentId, icon, iconBg, title, status, time, duration, amount, paymentStatus, notes, providerName,
+    modal, setModal, setIsOpenModal, serviceId, adminId, showMainButtons = false
 }) => {
     const [startTime, setStartTime] = useState('');
     const { mutate: cancelAppointment, isPending } = useCancelAppointment();
@@ -74,7 +74,7 @@ const CustomerBookingsCardModal = ({ appointmentId, icon, iconBg, title, status,
 
                                     <span className={`badge ml-auto capitalize
                                             ${status === 'confirmed' ? 'badge-confirmed' : status === 'pending' ? 'badge-pending' 
-                                                : 'badge-cancelled'
+                                                : status === 'completed' ? 'badge-completed' : 'badge-cancelled'
                                             }
                                         `}
                                     >
@@ -85,8 +85,8 @@ const CustomerBookingsCardModal = ({ appointmentId, icon, iconBg, title, status,
                                 <div className="grid grid-cols-2 gap-4">
                                     <div className="glass2 rounded-xl p-3">
                                         <p className="text-xs text-muted mb-1">Date & Time</p>
-                                        <p className="text-sm font-medium text-tx">{ timeText }</p>
-                                        <p className="text-xs text-muted">{ time }</p>
+                                        <p className="text-sm font-medium text-tx">{ formatBookingDate(time?.split('~')[0]) }</p>
+                                        <p className="text-xs text-muted">{ formatTimeRange(time?.split('~')[0], time?.split('~')[1]) }</p>
                                     </div>
 
                                     <div className="glass2 rounded-xl p-3">
@@ -113,30 +113,33 @@ const CustomerBookingsCardModal = ({ appointmentId, icon, iconBg, title, status,
                                     <p className="text-sm text-tx">{ notes }</p>
                                 </div>
 
-                                <div className="flex gap-3 pt-2">
-                                    <Button label="Cancel Booking"
-                                        onClick={() => {setModal('cancel')}}
-                                        className="flex-1 py-2.5 rounded-xl text-sm font-medium bg-[rgba(248,113,113,0.1)] text-weak 
-                                            border-[rgba(248,113,113,0.2)] border border-solid" 
-                                    />
+                                {
+                                    showMainButtons &&
+                                    <div className="flex gap-3 pt-2">
+                                        <Button label="Cancel Booking"
+                                            onClick={() => {setModal('cancel')}}
+                                            className="flex-1 py-2.5 rounded-xl text-sm font-medium bg-[rgba(248,113,113,0.1)] text-weak 
+                                                border-[rgba(248,113,113,0.2)] border border-solid" 
+                                        />
 
-                                    <Button className="flex-1 py-2.5 rounded-xl text-sm font-medium bg-[rgba(108,99,255,0.15)] 
-                                        text-accent-soft border-[rgba(108,99,255,0.25)] border border-solid" 
-                                        label="Reschedule" onClick={() => {setModal('slots')}}
-                                    />
-                                    
-                                    <Link href="/reviews" className="flex-1 py-2.5 rounded-xl text-sm font-medium text-white btn-primary flex items-center justify-center gap-1.5">
-                                        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" 
-                                                d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 
-                                                0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 
-                                                0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 
-                                                0 00.951-.69l1.519-4.674z"
-                                            />
-                                        </svg>
-                                        Review
-                                    </Link>
-                                </div>
+                                        <Button className="flex-1 py-2.5 rounded-xl text-sm font-medium bg-[rgba(108,99,255,0.15)] 
+                                            text-accent-soft border-[rgba(108,99,255,0.25)] border border-solid" 
+                                            label="Reschedule" onClick={() => {setModal('slots')}}
+                                        />
+                                        
+                                        <Link href="/reviews" className="flex-1 py-2.5 rounded-xl text-sm font-medium text-white btn-primary flex items-center justify-center gap-1.5">
+                                            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" 
+                                                    d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 
+                                                    0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 
+                                                    0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 
+                                                    0 00.951-.69l1.519-4.674z"
+                                                />
+                                            </svg>
+                                            Review
+                                        </Link>
+                                    </div>
+                                }
                             </div>
                         </div>
                     )
@@ -189,6 +192,22 @@ const CustomerBookingsCardModal = ({ appointmentId, icon, iconBg, title, status,
             </Modal>
         </>
     )
+}
+
+function formatTimeRange(startDateString, endDateString, locale = "en-US") {
+    const startDate = new Date(startDateString);
+    const endDate = new Date(endDateString);
+
+    const options = {
+        hour: "numeric",
+        minute: "2-digit",
+        hour12: true
+    };
+
+    const startTime = startDate.toLocaleTimeString(locale, options);
+    const endTime = endDate.toLocaleTimeString(locale, options);
+
+    return `${startTime} – ${endTime}`;
 }
 
 export default CustomerBookingsCardModal
