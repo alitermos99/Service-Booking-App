@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Button from '../../ui/Button'
 import CustomerBookingsCardModal from './CustomerBookingsCardModal';
 import { formatBookingDate } from '@/app/utils/dateUtils';
+import Link from 'next/link';
 
 const DEFAULT_ICON_BG = 'linear-gradient(135deg,rgba(108,99,255,0.2),rgba(167,139,250,0.2))';
 
@@ -84,6 +85,13 @@ const CustomerBookingsCard = ({ appointmentId, icon, iconBg, status, title, prov
                                     border border-solid border-[rgba(108,99,255,0.25)]" onClick={handleModalReschedule}
                                     label="Reschedule"
                                 />
+
+                                {
+                                    status === 'pending' &&
+                                    <Link href="/checkout" className="text-xs px-3 py-1.5 rounded-lg btn-primary text-white">
+                                        Pay Now
+                                    </Link>
+                                }
                             </div>
                         )
                     }
