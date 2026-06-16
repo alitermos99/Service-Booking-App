@@ -11,19 +11,23 @@ import {
 import mongoose from "mongoose";
 import aggregatePagination from "../utils/aggregatePagination.js";
 
-export const createAnAppointment = async ({ service_id, startTime, notes }, userId) => {
-	if(!startTime) {
-		throw new ApiError('StartTime is required', 400);
+export const createAnAppointment = async ({ serviceId, startTime, notes }, userId) => {
+	if (!startTime || startTime === 'null' || isNaN(new Date(startTime).getTime())) {
+		throw new ApiError('StartTime must be a valid date', 400);
 	}
 
-	const service = await getServiceByIdOrThrow(service_id);
+	if (new Date(startTime) < new Date()) {
+		throw new ApiError('StartTime cannot be in the past', 400);
+	}
+
+	const service = await getServiceByIdOrThrow(serviceId);
 	const { start, end } = await calculateAndValidateTimeRange(
 		startTime,
 		service.duration
 	);
 
 	const appointment = await Appointment.create({
-		service_id,
+		service_id: serviceId,
 		startTime: start,
 		notes,
 		endTime: end,

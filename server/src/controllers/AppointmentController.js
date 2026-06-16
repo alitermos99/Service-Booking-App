@@ -11,8 +11,8 @@ import {
 } from '../services/appointmentService.js';
 
 export const createAppointment = asyncHandler(async (req, res) => {
-	const { service_id, startTime, notes } = req.body;
-	const appointment = await createAnAppointment({ service_id, startTime, notes }, req.user.id);
+	const { serviceId, startTime, notes } = req.body;
+	const appointment = await createAnAppointment({ serviceId, startTime, notes }, req.user.id);
 
 	return res.status(201).json({
 		message: "Appointment created successfully",
