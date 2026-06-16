@@ -58,7 +58,7 @@ export const deleteAService = async (serviceId, adminId) => {
 	return service;
 };
 
-export const getAService = async (serviceId) => {
+export const getAService = async (serviceId, adminId) => {
 	const service = await getServiceByIdOrThrow(serviceId);
 	assertOwnership(service, "admin_id", adminId, 'Not authorized to see this service');
 
