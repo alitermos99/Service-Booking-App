@@ -365,7 +365,7 @@ body {
     transition:all 0.2s;
     text-align:center;
     border:1px solid rgba(255,255,255,0.094);
-    color:var(--text-muted);
+    color:var(--muted);
     background:rgba(26,26,36,0.4)
   }
 
@@ -384,5 +384,54 @@ body {
     opacity:0.35;
     cursor:not-allowed;
     text-decoration:line-through
+  }
+
+  .step-item{
+    display:flex;
+    align-items:center;
+    gap:0.75rem
+  }
+
+  .step-num{
+    width:2rem;
+    height:2rem;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:0.8rem;
+    font-weight:600;
+    flex-shrink:0;
+    transition:all 0.3s
+  }
+
+  .step-num.done{
+    background:linear-gradient(135deg,var(--accent),var(--accent-soft));
+    color:white
+  }
+
+  .step-num.active{
+    background:linear-gradient(135deg,var(--accent),var(--accent-soft));
+    color:white;
+    box-shadow:0 0 16px rgba(108,99,255,0.5)
+  }
+
+  .step-num.pending{
+    background:rgba(255,255,255,0.06);
+    color:var(--muted);
+  }
+
+  .step-line{
+    height:1px;
+    flex:1;
+    transition:background 0.3s
+  }
+
+  .step-line.done{
+    background:linear-gradient(90deg,var(--accent),var(--accent-soft))
+  }
+
+  .step-line.pending{
+    background:rgba(255,255,255,0.1)
   }
 }
