@@ -196,7 +196,6 @@ const CustomerBookingsPastAppointments = () => {
                     icon={clickedRow.service_id.icon}
                     iconBg={clickedRow.service_id.iconBg}
                     time={clickedRow.startTime + '~' + clickedRow.endTime}
-                    timeText={clickedRow.startTime}
                     appointmentId={clickedRow._id}
                     serviceId={clickedRow.service_id._id}
                     adminId={clickedRow.admin_id._id}
