@@ -4,14 +4,19 @@ import React from 'react'
 import TextArea from '../../forms/TextArea'
 import Button from '../../ui/Button'
 
-const CustomerBookDetails = () => {
+const CustomerBookDetails = ({ activeStep, setActiveStep, setCompletedSteps }) => {
     const handleChange = (event) => {
         const { name, value } = event.target;
-        
-        // setForm((prev) => ({
-        //     ...prev,
-        //     [name]: value
-        // }));
+    }
+
+    const handleStepChange = () => {
+        setCompletedSteps(prev => {
+            return [
+                ...prev,
+                activeStep
+            ]
+        });
+        setActiveStep(activeStep + 1);
     }
 
     return (
@@ -29,12 +34,8 @@ const CustomerBookDetails = () => {
             </div>
 
             <div className="flex gap-2">
-                <Button className="glass2 rounded-xl py-2.5 px-5 text-sm font-medium text-muted hover:text-tx 
-                    transition-colors" label="← Back"
-                />
-
                 <Button className="flex-1 btn-primary text-white rounded-xl py-2.5 text-sm font-medium" 
-                    label="Continue to Payment →"
+                    label="Continue to Payment →" onClick={handleStepChange}
                 />
             </div>
         </div>

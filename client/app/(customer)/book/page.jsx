@@ -14,7 +14,6 @@ const CustomerBookPage = () => {
             </Header>
 
             <Section maxWidth="max-w-4xl" padding="py-8">
-                <CustomerBookProgressSteps />
                 <CustomerBookMainContent />
             </Section>
         </>

@@ -1,6 +1,6 @@
 import React from 'react'
 
-const ProgressStep = ({ label, stepNumber, isActive = false, isCompleted = false }) => {
+const ProgressStep = ({ label, stepNumber, isActive = false, isCompleted = false, isLast = false }) => {
     return (
         <>
             <div className="step-item">
@@ -18,9 +18,12 @@ const ProgressStep = ({ label, stepNumber, isActive = false, isCompleted = false
                 </span>
             </div>
 
-            <div className={`step-line
-                ${isCompleted ? 'done' : 'pending'}
-            `}></div>
+            {
+                !isLast &&
+                <div className={`step-line
+                    ${isCompleted ? 'done' : 'pending'}
+                `}></div>
+            }
         </>
     )
 }
