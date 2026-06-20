@@ -1,13 +1,7 @@
 import React, { useState } from 'react'
 import Button from '../ui/Button';
 import { useGetAvailableSlots } from '@/app/features/slot/hooks/useGetAvailableSlots';
-
-function formatTo12hr(time) {
-    const [h, m] = time.split(':').map(Number);
-    const period = h >= 12 ? 'PM' : 'AM';
-    const hour = h % 12 || 12;
-    return `${hour}:${m.toString().padStart(2, '0')} ${period}`;
-};
+import { formatTo12hr } from '@/app/utils/dateUtils';
 
 const CustomerScheduleAppointment = ({ serviceId, adminId, onSelect, onCancel, showCancel = false, onSchedule,
     scheduleLabel = 'Schedule', className = '' 
