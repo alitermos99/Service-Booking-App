@@ -19,7 +19,7 @@ export const getOverlappingAppointment = async (startDate, endDate) => {
 	});
 
 	if (overlappingAppointment) {
-		throw new ApiError('You already have an appointment at this time', 400);
+		throw new ApiError('There is already an appointment at this time', 400);
 	}
 };
 

@@ -13,11 +13,11 @@ import aggregatePagination from "../utils/aggregatePagination.js";
 
 export const createAnAppointment = async ({ serviceId, startTime, notes }, userId) => {
 	if (!startTime || startTime === 'null' || isNaN(new Date(startTime).getTime())) {
-		throw new ApiError('StartTime must be a valid date', 400);
+		throw new ApiError('Start Time must be a valid date', 400);
 	}
 
 	if (new Date(startTime) < new Date()) {
-		throw new ApiError('StartTime cannot be in the past', 400);
+		throw new ApiError('Start Time cannot be in the past', 400);
 	}
 
 	const service = await getServiceByIdOrThrow(serviceId);
@@ -187,7 +187,7 @@ export const updateAnAppointment = async ({ startTime, notes }, appointmentId, u
 		appointment.startTime = start;
 		appointment.endTime = end;
 	}
-	else {
+	else if(startTime) {
 		throw new ApiError("Appointment already scheduled at this time", 400);
 	}
 
