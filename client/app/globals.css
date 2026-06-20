@@ -434,4 +434,27 @@ body {
   .step-line.pending{
     background:rgba(255,255,255,0.1)
   }
+
+  .review-card{
+    background:rgba(26,26,36,0.6);
+    border:1px solid rgba(255,255,255,0.094);
+    border-radius:1rem;
+    transition:all 0.2s
+  }
+
+  .review-card:hover{
+    border-color:rgba(108,99,255,0.3)
+  }
+
+  .pending-card{
+    background:rgba(26,26,36,0.6);
+    border:1px solid rgba(251,191,36,0.2);
+    border-radius:1rem;
+    transition:all 0.2s;cursor:pointer
+  }
+
+  .pending-card:hover{
+    border-color:rgba(251,191,36,0.4);
+    transform:translateY(-1px)
+  }
 }

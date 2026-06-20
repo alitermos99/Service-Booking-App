@@ -1,4 +1,5 @@
 import CustomerHeader from '@/app/components/customer/CustomerHeader'
+import CustomerReviewsPendingSection from '@/app/components/customer/reviews/CustomerReviewsPendingSection'
 import Section from '@/app/components/layouts/Section'
 import StatsCard from '@/app/components/ui/StatsCard'
 import React from 'react'
@@ -41,6 +42,8 @@ const CustomerReviewsPage = () => {
                         />
                     </div>
                 </div>
+
+                <CustomerReviewsPendingSection />
             </Section>
         </>
     )
