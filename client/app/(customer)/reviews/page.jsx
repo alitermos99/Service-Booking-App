@@ -1,4 +1,5 @@
 import CustomerHeader from '@/app/components/customer/CustomerHeader'
+import CustomerReviewsPastReviews from '@/app/components/customer/reviews/CustomerReviewsPastReviews'
 import CustomerReviewsPendingSection from '@/app/components/customer/reviews/CustomerReviewsPendingSection'
 import Section from '@/app/components/layouts/Section'
 import StatsCard from '@/app/components/ui/StatsCard'
@@ -44,6 +45,7 @@ const CustomerReviewsPage = () => {
                 </div>
 
                 <CustomerReviewsPendingSection />
+                <CustomerReviewsPastReviews />
             </Section>
         </>
     )
