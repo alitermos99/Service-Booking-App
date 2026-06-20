@@ -11,6 +11,7 @@ export const useUpdateAppointment = () => {
 		mutationFn: updateAppointment,
 
 		onSuccess: (data) => {
+    		queryClient.invalidateQueries({ queryKey: ['appointment'] });
     		queryClient.invalidateQueries({ queryKey: ['appointments'] });
 			toast.success(data?.message);
 		},

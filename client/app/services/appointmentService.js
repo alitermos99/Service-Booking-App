@@ -1,5 +1,13 @@
 import api from "../lib/api"
 
+export const getAppointment = async (id) => {
+	const response = await api.get(
+		`/api/v1/appointments/${id}`
+	);
+
+	return response.data;
+}
+
 export const getAppointments = async () => {
 	const response = await api.get(
 		'/api/v1/appointments'
@@ -30,6 +38,15 @@ export const getAppointmentsInfo = async () => {
 		'/api/v1/appointments/appointments-info'
 	);
 
+	return response.data;
+}
+
+export const createAppointment = async (body) => {
+	const response = await api.post(
+		'/api/v1/appointments',
+		body
+	);
+	
 	return response.data;
 }
 
