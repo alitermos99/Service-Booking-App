@@ -74,7 +74,7 @@ const CustomerServicesServiceModal = ({ serviceId, adminId, title, price, durati
                         adminId={adminId} 
                         onSelect={handleSlotSelection}
                         scheduleLabel="Continue to Book"
-                        onSchedule={() => router.push('/book')}
+                        onSchedule={() => router.push(`/book?serviceId=${serviceId}&startTime=${selectedTime}&title=${encodeURIComponent(title)}`)}
                     />
                 </div>
             </div>
