@@ -7,9 +7,9 @@ const router = express.Router();
 
 router.use(authMiddleware);
 
+router.get('/:id', getService);
 router.get('/all-services', getServices);
 router.get('/', authorize('business'), getServicesBusiness);
-router.get('/:id', authorize('business'),  getService);
 router.post('/', authorize('business'), createService);
 router.put('/:id', authorize('business'), updateService);
 router.delete('/:id', authorize('business'), deleteService);

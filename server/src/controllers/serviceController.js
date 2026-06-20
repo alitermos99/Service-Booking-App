@@ -22,7 +22,7 @@ export const createService = asyncHandler(async (req, res) => {
 // Get a service
 export const getService = asyncHandler(async (req, res) => {
 	const { id } = req.params;
-	const service = await getAService(id, req.user.id);
+	const service = await getAService(id);
 
 	return res.status(200).json({
 		service: sanitizeService(service)
