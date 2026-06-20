@@ -5,16 +5,8 @@ import { useSearchParams } from 'next/navigation';
 import { useGetService } from '@/app/features/service/hooks/useGetService';
 import LoadingOverlay from '../../ui/LoadingOverlay';
 import CustomerBookPaymentInfo from './CustomerBookPaymentInfo';
-import { formatDate, formatTime, formatTo12hr, TODAY } from '@/app/utils/dateUtils';
+import { buildISODateTime, formatBookingDate, formatTime, formatTo12hr, formatTo2Decimals, TODAY } from '@/app/utils/dateUtils';
 import { useGetAppointment } from '@/app/features/appointment/hooks/useGetAppointment';
-
-function formatTo2Decimals(num) {
-    if (typeof num !== 'number' || isNaN(num)) {
-        return null;
-    }
-
-    return num.toFixed(2);
-}
 
 const CustomerBookPayment = ({ activeStep, setActiveStep, setCompletedSteps }) => {
     const searchParams = useSearchParams();
@@ -43,7 +35,7 @@ const CustomerBookPayment = ({ activeStep, setActiveStep, setCompletedSteps }) =
                     />
 
                     <CustomerBookPaymentInfo 
-                        title="Date" value={formatDate(TODAY)}
+                        title="Date" value={formatBookingDate(buildISODateTime(TODAY, startTime))}
                     />
 
                     <CustomerBookPaymentInfo 

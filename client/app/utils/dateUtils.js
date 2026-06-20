@@ -1,5 +1,13 @@
 export const TODAY = new Date().toLocaleDateString('en-CA');
 
+export function formatTo2Decimals(num) {
+    if (typeof num !== 'number' || isNaN(num)) {
+        return null;
+    }
+
+    return num.toFixed(2);
+}
+
 export function formatTo12hr(time) {
     const [h, m] = time.split(':').map(Number);
     const period = h >= 12 ? 'PM' : 'AM';
