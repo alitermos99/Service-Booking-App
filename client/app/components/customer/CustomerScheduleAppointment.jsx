@@ -12,7 +12,7 @@ function formatTo12hr(time) {
 const CustomerScheduleAppointment = ({ serviceId, adminId, onSelect, onCancel, showCancel = false, onSchedule,
     scheduleLabel = 'Schedule', className = '' 
 }) => {
-    const [selectedIndex, setSelectedIndex] = useState(0);
+    const [selectedIndex, setSelectedIndex] = useState(null);
     const { data: slots } = useGetAvailableSlots(adminId, serviceId, 
         new Date().toLocaleDateString('en-CA'), new Date().getTimezoneOffset()
     );
