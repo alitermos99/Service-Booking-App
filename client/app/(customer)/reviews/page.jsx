@@ -36,7 +36,7 @@ const CustomerReviewsPage = () => {
                             stat="2"
                             subtitle="Pending"
                             cardStyle="glass2 rounded-xl px-4 py-2 text-center"
-                            statStyle="text-xl font-bold text-tx"
+                            statStyle="text-xl font-bold text-fair"
                             spacing="mt-0"
                         />
                     </div>
