@@ -1,5 +1,6 @@
 import React from 'react'
 import CustomerReviewsPendingCard from './CustomerReviewsPendingCard'
+import CustomerReviewsEditModal from './CustomerReviewsEditModal'
 
 const CustomerReviewsPendingSection = () => {
     return (
@@ -13,6 +14,8 @@ const CustomerReviewsPendingSection = () => {
                 <CustomerReviewsPendingCard />
                 <CustomerReviewsPendingCard />
             </div>
+
+            <CustomerReviewsEditModal />
         </div>
     )
 }

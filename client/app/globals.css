@@ -457,4 +457,18 @@ body {
     border-color:rgba(251,191,36,0.4);
     transform:translateY(-1px)
   }
+
+  .star-btn{
+    font-size:1.6rem;
+    cursor:pointer;transition:all 0.15s;
+    color:rgba(255,255,255,0.2)
+  }
+
+  .star-btn.filled{
+    color:var(--fairpass)
+  }
+
+  .star-btn:hover{
+    transform:scale(1.15)
+  }
 }
