@@ -9,7 +9,7 @@ const LoginForm = () => {
     const [form, setForm] = useState({
         email: '',
         password: '',
-        remember: false
+        saveThirtyDays: false
     });
     const { mutate: loginUser, isPending } = useLogin();
 
@@ -58,7 +58,7 @@ const LoginForm = () => {
 
                 <div className="flex items-center gap-2">
                     <FormField
-                        name="remember"
+                        name="saveThirtyDays"
                         type="checkbox"
                         checked={form.remember}
                         className="accent-[#6c63ff]"

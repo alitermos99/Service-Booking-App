@@ -26,7 +26,7 @@ const CustomerUserAvatar = () => {
             </span>
 
             <span className="inline-block hover:underline px-3 pt-2">
-                <Link href="/profile">Preference</Link>
+                <Link href="/profile">Preferences</Link>
             </span>
 
             <div className="mt-2" style={{ borderTop: '1px solid rgba(255,255,255,0.5)' }} />
