@@ -36,7 +36,7 @@ api.interceptors.response.use(
             .catch(err => Promise.reject(err));
         }
 
-        original._retry  = true;
+        original._retry = true;
         isRefreshing = true;
 
         try {
