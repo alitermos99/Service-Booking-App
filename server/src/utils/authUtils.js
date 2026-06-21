@@ -6,19 +6,29 @@ export const ACCOUNT_TYPES = {
     business: 'business'
 };
 
-export const COOKIE_OPTIONS = {
-	httpOnly: true,
-	secure: process.env.NODE_ENV === "production",
-	sameSite: "strict",
-	maxAge: 24 * 60 * 60 * 1000
+export const COOKIE_OPTIONS = (maxAge = 15 * 60 * 1000) => {
+	return {
+		httpOnly: true,
+		secure: process.env.NODE_ENV === "production",
+		sameSite: "strict",
+		maxAge: maxAge
+	}
 };
 
-export const generateAuthToken = (userId, userRole) => {
-	return jwt.sign(
-		{ id: userId, role: userRole },
-		process.env.JWT_SECRET,
-		{ expiresIn: "24h" }
-	);
+export const generateTokens = (userId, userRole, expiresIn = '7d') => {
+    const accessToken = jwt.sign(
+        { id: userId, role: userRole },
+        process.env.JWT_SECRET,
+        { expiresIn: '15m' }
+    );
+
+    const refreshToken = jwt.sign(
+        { id: userId, role: userRole },
+        process.env.JWT_REFRESH_SECRET,
+        { expiresIn: expiresIn }
+    );
+
+    return { accessToken, refreshToken };
 };
 
 export const generatePasswordResetToken = (userId) => {

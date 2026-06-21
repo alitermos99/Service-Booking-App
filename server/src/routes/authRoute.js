@@ -9,13 +9,15 @@ import {
 	forgotPassword, 
 	resetPassword, 
 	getProfile,
-	deactivateUser
+	deactivateUser,
+	refreshToken
 } from "../controllers/authController.js";
 
 const router = express.Router();
 
 router.post("/register", register);
 router.post("/login", login);
+router.post("/refresh", refreshToken);
 router.post("/logout", logout);
 router.put("/profile", authMiddleware, updateProfile);
 router.patch("/change-password", authMiddleware, changePassword);

@@ -7,19 +7,28 @@ import {
 	forgotUserPassword, 
 	resetUserPassword, 
 	getUserProfile, 
-	deactivateUserAccount
+	deactivateUserAccount,
+	refreshAccesToken
 } from "../services/authService.js";
 import { sanitizeUser } from '../utils/userUtils.js'
-import { COOKIE_OPTIONS, generateAuthToken } from "../utils/authUtils.js";
+import { COOKIE_OPTIONS, generateTokens } from "../utils/authUtils.js";
 
 export const register = asyncHandler(async (req, res) => {
 	const { name, email, password, accountType, phone } = req.body;
 	const user = await registerUser({ name, email, password, accountType, phone });
 
+	const { accessToken, refreshToken } = generateTokens(user._id, user.role);
+
 	res.cookie(
 		"token",
-		generateAuthToken(user._id, user.role),
-		COOKIE_OPTIONS
+		accessToken,
+		COOKIE_OPTIONS(15 * 60 * 1000) // 15 mins
+	);
+
+	res.cookie(
+		'refreshToken', 
+		refreshToken, 
+		COOKIE_OPTIONS(7 * 24 * 60 * 60 * 1000) // 7 days
 	);
 
 	return res.status(201).json({
@@ -29,13 +38,21 @@ export const register = asyncHandler(async (req, res) => {
 });
 
 export const login = asyncHandler(async (req, res) => {
-	const { email, password } = req.body;
+	const { email, password, saveThirtyDays } = req.body;
 	const user = await loginUser({ email, password });
+
+	const { accessToken, refreshToken } = generateTokens(user._id, user.role, saveThirtyDays ? '30d' : '7d');
 
 	res.cookie(
 		"token",
-		generateAuthToken(user._id, user.role),
-		COOKIE_OPTIONS
+		accessToken,
+		COOKIE_OPTIONS(15 * 60 * 1000) // 15 mins
+	);
+
+	res.cookie(
+		'refreshToken', 
+		refreshToken, 
+		COOKIE_OPTIONS(7 * 24 * 60 * 60 * 1000) // 7 days
 	);
 
 	return res.status(200).json({
@@ -107,5 +124,20 @@ export const getProfile = asyncHandler(async (req, res) => {
 
 	return res.status(200).json({
 		user: sanitizeUser(user)
+	});
+});
+
+export const refreshToken = asyncHandler(async (req, res) => {
+	const user = await refreshAccesToken(req.cookies.refreshToken);
+	const { accessToken } = generateTokens(user._id, user.role);
+
+	res.cookie(
+		"token",
+		accessToken,
+		COOKIE_OPTIONS(15 * 60 * 1000) // 15 mins
+	);
+
+	return res.status(200).json({
+		message: "Token refreshed"
 	});
 });

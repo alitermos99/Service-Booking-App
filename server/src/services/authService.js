@@ -153,3 +153,16 @@ export const getUserProfile = async (userId) => {
 	const user = await getUserOrThrow(userId);
 	return user;
 }
+
+export const refreshAccesToken = async (refreshToken) => {
+	const token = refreshToken;
+
+	if(!token) {
+		throw new ApiError('No refresh token', 404);
+	}
+
+	const decoded = jwt.verify(token, process.env.JWT_REFRESH_SECRET);
+	const user = await getUserOrThrow(decoded.id);
+
+	return user;
+}
