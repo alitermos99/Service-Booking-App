@@ -5,7 +5,7 @@ export const getUserOrThrow = async (userId) => {
 	const user = await User.findById(userId);
 
 	if (!user) {
-		throw new ApiError("User not found", 404);
+		throw new ApiError("User not found", 401);
 	}
 
 	return user;

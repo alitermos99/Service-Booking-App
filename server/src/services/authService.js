@@ -158,7 +158,7 @@ export const refreshAccesToken = async (refreshToken) => {
 	const token = refreshToken;
 
 	if(!token) {
-		throw new ApiError('No refresh token', 404);
+		throw new ApiError('No refresh token', 401);
 	}
 
 	const decoded = jwt.verify(token, process.env.JWT_REFRESH_SECRET);
