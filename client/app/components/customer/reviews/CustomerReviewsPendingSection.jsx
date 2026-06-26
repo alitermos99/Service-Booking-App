@@ -1,6 +1,5 @@
 import React from 'react'
 import CustomerReviewsPendingCard from './CustomerReviewsPendingCard'
-import CustomerReviewsEditModal from './CustomerReviewsEditModal'
 
 const CustomerReviewsPendingSection = () => {
     return (
@@ -12,10 +11,7 @@ const CustomerReviewsPendingSection = () => {
 
             <div className="grid gap-4 sm:grid-cols-2">
                 <CustomerReviewsPendingCard />
-                <CustomerReviewsPendingCard />
             </div>
-
-            <CustomerReviewsEditModal />
         </div>
     )
 }
