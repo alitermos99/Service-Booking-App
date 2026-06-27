@@ -4,7 +4,9 @@ import {
 	updateAReview,
 	deleteAReview,
 	getAUserReviewsStats,
-	getAUserPendingReviews
+	getAUserPendingReviews,
+	replyToAUserReview,
+	deleteAReplyToAUserReview
 } from "../services/reviewService.js";
 import { sanitizeAppointment } from "../utils/appointmentUtils.js";
 
@@ -26,6 +28,7 @@ export const updateReview = asyncHandler(async (req, res) => {
 	const review = await updateAReview({ rating, comment }, id, req.user.id);
 
 	return res.status(200).json({
+		message: "Review updated successfully",
 		review
 	});
 });
@@ -37,6 +40,27 @@ export const deleteReview = asyncHandler(async (req, res) => {
 
 	return res.status(200).json({
 		message: "Review deleted successfully"
+	});
+});
+
+export const replyToUserReview = asyncHandler(async (req, res) => {
+	const { id } = req.params;
+	const { reply } = req.body;
+	const review = await replyToAUserReview(reply, id, req.user.id);
+
+	return res.status(200).json({
+		message: "Replied successfully",
+		review
+	});
+});
+
+export const deleteReplyToUserReview = asyncHandler(async (req, res) => {
+	const { id } = req.params;
+	const review = await deleteAReplyToAUserReview(id, req.user.id);
+
+	return res.status(200).json({
+		message: "Reply deleted successfully",
+		review
 	});
 });
 

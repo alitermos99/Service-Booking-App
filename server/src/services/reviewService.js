@@ -4,6 +4,7 @@ import { assertOwnership } from '../utils/authUtils.js';
 import { getReviewByIdOrThrow, getExistingReviewByParentIds } from '../utils/reviewUtils.js'
 import mongoose from "mongoose";
 import Appointment from "../models/Appointment.js";
+import { getAppointmentOrThrow } from './../utils/appointmentUtils.js';
 
 export const createAReview = async ({ rating, comment, serviceId, appointmentId }, userId) => {
 	if(!rating || !appointmentId || !serviceId) {
@@ -15,6 +16,7 @@ export const createAReview = async ({ rating, comment, serviceId, appointmentId 
 	}
 
 	await getExistingReviewByParentIds(appointmentId, serviceId, userId);
+	const appointment = await getAppointmentOrThrow(appointmentId);
 
 	const review = await Review.create({
 		rating,
@@ -22,6 +24,7 @@ export const createAReview = async ({ rating, comment, serviceId, appointmentId 
 		user_id: userId,
 		service_id: serviceId,
 		appointment_id: appointmentId,
+		admin_id: appointment.admin_id
 	});
 
 	return review;
@@ -47,6 +50,32 @@ export const deleteAReview = async (reviewId, userId) => {
 	assertOwnership(review, "user_id", userId, 'Not authorized to delete this review');
 
 	await review.deleteOne();
+}
+
+export const replyToAUserReview = async (reply, reviewId, userId) => {
+	const review = await getReviewByIdOrThrow(reviewId);
+	assertOwnership(review, "admin_id", userId, 'Not authorized to reply to this review');
+
+	review.reply = {
+        text: reply,
+        repliedAt: new Date()
+    };
+
+    await review.save();
+	return review;
+}
+
+export const deleteAReplyToAUserReview = async (reviewId, userId) => {
+	const review = await getReviewByIdOrThrow(reviewId);
+	assertOwnership(review, "admin_id", userId, 'Not authorized to delete this reply');
+
+	review.reply = { 
+		text: null, 
+		repliedAt: null 
+	};
+
+    await review.save();
+	return review;
 }
 
 export const getAUserReviewsStats = async (userId) => {

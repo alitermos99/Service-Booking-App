@@ -12,6 +12,11 @@ const reviewSchema = new mongoose.Schema(
 			ref: "User",
 			required: true
 		},
+		admin_id: { 
+			type: mongoose.Schema.Types.ObjectId, 
+			ref: "User", 
+			required: true
+		},
 		service_id: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Service",
@@ -27,7 +32,11 @@ const reviewSchema = new mongoose.Schema(
 		comment: {
 			type: String,
 			default: ""
-		}
+		},
+		reply: {
+            text: { type: String, default: null },
+            repliedAt: { type: Date, default: null }
+        }
 	},
 	{
 		timestamps: true
