@@ -2,7 +2,8 @@ import asyncHandler from "express-async-handler";
 import { 
 	createAReview,
 	updateAReview,
-	deleteAReview
+	deleteAReview,
+	getAUserReviewsStats
 } from "../services/reviewService.js";
 
 // Create a review
@@ -35,4 +36,10 @@ export const deleteReview = asyncHandler(async (req, res) => {
 	return res.status(200).json({
 		message: "Review deleted successfully"
 	});
+});
+
+// Get reviews info
+export const getUserReviewsStats = asyncHandler(async (req, res) => {
+	const reviewsInfo = await getAUserReviewsStats(req.user.id);
+	return res.status(200).json(reviewsInfo);
 });

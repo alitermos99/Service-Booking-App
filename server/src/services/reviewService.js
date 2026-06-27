@@ -2,6 +2,8 @@ import Review from "../models/Review.js";
 import ApiError from '../errors/ApiError.js';
 import { assertOwnership } from '../utils/authUtils.js';
 import { getReviewByIdOrThrow, getExistingReviewByParentIds } from '../utils/reviewUtils.js'
+import mongoose from "mongoose";
+import Appointment from "../models/Appointment.js";
 
 export const createAReview = async ({ rating, comment, serviceId, appointmentId }, userId) => {
 	if(!rating || !appointmentId || !serviceId) {
@@ -46,3 +48,30 @@ export const deleteAReview = async (reviewId, userId) => {
 
 	await review.deleteOne();
 }
+
+export const getAUserReviewsStats = async (userId) => {
+    const objectId = new mongoose.Types.ObjectId(userId);
+
+    const [reviewStats, reviewedAppointmentIds, totalCompleted] = await Promise.all([
+        Review.aggregate([
+            { $match: { user_id: objectId } },
+            {
+                $group: {
+                    _id: null,
+                    totalReviews: { $sum: 1 },
+                    avgRating: { $avg: "$rating" }
+                }
+            }
+        ]),
+        Review.distinct('appointment_id', { user_id: objectId }),
+        Appointment.countDocuments({ user_id: objectId, status: 'completed' })
+    ]);
+
+    const [stats] = reviewStats;
+
+    return {
+        totalReviews: stats?.totalReviews ?? 0,
+        avgRating: stats?.avgRating ?? 0,
+        pendingReviews: totalCompleted - reviewedAppointmentIds.length
+    };
+};
