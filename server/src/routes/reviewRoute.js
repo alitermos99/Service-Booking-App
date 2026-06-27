@@ -3,7 +3,8 @@ import {
 	createReview, 
 	updateReview, 
 	deleteReview,
-	getUserReviewsStats
+	getUserReviewsStats,
+	getUserPendingReviews
 } from '../controllers/reviewController.js';
 import authMiddleware from '../middlewares/authMiddleware.js';
 import { authorize } from '../middlewares/roleMiddleware.js';
@@ -13,6 +14,7 @@ const router = express.Router();
 router.use(authMiddleware);
 router.use(authorize('customer'));
 
+router.get('/pending-reviews', getUserPendingReviews);
 router.get('/reviews-info', getUserReviewsStats);
 router.post('/', createReview);
 router.put('/:id', updateReview);

@@ -3,8 +3,10 @@ import {
 	createAReview,
 	updateAReview,
 	deleteAReview,
-	getAUserReviewsStats
+	getAUserReviewsStats,
+	getAUserPendingReviews
 } from "../services/reviewService.js";
+import { sanitizeAppointment } from "../utils/appointmentUtils.js";
 
 // Create a review
 export const createReview = asyncHandler(async (req, res) => {
@@ -42,4 +44,14 @@ export const deleteReview = asyncHandler(async (req, res) => {
 export const getUserReviewsStats = asyncHandler(async (req, res) => {
 	const reviewsInfo = await getAUserReviewsStats(req.user.id);
 	return res.status(200).json(reviewsInfo);
+});
+
+export const getUserPendingReviews = asyncHandler(async (req, res) => {
+	const pedningAppointmentsReviews = await getAUserPendingReviews(req.user.id);
+
+	const sanitizedReviews = pedningAppointmentsReviews?.map(appointment => {
+		return sanitizeAppointment(appointment);
+	});
+
+	return res.status(200).json(sanitizedReviews);
 });

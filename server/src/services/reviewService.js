@@ -75,3 +75,18 @@ export const getAUserReviewsStats = async (userId) => {
         pendingReviews: totalCompleted - reviewedAppointmentIds.length
     };
 };
+
+export const getAUserPendingReviews = async (userId) => {
+	const objectId = new mongoose.Types.ObjectId(userId);
+	const reviewedIds = await Review.distinct("appointment_id", { user_id: objectId });
+
+	const appointments = await Appointment.find({
+		user_id: objectId,
+		status: "completed",
+		_id: { $nin: reviewedIds }
+	})
+	.populate('service_id', 'title icon iconBg price duration')
+    .populate('admin_id', 'name');
+
+	return appointments;
+}
