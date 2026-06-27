@@ -15,3 +15,12 @@ export const getPendingReviews = async () => {
 
 	return response.data;
 }
+
+export const createReview = async (body) => {
+	const response = await api.post(
+		'/api/v1/reviews',
+		body
+	);
+
+	return response.data;
+}

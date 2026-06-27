@@ -7,7 +7,7 @@ import { formatDate } from '@/app/utils/dateUtils'
 
 const DEFAULT_ICON_BG = 'linear-gradient(135deg,rgba(108,99,255,0.2),rgba(167,139,250,0.2))';
 
-const CustomerReviewsPendingCard = ({ title, providerName, startTime, icon, iconBg }) => {
+const CustomerReviewsPendingCard = ({ title, providerName, startTime, icon, iconBg, serviceId, appointmentId }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     return (
@@ -34,6 +34,7 @@ const CustomerReviewsPendingCard = ({ title, providerName, startTime, icon, icon
 
                 <div className="flex items-center justify-between">
                     <p className="text-xs text-muted">How was your experience?</p>
+
                     <Button 
                         className="btn-primary text-xs px-4 py-2 rounded-xl text-white font-medium flex items-center gap-1.5"
                         label={
@@ -52,7 +53,19 @@ const CustomerReviewsPendingCard = ({ title, providerName, startTime, icon, icon
                 </div>
             </div>
 
-            { isModalOpen && <CustomerReviewsReviewModal setIsModalOpen={setIsModalOpen} /> }
+            { 
+                isModalOpen && 
+                <CustomerReviewsReviewModal 
+                    title={title}
+                    providerName={providerName}
+                    startTime={startTime}
+                    icon={icon}
+                    iconBg={iconBg}
+                    serviceId={serviceId}
+                    appointmentId={appointmentId}
+                    setIsModalOpen={setIsModalOpen} 
+                /> 
+            }
         </>
     )
 }

@@ -17,19 +17,28 @@ const CustomerReviewsPendingSection = () => {
                     Awaiting Your Review
                 </h2>
 
-                <div className="grid gap-4 sm:grid-cols-2">
-                    {
-                        pendingReviews?.map(pending => (
-                            <CustomerReviewsPendingCard key={pending._id} 
-                                title={pending.service_id?.title}
-                                startTime={pending.startTime}
-                                icon={pending.service_id?.icon}
-                                iconBg={pending.service_id?.iconBg}
-                                providerName={pending.admin_id?.name}
-                            />
-                        ))
-                    }
-                </div>
+                {
+                    !!pendingReviews?.length &&
+                    (
+                        <div className="grid gap-4 sm:grid-cols-2">
+                            {
+                                pendingReviews?.map(pending => (
+                                    <CustomerReviewsPendingCard key={pending._id} 
+                                        title={pending.service_id?.title}
+                                        startTime={pending.startTime}
+                                        icon={pending.service_id?.icon}
+                                        iconBg={pending.service_id?.iconBg}
+                                        providerName={pending.admin_id?.name}
+                                        serviceId={pending.service_id?._id}
+                                        appointmentId={pending._id}
+                                    />
+                                ))
+                            }
+                        </div>
+                    )
+                }
+
+                { (!pendingReviews || !pendingReviews.length) && <p className="text-muted">No upcoming appointments</p> }
             </div>
         </>
     )
