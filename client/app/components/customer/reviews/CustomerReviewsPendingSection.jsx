@@ -5,7 +5,6 @@ import LoadingOverlay from '../../ui/LoadingOverlay';
 
 const CustomerReviewsPendingSection = () => {
     const { data: pendingReviews, isPending } = useGetPendingReviews();
-    console.log('@@@reviewwss ', pendingReviews)
 
     return (
         <>

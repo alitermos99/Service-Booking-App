@@ -35,7 +35,7 @@ const CustomerReviewsPage = () => {
                         />
 
                         <StatsCard 
-                            stat={reviewsInfo?.pendingReviews}
+                            stat={reviewsInfo?.totalReviews}
                             subtitle="Reviews"
                             cardStyle="glass2 rounded-xl px-4 py-2 text-center"
                             statStyle="text-xl font-bold text-tx"
@@ -43,7 +43,7 @@ const CustomerReviewsPage = () => {
                         />
 
                         <StatsCard 
-                            stat={reviewsInfo?.totalReviews}
+                            stat={reviewsInfo?.pendingReviews}
                             subtitle="Pending"
                             cardStyle="glass2 rounded-xl px-4 py-2 text-center"
                             statStyle="text-xl font-bold text-fair"
