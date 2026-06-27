@@ -1,13 +1,22 @@
-import CustomerHeader from '@/app/components/customer/CustomerHeader'
-import CustomerReviewsPastReviews from '@/app/components/customer/reviews/CustomerReviewsPastReviews'
-import CustomerReviewsPendingSection from '@/app/components/customer/reviews/CustomerReviewsPendingSection'
-import Section from '@/app/components/layouts/Section'
-import StatsCard from '@/app/components/ui/StatsCard'
-import React from 'react'
+'use client'
+
+import React from 'react';
+import StatsCard from '@/app/components/ui/StatsCard';
+import Section from '@/app/components/layouts/Section';
+import CustomerHeader from '@/app/components/customer/CustomerHeader';
+import { useGetReviewsInfo } from '@/app/features/review/hooks/useGetReviewsInfo';
+import CustomerReviewsPastReviews from '@/app/components/customer/reviews/CustomerReviewsPastReviews';
+import CustomerReviewsPendingSection from '@/app/components/customer/reviews/CustomerReviewsPendingSection';
+import LoadingOverlay from '@/app/components/ui/LoadingOverlay';
 
 const CustomerReviewsPage = () => {
+    const { data: reviewsInfo, isPending } = useGetReviewsInfo();
+    console.log('@@@@@dataa ', reviewsInfo);
+
     return (
         <>
+            { isPending && <LoadingOverlay /> }
+
             <CustomerHeader />
 
             <Section>
@@ -19,7 +28,7 @@ const CustomerReviewsPage = () => {
 
                     <div className="flex items-center gap-3">
                         <StatsCard 
-                            stat="4.8"
+                            stat={reviewsInfo?.avgRating}
                             subtitle="Avg Rating"
                             cardStyle="glass2 rounded-xl px-4 py-2 text-center"
                             statStyle="text-xl font-bold gradient-text"
@@ -27,7 +36,7 @@ const CustomerReviewsPage = () => {
                         />
 
                         <StatsCard 
-                            stat="6"
+                            stat={reviewsInfo?.pendingReviews}
                             subtitle="Reviews"
                             cardStyle="glass2 rounded-xl px-4 py-2 text-center"
                             statStyle="text-xl font-bold text-tx"
@@ -35,7 +44,7 @@ const CustomerReviewsPage = () => {
                         />
 
                         <StatsCard 
-                            stat="2"
+                            stat={reviewsInfo?.totalReviews}
                             subtitle="Pending"
                             cardStyle="glass2 rounded-xl px-4 py-2 text-center"
                             statStyle="text-xl font-bold text-fair"
