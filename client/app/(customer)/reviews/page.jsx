@@ -11,7 +11,6 @@ import LoadingOverlay from '@/app/components/ui/LoadingOverlay';
 
 const CustomerReviewsPage = () => {
     const { data: reviewsInfo, isPending } = useGetReviewsInfo();
-    console.log('@@@@@dataa ', reviewsInfo);
 
     return (
         <>

@@ -7,3 +7,11 @@ export const getReviewsInfo = async () => {
 
 	return response.data;
 }
+
+export const getPendingReviews = async () => {
+	const response = await api.get(
+		'/api/v1/reviews/pending-reviews'
+	);
+
+	return response.data;
+}
